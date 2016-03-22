@@ -1,0 +1,7 @@
+*.pyc
+.idea/
+
+lotube/db.sqlite3
+lotube/.sass-cache/
+lotube/static/CACHE/
+lotube/static_root/
