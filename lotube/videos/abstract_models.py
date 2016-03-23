@@ -16,7 +16,7 @@ class AbstractTimeStamped(models.Model):
 class AbstractVideo(AbstractTimeStamped):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=300)
-    description = models.CharField(max_length=10000, default='')
+    description = models.CharField(max_length=10000, blank=True, default='')
     filename = models.CharField(max_length=255, unique=True)
     analytic = models.OneToOneField('videos.VideoAnalytic',
                                     on_delete=models.CASCADE)
