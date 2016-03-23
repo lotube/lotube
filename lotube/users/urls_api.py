@@ -4,9 +4,15 @@ from .views import test
 urlpatterns = [
     # List of users
     url(
-        r'^$',
+        r'^.json$',
         test,
-        name='users'
+        name='users_json'
+    ),
+
+    url(
+        r'^.xml',
+        test,
+        name='users_xml'
     ),
 
     # Retrieve a specific user
