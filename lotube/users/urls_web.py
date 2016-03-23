@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import UserList
+from .views_web import UserList
 
 urlpatterns = [
     # List of users

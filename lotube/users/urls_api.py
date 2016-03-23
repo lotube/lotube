@@ -1,20 +1,20 @@
 from django.conf.urls import url
 
-from .views import UserList
+from .views_api import UserListJSON
 
 urlpatterns = [
     # List of users
     url(
         r'^.json$',
-        UserList.as_view(),
+        UserListJSON.as_view(),
         name='users_json'
     ),
 
-    url(
-        r'^.xml',
-        UserList.as_view(),
-        name='users_xml'
-    ),
+    #url(
+    #    r'^.xml',
+    #    UserList.as_view(),
+    #    name='users_xml'
+    #),
 
     # Retrieve a specific user
 
