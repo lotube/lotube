@@ -1,5 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from .abstract_models import AbstractUser
 
-# Create your models here.
+
+class User(AbstractUser):
+    pass
