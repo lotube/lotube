@@ -1,13 +1,15 @@
 from django.conf.urls import url
 
-from .views_api import UserListJSON
+from core.loading import APIViewLoader
+from .views_api_json import UserListJSON
+from .views_api_xml import UserListXML
 
 urlpatterns = [
     # List of users
     url(
-        r'^.json$',
-        UserListJSON.as_view(),
-        name='users_json'
+        r'^(?P<format>(\.\w{1,4}))$',
+        APIViewLoader.as_view(json=UserListJSON, xml=UserListXML),
+        name='users'
     ),
 
     #url(

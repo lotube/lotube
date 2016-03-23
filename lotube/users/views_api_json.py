@@ -1,9 +1,8 @@
-from django.http import JsonResponse
-
+from core.mixins import JSONView
 from .mixins import UserListMixin
 
 
-class UserListJSON(UserListMixin):
+class UserListJSON(JSONView, UserListMixin):
     """
     Returns a list of users, such as:
     [
@@ -15,8 +14,7 @@ class UserListJSON(UserListMixin):
         }, ...
     ]
     """
-
-    def render_to_response(self, context, **response_kwargs):
+    def craft_response(self, context, **response_kwargs):
         items = []
         for dbuser in context['user_list']:
             user = {
@@ -37,4 +35,4 @@ class UserListJSON(UserListMixin):
             },
             'items': items
         }
-        return JsonResponse(response)
+        return response
