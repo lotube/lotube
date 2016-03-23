@@ -1,12 +1,12 @@
 from django.conf.urls import url
 
-from .views import test
+from .views import UserList
 
 urlpatterns = [
     # List of users
     url (
         r'^$',
-        test,
+        UserList.as_view(),
         name='users'
     ),
 
@@ -17,3 +17,4 @@ urlpatterns = [
     #
     #)
 ]
+

@@ -1,17 +1,18 @@
 from django.conf.urls import url
-from .views import test
+
+from .views import UserList
 
 urlpatterns = [
     # List of users
     url(
         r'^.json$',
-        test,
+        UserList.as_view(),
         name='users_json'
     ),
 
     url(
         r'^.xml',
-        test,
+        UserList.as_view(),
         name='users_xml'
     ),
 

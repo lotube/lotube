@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import View, ListView, CreateView
+
+from .models import User
 
 
-def test(request):
-    return HttpResponse('Hey there!')
+class UserList(ListView):
+    model = User
+    template_name = 'users/user_list.html'
