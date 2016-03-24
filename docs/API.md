@@ -17,8 +17,8 @@ Returns a collection of users.
 ```json
     {
      "page_info": {
-        "total_results": 100,
-        "results_page": 100
+        "total_results": 1,
+        "results_page": 1
      },
      "items": [
         { 
@@ -36,6 +36,9 @@ Returns a collection of users.
 ```
 
 ### GET users/:username
+
+If exists, it returns the user details of the :username provided.
+
 ```json
     { 
       "id": 1,
@@ -46,5 +49,189 @@ Returns a collection of users.
       "last_login": "2016-03-23T10:37:04.873Z",
       "is_staff": false,
       "is_active": true
+    }
+```
+
+## Videos
+
+### GET videos
+
+**id**: LOTube unique identifier.
+
+**id_source**: LOTube identifier if `source="lotube"`, else source's unique 
+identifier.
+
+Other data such as user, title or description will be relative to the source.
+
+```json
+    {
+     "page_info": {
+        "total_results": 1,
+        "results_page": 1
+     },
+     "items": [
+        { 
+          "id": 1,
+          "id_source": 1,
+          "source": "lotube",
+          "user": "tommy33",
+          "title": "Hello world",
+          "description": "My hello world video",
+          "created_at": "2016-03-23T10:37:04.873Z",
+          "modified_at": "2016-03-23T10:37:04.873Z",
+          "video_filename": "1.flv",
+          "video_url": "http://127.0.0.1/video_dir/1.flv",
+          "tags": [
+            "python"
+          ]
+        }
+     ]
+    }
+```
+
+### GET videos/:id
+
+If exists, it returns the video details of the provided video :id.
+
+See [GET videos](#get-videos)
+
+```json
+    { 
+      "id": 1,
+      "id_source": 1,
+      "source": "lotube",
+      "user": "tommy33",
+      "title": "Hello world",
+      "description": "My hello world video",
+      "created_at": "2016-03-23T10:37:04.873Z",
+      "modified_at": "2016-03-23T10:37:04.873Z",
+      "video_filename": "1.flv",
+      "video_url": "http://127.0.0.1/video_dir/1.flv",
+      "tags": [
+        "python"
+      ]
+    }
+```
+
+### GET videos/user/:username
+
+Returns a collection of videos uploaded by the provided User :username.
+
+See [GET videos](#get-videos)
+
+```json
+    {
+     "page_info": {
+        "total_results": 1,
+        "results_page": 1
+     },
+     "items": [
+        { 
+          "id": 1,
+          "id_source": 1,
+          "source": "lotube",
+          "user": "tommy33",
+          "title": "Hello world",
+          "description": "My hello world video",
+          "created_at": "2016-03-23T10:37:04.873Z",
+          "modified_at": "2016-03-23T10:37:04.873Z",
+          "video_filename": "1.flv",
+          "video_url": "http://127.0.0.1/video_dir/1.flv",
+          "tags": [
+            "python"
+          ]
+        }
+     ]
+    }
+```
+
+### GET videos/tags/:coma_separated_tags
+
+Returns a collection of videos containing at least one of the following 
+:coma_separated_tags.
+
+See [GET videos](#get-videos)
+
+```json
+    {
+     "page_info": {
+        "total_results": 1,
+        "results_page": 1
+     },
+     "items": [
+        { 
+          "id": 1,
+          "id_source": 1,
+          "source": "lotube",
+          "user": "tommy33",
+          "title": "Hello world",
+          "description": "My hello world video",
+          "created_at": "2016-03-23T10:37:04.873Z",
+          "modified_at": "2016-03-23T10:37:04.873Z",
+          "video_filename": "1.flv",
+          "video_url": "http://127.0.0.1/video_dir/1.flv",
+          "tags": [
+            "python"
+          ]
+        }
+     ]
+    }
+```
+
+### GET videos/:id/analytics
+
+Returns video analytics (such as views) of provided Video :id.
+
+```json
+    {
+      "id": 1,
+      "views": 0
+    }
+```
+
+### GET videos/:id/comments
+
+Returns a collection of comments of the provided Video :id.
+
+**id**: LOTube unique identifier of the comment
+
+**id_source**: LOTube identifier of the comment if `source="lotube"`, 
+else source's unique identifier.
+
+```json
+    {
+     "page_info": {
+        "total_results": 1,
+        "results_page": 1
+     },
+     "items": [
+        {
+          "video_id": 1
+          "id": 1,
+          "id_source": 1,
+          "source": "lotube",
+          "user": "tommy33",
+          "content": "I like my own video!",
+          "created_at": "2016-03-23T10:37:04.873Z",
+          "modified_at": "2016-03-23T10:37:04.873Z",
+        }
+     ]
+    }
+```
+
+### GET videos/:id/comments/:comment_id
+
+If exists, it returns the comment details of the video :id.
+
+```json
+    {
+      "video_id": 1
+      "id": 1,
+      "id_source": 1,
+      "source": "lotube",
+      "user": "tommy33",
+      "content": "I like my own video!",
+      "created_at": "2016-03-23T10:37:04.873Z",
+      "modified_at": "2016-03-23T10:37:04.873Z",
     }
 ```
