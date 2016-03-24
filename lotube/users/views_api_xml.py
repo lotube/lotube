@@ -1,14 +1,12 @@
-import dicttoxml
 from django.http import HttpResponse
 
-from .views_api_json import UserListJSON
+from core.mixins import XMLFromJSONView
+from .views_api_json import UserListJSON, UserDetailJSON
 
 
-class UserListXML(UserListJSON):
+class UserListXML(XMLFromJSONView, UserListJSON):
+    pass
 
-    def render_to_response(self, context, **response_kwargs):
-        response = self.craft_response(context, **response_kwargs)
-        return HttpResponse(
-            dicttoxml.dicttoxml(response),
-            content_type="text/xml"
-        )
+
+class UserDetailXML(XMLFromJSONView, UserDetailJSON):
+    pass

@@ -1,38 +1,48 @@
 from core.mixins import JSONView
-from .mixins import UserListMixin
+from .mixins import UserListMixin, UserDetailMixin
 
 
 class UserListJSON(JSONView, UserListMixin):
     """
-    Returns a list of users, such as:
-    [
-        { "id": 1,
-          "username": "tommy33",
-          "first_name": "Tommy",
-          "last_name": "Sun",
-          "created_at": "2016-01-01"
-        }, ...
-    ]
+    List of users
     """
+
     def craft_response(self, context, **response_kwargs):
-        items = []
-        for dbuser in context['user_list']:
-            user = {
-                'id': dbuser.user.id,
-                'username': dbuser.user.username,
-                'first_name': dbuser.user.first_name,
-                'last_name': dbuser.user.last_name,
-                'created_at': dbuser.user.date_joined,
-                'last_login': dbuser.user.last_login,
-                'is_staff': dbuser.user.is_staff,
-                'is_active': dbuser.user.is_active,
-            }
-            items.append(user)
+        items = [{
+            'id': db_user.user.id,
+            'username': db_user.user.username,
+            'first_name': db_user.user.first_name,
+            'last_name': db_user.user.last_name,
+            'created_at': db_user.user.date_joined,
+            'last_login': db_user.user.last_login,
+            'is_staff': db_user.user.is_staff,
+            'is_active': db_user.user.is_active,
+        } for db_user in context['user_list']]
         response = {
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
             },
             'items': items
+        }
+        return response
+
+
+class UserDetailJSON(JSONView, UserDetailMixin):
+    """
+    User details
+    """
+
+    def craft_response(self, context, **response_kwargs):
+        db_user = context['object']
+        response = {
+            'id': db_user.user.id,
+            'username': db_user.user.username,
+            'first_name': db_user.user.first_name,
+            'last_name': db_user.user.last_name,
+            'created_at': db_user.user.date_joined,
+            'last_login': db_user.user.last_login,
+            'is_staff': db_user.user.is_staff,
+            'is_active': db_user.user.is_active,
         }
         return response

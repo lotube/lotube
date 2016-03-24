@@ -3,7 +3,7 @@
 {% block content %}
     {% for user in object_list %}
         <div>
-            <div>{{ user.user.first_name }} {{user.user.last_name}}</div>
+            <div>{{ user.user.first_name }} {{ user.user.last_name }}</div>
             <div>{{ user.user.username }}</div>
             <div>Joined: {{ user.user.date_joined }} Last login: {{ user.user.last_login }}</div>
             <div>

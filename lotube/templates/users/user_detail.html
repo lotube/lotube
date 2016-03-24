@@ -1,0 +1,18 @@
+{% extends "users/base.html" %}
+
+<h2>{{ object.user.username }}</h2>
+
+{% block content %}
+    <div>
+        <div>{{ object.user.first_name }} {{ object.user.last_name }}</div>
+        <div>{{ object.user.username }}</div>
+        <div>Joined: {{ object.user.date_joined }} Last login: {{ object.user.last_login }}</div>
+        <div>
+            {% if object.user.is_staff %}
+                Staff
+            {% else %}
+                Member
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

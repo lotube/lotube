@@ -1,3 +1,4 @@
+import dicttoxml
 from django.http import JsonResponse, HttpResponse
 from django.views.generic import View
 
@@ -32,5 +33,15 @@ class XMLView(View):
         response = self.craft_response(context, **response_kwargs)
         return HttpResponse(
             response,
+            content_type="text/xml"
+        )
+
+
+class XMLFromJSONView(View):
+
+    def render_to_response(self, context, **response_kwargs):
+        response = self.craft_response(context, **response_kwargs)
+        return HttpResponse(
+            dicttoxml.dicttoxml(response),
             content_type="text/xml"
         )

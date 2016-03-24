@@ -37,12 +37,14 @@ Returns a collection of users.
 
 ### GET users/:username
 ```json
-    {
-     "id": 1,
-     "username": "tommy33",
-     "first_name": "Tommy",
-     "last_name": "Sun",
-     "created_at": "2016-03-23T10:37:04.873Z",
-     "last_login": "2016-03-23T10:37:04.873Z"
+    { 
+      "id": 1,
+      "username": "tommy33",
+      "first_name": "Tommy",
+      "last_name": "Sun",
+      "created_at": "2016-03-23T10:37:04.873Z",
+      "last_login": "2016-03-23T10:37:04.873Z",
+      "is_staff": false,
+      "is_active": true
     }
 ```
