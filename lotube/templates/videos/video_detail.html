@@ -1,0 +1,14 @@
+{% extends "videos/base.html" %}
+
+<h2>{{ object.video.title }}</h2>
+
+{% block content %}
+    <div>
+        <div>   Title: {{ video.video.filename }}
+                Username: {{ user.user.user }}
+        </div>
+        <div>   Created at: {{ video.video.created }}
+                Modified at: {{ video.video.modified }}
+        </div>
+    </div>
+{% endblock %}
