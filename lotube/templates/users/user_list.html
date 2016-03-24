@@ -2,6 +2,17 @@
 
 {% block content %}
     {% for user in object_list %}
-        - {{ user }}
+        <div>
+            <div>{{ user.user.first_name }} {{user.user.last_name}}</div>
+            <div>{{ user.user.username }}</div>
+            <div>Joined: {{ user.user.date_joined }} Last login: {{ user.user.last_login }}</div>
+            <div>
+                {% if user.user.is_staff %}
+                    Staff
+                {% else %}
+                    Member
+                {% endif %}
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}
