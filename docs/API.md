@@ -85,7 +85,6 @@ Other data such as user, title or description will be relative to the source.
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "video_filename": "1.flv",
-          "video_url": "http://127.0.0.1/video_dir/1.flv",
           "tags": [
             "python"
           ]
@@ -111,7 +110,6 @@ See [GET videos](#get-videos)
       "created_at": "2016-03-23T10:37:04.873Z",
       "modified_at": "2016-03-23T10:37:04.873Z",
       "video_filename": "1.flv",
-      "video_url": "http://127.0.0.1/video_dir/1.flv",
       "tags": [
         "python"
       ]
@@ -141,7 +139,6 @@ See [GET videos](#get-videos)
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "video_filename": "1.flv",
-          "video_url": "http://127.0.0.1/video_dir/1.flv",
           "tags": [
             "python"
           ]
@@ -174,7 +171,6 @@ See [GET videos](#get-videos)
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "video_filename": "1.flv",
-          "video_url": "http://127.0.0.1/video_dir/1.flv",
           "tags": [
             "python"
           ]
