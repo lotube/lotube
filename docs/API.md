@@ -8,6 +8,11 @@ URL example:
 
 `/api/users.json`
 
+## Table of Contents
+
+- [Users](#users)
+- [Videos](#videos)
+
 ## Users
 
 ### GET users
@@ -206,7 +211,7 @@ else source's unique identifier.
      },
      "items": [
         {
-          "video_id": 1
+          "video_id": 1,
           "id": 1,
           "id_source": 1,
           "source": "lotube",
@@ -225,7 +230,7 @@ If exists, it returns the comment details of the video :id.
 
 ```json
     {
-      "video_id": 1
+      "video_id": 1,
       "id": 1,
       "id_source": 1,
       "source": "lotube",
