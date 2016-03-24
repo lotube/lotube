@@ -1,7 +1,5 @@
--markerlib==0.0.0
 dicttoxml==1.6.6
 Django==1.9.4
 django-annoying==0.9.0
 django-appconf==1.0.1
-pkg-resources==0.0.0
 six==1.10.0
