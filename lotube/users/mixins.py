@@ -15,6 +15,5 @@ class UserDetailMixin(DetailView):
     template_name = 'users/user_detail.html'
 
     def get_object(self):
-        auth_user = get_object_or_404(models.User, username=self.kwargs['username'])
-        user = get_object_or_404(self.model, user=auth_user)
+        user = get_object_or_404(self.model, username=self.kwargs['username'])
         return user

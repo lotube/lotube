@@ -22,20 +22,23 @@ class AbstractUser(AbstractBaseUser):
                                   ])
     email = models.EmailField(unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    first_name = models.CharField(max_length=300, blank=True, null=True)
-    last_name = models.CharField(max_length=300, blank=True, null=True)
+    first_name = models.CharField(max_length=300, blank=True, null=True,
+                                  default='')
+    last_name = models.CharField(max_length=300, blank=True, null=True,
+                                 default='')
     ip_address = GenericIPAddressField(null=True)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
     objects = UserManager()
 
+    @property
     def is_active(self):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
-        return now - self.last_login <= constants.ACTIVE_DAYS
+        last_seen = max(self.date_joined, self.last_login)
+        return (now - last_seen).days <= constants.ACTIVE_DAYS
 
     @property
     def is_superuser(self):
