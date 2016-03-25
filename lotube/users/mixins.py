@@ -1,6 +1,5 @@
-from django.views.generic import View, ListView, CreateView, DetailView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
-from django.contrib.auth import models
 
 from .models import User
 

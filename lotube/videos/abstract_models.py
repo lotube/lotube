@@ -21,6 +21,7 @@ class AbstractVideo(AbstractTimeStamped):
     title = models.CharField(max_length=300)
     description = models.CharField(max_length=10000, blank=True, default='')
     filename = models.CharField(max_length=255, unique=True)
+    tags = models.ManyToManyField('videos.Tag', related_name='videos')
     analytic = models.OneToOneField('videos.VideoAnalytic',
                                     on_delete=models.CASCADE)
 
@@ -31,7 +32,7 @@ class AbstractVideo(AbstractTimeStamped):
         abstract = True
 
 
-class AbstractVideoAnalytic(models.Model):
+class AbstractAnalytic(models.Model):
     views = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -52,7 +53,6 @@ class AbstractComment(AbstractTimeStamped):
 
 
 class AbstractTag(models.Model):
-    video = models.ForeignKey('videos.Video', on_delete=models.CASCADE)
     tag = LowerCaseCharField(max_length=30,
                              validators=[Common.contains('a-z0-9+#-.')])
 

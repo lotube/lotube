@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import View, ListView, CreateView, DetailView
+from django.views.generic import ListView, DetailView
 
 from users.models import User
 from .models import Video

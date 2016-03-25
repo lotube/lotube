@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-
 from core.mixins import XMLFromJSONView
 from .views_api_json import UserListJSON, UserDetailJSON
 
