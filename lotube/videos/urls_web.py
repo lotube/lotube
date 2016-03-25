@@ -12,7 +12,7 @@ urlpatterns = [
 
     #Retrieve a specific Video
     url(
-        r'^\/(?P<pk>)$',
+        r'^\/(?P<pk>\d+)$',
         VideoDetail.as_view(),
         name='video'
     ),

@@ -1,3 +1,4 @@
+from config import constants
 from core.mixins import JSONView
 from .mixins import VideoListMixin, VideoDetailMixin
 
@@ -9,15 +10,15 @@ class VideoListJSON(JSONView, VideoListMixin):
 
     def craft_response(self, context, **response_kwargs):
         items = [{
-            'id': db_video.video.user_id,
-            'source_id': db_video.video.user_id,
-            'source': 'lotube',
-            'user': db_video.video.user,
-            'title': db_video.video.filename,
-            'description': db_video.video.description,
-            'created_at': db_video.video.created,
-            'modified_at': db_video.video.modified,
-            'video_filename': db_video.video.filename,
+            'id': db_video.id,
+            'source_id': db_video.id,
+            'source': constants.PROJECT_NAME,
+            'user': db_video.user.user.username,
+            'title': db_video.filename,
+            'description': db_video.description,
+            'created_at': db_video.created,
+            'modified_at': db_video.modified,
+            'video_filename': db_video.filename,
         } for db_video in context['video_list']]
         response = {
             'page_info': {
@@ -37,14 +38,14 @@ class VideoDetailJSON(JSONView, VideoDetailMixin):
     def craft_response(self, context, **response_kwargs):
         db_video = context['object']
         response = {
-            'id': db_video.video.user_id,
-            'source_id': db_video.video.user_id,
-            'source': 'lotube',
-            'user': db_video.video.user,
-            'title': db_video.video.filename,
-            'description': db_video.video.description,
-            'created_at': db_video.video.created,
-            'modified_at': db_video.video.modified,
-            'video_filename': db_video.video.filename,
+            'id': db_video.user_id,
+            'source_id': db_video.user_id,
+            'source': constants.PROJECT_NAME,
+            'user': db_video.user.user.username,
+            'title': db_video.filename,
+            'description': db_video.description,
+            'created_at': db_video.created,
+            'modified_at': db_video.modified,
+            'video_filename': db_video.filename,
         }
         return response

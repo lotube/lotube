@@ -5,7 +5,7 @@ from .views_api_json import VideoListJSON, VideoDetailJSON
 from .views_api_xml import VideoListXML, VideoDetailXML
 
 
-data_format = '(?P<format>(\.\w{1,4}))'
+data_format = '(?P<format>\.\w{1,4})'
 urlpatterns = [
     #List of Videos
     url(
@@ -16,7 +16,7 @@ urlpatterns = [
 
     #Retrieve a specific Video
     url(
-        r'^\/(?P<pk>)' + data_format + '$',
+        r'^\/(?P<pk>\d+)' + data_format + '$',
         APIViewLoader.as_view(json=VideoDetailJSON, xml=VideoDetailXML),
         name='video'
     ),

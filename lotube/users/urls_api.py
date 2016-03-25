@@ -5,7 +5,7 @@ from .views_api_json import UserListJSON, UserDetailJSON
 from .views_api_xml import UserListXML, UserDetailXML
 
 
-data_format = '(?P<format>(\.\w{1,4}))'
+data_format = '(?P<format>\.\w{1,4})'
 urlpatterns = [
     # List of users
     url(
