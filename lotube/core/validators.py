@@ -7,7 +7,7 @@ class Common(object):
     def contains(characters, verbose=None):
         return RegexValidator(
             r'^[' + characters + ']*$',
-            'Only ' + verbose or characters + ' characters are allowed.'
+            'Only ' + (verbose or characters) + ' characters are allowed.'
         )
 
     @staticmethod
