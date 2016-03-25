@@ -1,4 +1,4 @@
-from .mixins import VideoListMixin, VideoDetailMixin
+from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
 
 
 class VideoList(VideoListMixin):
@@ -6,4 +6,8 @@ class VideoList(VideoListMixin):
 
 
 class VideoDetail(VideoDetailMixin):
+    pass
+
+
+class VideoUserList(VideoUserListMixin):
     pass

@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
 from core.loading import APIViewLoader
-from .views_api_json import VideoListJSON, VideoDetailJSON
-from .views_api_xml import VideoListXML, VideoDetailXML
+from .views_api_json import VideoListJSON, VideoDetailJSON, VideoUserListJSON
+from .views_api_xml import VideoListXML, VideoDetailXML, VideoUserListXML
 
 
 data_format = '(?P<format>\.\w{1,4})'
@@ -20,4 +20,11 @@ urlpatterns = [
         APIViewLoader.as_view(json=VideoDetailJSON, xml=VideoDetailXML),
         name='video'
     ),
+
+    #List of Videos by User
+    url(
+        r'^\/user\/(?P<username>[\w\d]+)' + data_format + '$',
+        APIViewLoader.as_view(json=VideoUserListJSON, xml=VideoUserListXML),
+        name='user_videos'
+    )
 ]
