@@ -1,4 +1,7 @@
 from django.db import models
+
+from core.models import LowerCaseCharField
+from core.validators import Common
 from users.models import User
 
 
@@ -50,7 +53,8 @@ class AbstractComment(AbstractTimeStamped):
 
 class AbstractTag(models.Model):
     video = models.ForeignKey('videos.Video', on_delete=models.CASCADE)
-    tag = models.CharField(max_length=50)
+    tag = LowerCaseCharField(max_length=30,
+                             validators=[Common.contains('a-z0-9+#-.')])
 
     def __str__(self):
         return self.tag

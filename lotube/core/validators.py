@@ -2,10 +2,17 @@ from django.core.validators import RegexValidator
 
 
 class Common(object):
-    alphanumeric = RegexValidator(
-        r'^[0-9a-zA-Z]*$',
-        'Only alphanumeric characters are allowed.'
-    )
+
+    @staticmethod
+    def contains(characters, verbose=None):
+        return RegexValidator(
+            r'^[' + characters + ']*$',
+            'Only ' + verbose or characters + ' characters are allowed.'
+        )
+
+    @staticmethod
+    def alphanumeric():
+        return Common.contains('0-9a-zA-Z', 'alphanumeric')
 
     @staticmethod
     def starts_with(val):

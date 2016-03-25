@@ -16,7 +16,7 @@ class AbstractUser(AbstractBaseUser):
     """
     username = LowerCaseCharField(max_length=50, unique=True,
                                   validators=[
-                                      Common.alphanumeric,
+                                      Common.alphanumeric(),
                                       Common.min_length(5),
                                       Common.starts_with_letter(),
                                   ])
