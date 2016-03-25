@@ -1,6 +1,6 @@
 {% extends "videos/base.html" %}
 
-<h2>Uploaded Videos for: {{ video.user.user.username }}</h2>
+<h2>Uploaded Videos by: {{ video.user.username }}</h2>
 
 {% block content %}
     {% for video in object_list %}
