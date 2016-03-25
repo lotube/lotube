@@ -5,6 +5,8 @@ from django.db import models
 from django.db.models import GenericIPAddressField
 from django.utils.timezone import utc
 
+from core.models import LowerCaseCharField
+from core.validators import Common
 from . import constants
 
 
@@ -12,7 +14,12 @@ class AbstractUser(AbstractBaseUser):
     """
     Remember that password and last_login are inherited from AbstractBaseUser.
     """
-    username = models.CharField(max_length=50, unique=True)
+    username = LowerCaseCharField(max_length=50, unique=True,
+                                  validators=[
+                                      Common.alphanumeric,
+                                      Common.min_length(5),
+                                      Common.starts_with_letter(),
+                                  ])
     email = models.EmailField(unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=300, blank=True, null=True)
