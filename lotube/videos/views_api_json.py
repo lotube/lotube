@@ -41,8 +41,7 @@ class VideoDetailJSON(JSONView, VideoDetailMixin):
 
     def craft_response(self, context, **response_kwargs):
         db_video = context['object']
-        response = _get_item(db_video)
-        return response
+        return _get_item(db_video)
 
 
 class VideoUserListJSON(JSONView, VideoUserListMixin):
@@ -58,5 +57,19 @@ class VideoUserListJSON(JSONView, VideoUserListMixin):
                 'results_page': len(items),
             },
             'items': items
+        }
+        return response
+
+
+class VideoAnalyticJSON(JSONView, VideoDetailMixin):
+    """
+    Video analytic
+    """
+
+    def craft_response(self, context, **response_kwargs):
+        db_video = context['object']
+        response = {
+            'id': db_video.id,
+            'views': db_video.analytic.views,
         }
         return response

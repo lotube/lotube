@@ -37,7 +37,8 @@ class AbstractUser(AbstractBaseUser):
     @property
     def is_active(self):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
-        last_seen = max(self.date_joined, self.last_login)
+        last_seen = self.date_joined if self.last_login is None else \
+            max(self.date_joined, self.last_login)
         return (now - last_seen).days <= constants.ACTIVE_DAYS
 
     @property

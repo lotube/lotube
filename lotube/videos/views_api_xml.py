@@ -2,6 +2,7 @@ from django.http import HttpResponse
 
 from core.mixins import XMLFromJSONView
 from .views_api_json import VideoListJSON, VideoDetailJSON, VideoUserListJSON
+from .views_api_json import VideoAnalyticJSON
 
 
 class VideoListXML(XMLFromJSONView, VideoListJSON):
@@ -13,4 +14,8 @@ class VideoDetailXML(XMLFromJSONView, VideoDetailJSON):
 
 
 class VideoUserListXML(XMLFromJSONView, VideoUserListJSON):
+    pass
+
+
+class VideoAnalyticXML(XMLFromJSONView, VideoAnalyticJSON):
     pass
