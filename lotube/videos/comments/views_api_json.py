@@ -2,6 +2,7 @@ from config import constants
 from core.mixins import JSONView
 from .mixins import CommentListMixin, CommentDetailMixin
 
+
 def _get_item(db_comment):
     return {
         'video_id': db_comment.video.id,
