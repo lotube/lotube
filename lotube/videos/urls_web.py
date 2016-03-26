@@ -1,9 +1,15 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 
 from . import constants
 from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList
 
 urlpatterns = [
+    # Include comments application
+    url(
+        r'^\/(?P<video>\d+)/comments',
+        include('videos.comments.urls_web', namespace='comments')
+    ),
+
     # List of Videos
     url(
         r'^$',

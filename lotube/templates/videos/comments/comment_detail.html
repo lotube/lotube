@@ -1,0 +1,18 @@
+{% extends "videos/base.html" %}
+
+<h2>{{ object.id }}</h2>
+
+{% block content %}
+    <div>
+        <div>
+            Username: {{ object.user.username }}
+        </div>
+        <div>
+            Created at: {{ object.created }}
+            Modified at: {{ object.modified }}
+        </div>
+        <div>
+            {{ object.content }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "videos/base.html" %}
+
+{% block content %}
+    {% for comment in object_list %}
+        <div>
+            <div>
+                Username: {{ comment.user.username }}
+            </div>
+            <div>
+                Created at: {{ comment.created }}
+                Modified at: {{ comment.modified }}
+            </div>
+            <div>
+                {{ comment.content }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
