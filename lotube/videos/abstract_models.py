@@ -44,19 +44,6 @@ class AbstractAnalytic(models.Model):
         abstract = True
 
 
-class AbstractComment(AbstractTimeStamped):
-    user = models.ForeignKey(User)
-    video = models.ForeignKey('videos.Video')
-    content = models.CharField(max_length=10000)
-    is_removed = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.content if self.content < 50 else self.content[:50] + '...'
-
-    class Meta:
-        abstract = True
-
-
 class AbstractTag(models.Model):
     name = LowerCaseCharField(max_length=30,
                               validators=[Common.contains(constants.TAGS_ALLOWED_CHARACTERS)])

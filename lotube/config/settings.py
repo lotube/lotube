@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'annoying',
     'users',
     'videos',
+    'videos.comments',
 ]
 
 MIDDLEWARE_CLASSES = [

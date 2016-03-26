@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
-from .abstract_models import AbstractVideo, AbstractAnalytic
-from .abstract_models import AbstractComment, AbstractTag
+from .abstract_models import AbstractVideo, AbstractAnalytic, AbstractTag
 
 
 class Video(AbstractVideo):
@@ -13,8 +12,4 @@ class Analytic(AbstractAnalytic):
 
 
 class Tag(AbstractTag):
-    pass
-
-
-class Comment(AbstractComment):
     pass
