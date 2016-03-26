@@ -6,7 +6,7 @@ from videos.abstract_models import AbstractTimeStamped
 
 class AbstractComment(AbstractTimeStamped):
     user = models.ForeignKey(User)
-    video = models.ForeignKey('videos.Video')
+    video = models.ForeignKey('videos.Video', related_name='comments')
     content = models.CharField(max_length=10000)
     is_removed = models.BooleanField(default=False)
 
