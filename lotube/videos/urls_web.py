@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 
 from . import constants
 from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList
+from .views_web import TagList
 
 urlpatterns = [
     # Include comments application
@@ -29,6 +30,13 @@ urlpatterns = [
         r'^\/user/(?P<username>[\w\d]+)$',
         VideoUserList.as_view(),
         name='user_videos'
+    ),
+
+    # List of tags
+    url(
+      r'\/tags$',
+      TagList.as_view(),
+      name='tag_list'
     ),
 
     # List of Videos by Tags

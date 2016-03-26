@@ -1,0 +1,9 @@
+{% extends "videos/base.html" %}
+
+{% block content %}
+    {% for tag in object_list %}
+       <div>
+            {{ tag }}
+       </div>
+    {% endfor %}
+{% endblock %}

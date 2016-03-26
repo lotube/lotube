@@ -35,3 +35,7 @@ class VideoByTagListMixin(ListView):
                 queryset = queryset | \
                            self.model.objects.get(name=tag).videos.all()
         return queryset.distinct()
+
+
+class TagListMixin(ListView):
+    model = Tag

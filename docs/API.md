@@ -147,6 +147,22 @@ See [GET videos](#get-videos)
     }
 ```
 
+### GET videos/tags
+
+Returns a collection of all tags.
+
+See [GET videos](#get-videos)
+
+```json
+    {
+     "page_info": {
+        "total_results": 1,
+        "results_page": 1
+     },
+     "tags": ["python", ...]
+    }
+```
+
 ### GET videos/tags/:coma_separated_tags
 
 Returns a collection of videos containing at least one of the following 
