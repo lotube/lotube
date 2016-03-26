@@ -8,7 +8,7 @@ class Video(AbstractVideo):
     pass
 
 
-class VideoAnalytic(AbstractAnalytic):
+class Analytic(AbstractAnalytic):
     pass
 
 

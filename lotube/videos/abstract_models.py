@@ -1,3 +1,4 @@
+from annoying.fields import AutoOneToOneField
 from django.db import models
 
 from core.models import LowerCaseCharField
@@ -22,8 +23,6 @@ class AbstractVideo(AbstractTimeStamped):
     description = models.CharField(max_length=10000, blank=True, default='')
     filename = models.CharField(max_length=255, unique=True)
     tags = models.ManyToManyField('videos.Tag', related_name='videos')
-    analytic = models.OneToOneField('videos.VideoAnalytic',
-                                    on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -33,7 +32,12 @@ class AbstractVideo(AbstractTimeStamped):
 
 
 class AbstractAnalytic(models.Model):
+    video = AutoOneToOneField('videos.Video', primary_key=True,
+                              related_name='analytic')
     views = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.video)
 
     class Meta:
         abstract = True
@@ -53,11 +57,11 @@ class AbstractComment(AbstractTimeStamped):
 
 
 class AbstractTag(models.Model):
-    tag = LowerCaseCharField(max_length=30,
+    name = LowerCaseCharField(max_length=30,
                              validators=[Common.contains('a-z0-9+#-.')])
 
     def __str__(self):
-        return self.tag
+        return self.name
 
     class Meta:
         abstract = True
