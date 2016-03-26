@@ -1,0 +1,1 @@
+TAGS_ALLOWED_CHARACTERS = 'a-z0-9+#-.'

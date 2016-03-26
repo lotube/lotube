@@ -1,6 +1,7 @@
 from config import constants
 from core.mixins import JSONView
 from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
+from .mixins import VideoByTagListMixin
 
 
 def _get_item(db_video):
@@ -14,6 +15,7 @@ def _get_item(db_video):
         'created_at': db_video.created,
         'modified_at': db_video.modified,
         'video_filename': db_video.filename,
+        'tags': [tag.name for tag in db_video.tags.all()]
     }
 
 
@@ -71,5 +73,23 @@ class VideoAnalyticJSON(JSONView, VideoDetailMixin):
         response = {
             'id': db_video.id,
             'views': db_video.analytic.views,
+        }
+        return response
+
+
+class VideoByTagListJSON(JSONView, VideoByTagListMixin):
+    """
+    List of videos by Tags
+    """
+
+    def craft_response(self, context, **response_kwargs):
+        print context
+        items = [_get_item(db_video) for db_video in context['video_list']]
+        response = {
+            'page_info': {
+                'total_results': len(items),
+                'results_page': len(items),
+            },
+            'items': items
         }
         return response

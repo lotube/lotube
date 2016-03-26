@@ -1,4 +1,5 @@
 from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
+from .mixins import VideoByTagListMixin
 
 
 class VideoList(VideoListMixin):
@@ -11,3 +12,7 @@ class VideoDetail(VideoDetailMixin):
 
 class VideoUserList(VideoUserListMixin):
     template_name = 'videos/video_user_list.html'
+
+
+class VideoByTagList(VideoByTagListMixin):
+    template_name = 'videos/video_list.html'

@@ -17,3 +17,7 @@ class VideoUserListXML(XMLFromJSONView, VideoUserListJSON):
 
 class VideoAnalyticXML(XMLFromJSONView, VideoAnalyticJSON):
     pass
+
+
+class VideoByTagListXML(XMLFromJSONView, VideoAnalyticJSON):
+    pass

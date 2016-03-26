@@ -4,6 +4,7 @@ from django.db import models
 from core.models import LowerCaseCharField
 from core.validators import Common
 from users.models import User
+from . import constants
 
 
 class AbstractTimeStamped(models.Model):
@@ -58,7 +59,7 @@ class AbstractComment(AbstractTimeStamped):
 
 class AbstractTag(models.Model):
     name = LowerCaseCharField(max_length=30,
-                             validators=[Common.contains('a-z0-9+#-.')])
+                              validators=[Common.contains(constants.TAGS_ALLOWED_CHARACTERS)])
 
     def __str__(self):
         return self.name
