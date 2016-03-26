@@ -2,8 +2,8 @@ from .mixins import UserListMixin, UserDetailMixin
 
 
 class UserList(UserListMixin):
-    pass
+    template_name = 'users/user_list.html'
 
 
 class UserDetail(UserDetailMixin):
-    pass
+    template_name = 'users/user_detail.html'

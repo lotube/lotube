@@ -2,12 +2,12 @@ from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
 
 
 class VideoList(VideoListMixin):
-    pass
+    template_name = 'videos/video_list.html'
 
 
 class VideoDetail(VideoDetailMixin):
-    pass
+    template_name = 'videos/video_detail.html'
 
 
 class VideoUserList(VideoUserListMixin):
-    pass
+    template_name = 'videos/video_user_list.html'
