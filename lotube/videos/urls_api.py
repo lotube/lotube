@@ -3,9 +3,9 @@ from django.conf.urls import url
 from core.loading import APIViewLoader
 from . import constants
 from .views_api_json import VideoListJSON, VideoDetailJSON, VideoUserListJSON
-from .views_api_json import VideoAnalyticJSON, VideoByTagListJSON
+from .views_api_json import VideoAnalyticJSON, VideoByTagListJSON, TagListJSON
 from .views_api_xml import VideoListXML, VideoDetailXML, VideoUserListXML
-from .views_api_xml import VideoAnalyticXML, VideoByTagListXML
+from .views_api_xml import VideoAnalyticXML, VideoByTagListXML, TagListXML
 
 
 data_format = '(?P<format>\.\w{1,4})'
@@ -36,6 +36,13 @@ urlpatterns = [
         r'^\/(?P<pk>\d+)\/analytics' + data_format + '$',
         APIViewLoader.as_view(json=VideoAnalyticJSON, xml=VideoAnalyticXML),
         name='video_analytic'
+    ),
+
+    # List of all tags
+    url(
+        r'^\/tags' + data_format + '$',
+        APIViewLoader.as_view(json=TagListJSON, xml=TagListXML),
+        name='tag_list'
     ),
 
     # List of Videos by Tags
