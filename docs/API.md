@@ -159,7 +159,7 @@ See [GET videos](#get-videos)
         "total_results": 1,
         "results_page": 1
      },
-     "tags": ["python", ...]
+     "tags": ["python", "django"]
     }
 ```
 
