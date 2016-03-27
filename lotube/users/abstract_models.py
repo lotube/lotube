@@ -27,7 +27,7 @@ class AbstractUser(AbstractBaseUser):
                                   default='')
     last_name = models.CharField(max_length=300, blank=True, null=True,
                                  default='')
-    ip_address = GenericIPAddressField(null=True)
+    ip_address = GenericIPAddressField()
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
