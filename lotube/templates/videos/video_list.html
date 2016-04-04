@@ -1,12 +1,15 @@
 {% extends "videos/base.html" %}
 
-{% block content %}
+{% block inner_content %}
     <h1>Videos</h1>
 
     {% for video in object_list %}
         <div>
             <div>
-                Title: {{ video.title }} ({{ video.id }})<br>
+                <a href="{% url "web:videos:video" video.id %}">
+                    Title: {{ video.title }} ({{ video.id }})
+                </a>
+                <br>
                 Source: {{ video.source }}<br>
                 Filename: {{ video.filename }}<br>
                 Username: {{ video.user.username }}

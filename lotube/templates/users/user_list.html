@@ -1,12 +1,16 @@
 {% extends "users/base.html" %}
 
-{% block content %}
+{% block inner_content %}
     <h1>Users</h1>
 
     {% for user in object_list %}
         <div>
             <div>Name: {{ user.first_name }} {{ user.last_name }}</div>
-            <div>Username: {{ user.username }} ({{ user.id }})</div>
+            <div>
+                <a href="{% url "web:users:user" user.username %}">
+                    Username: {{ user.username }} ({{ user.id }})
+                </a>
+            </div>
             <div>Joined: {{ user.date_joined }} Last login: {{ user.last_login }}</div>
             <div>
                 {% if user.is_staff %}

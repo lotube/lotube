@@ -36,7 +36,7 @@ urlpatterns = [
     url(
       r'\/tags$',
       TagList.as_view(),
-      name='tag_list'
+      name='tags'
     ),
 
     # List of Videos by Tags
