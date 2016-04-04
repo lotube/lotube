@@ -6,15 +6,24 @@ from .mixins import VideoByTagListMixin, TagListMixin
 
 def _get_item(db_video):
     return {
-        'id': db_video.id,
-        'source_id': db_video.id,
-        'source': constants.PROJECT_NAME,
+        'type': 'video',
+        'id': {
+            'id': db_video.id,
+            'id_source': db_video.id_source,
+        },
+        'source': db_video.source,
         'user': db_video.user.username,
         'title': db_video.title,
         'description': db_video.description,
+        'duration': db_video.duration,
         'created_at': db_video.created,
         'modified_at': db_video.modified,
-        'video_filename': db_video.filename,
+        'filename': db_video.filename,
+        'thumbnail': {
+            'height': db_video.thumbnail.height,
+            'width': db_video.thumbnail.width,
+            'url': db_video.thumbnail.url
+        },
         'tags': [tag.name for tag in db_video.tags.all()]
     }
 
@@ -30,6 +39,7 @@ class VideoListJSON(JSONView, VideoListMixin):
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
+                'page': 1,
             },
             'items': items
         }
@@ -57,6 +67,7 @@ class VideoUserListJSON(JSONView, VideoUserListMixin):
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
+                'page': 1
             },
             'items': items
         }
@@ -71,8 +82,29 @@ class VideoAnalyticJSON(JSONView, VideoDetailMixin):
     def craft_response(self, context, **response_kwargs):
         db_video = context['object']
         response = {
-            'id': db_video.id,
-            'views': db_video.analytic.views,
+            'type': 'video-analytic',
+            'video_id': db_video.id,
+            'views': {
+                'total_views': db_video.analytic.views,
+                'unique_views': db_video.analytic.unique_views,
+            },
+            'shares': db_video.analytic.shares,
+        }
+        return response
+
+
+class VideoRatingJSON(JSONView, VideoDetailMixin):
+    """
+    Video rating
+    """
+
+    def craft_response(self, context, **response_kwargs):
+        db_video = context['object']
+        response = {
+            'type': 'video-rating',
+            'video_id': db_video.id,
+            'upvotes': db_video.rating.upvotes,
+            'downvotes': db_video.rating.downvotes,
         }
         return response
 
@@ -88,6 +120,7 @@ class VideoByTagListJSON(JSONView, VideoByTagListMixin):
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
+                'page': 1
             },
             'items': items
         }
@@ -101,11 +134,11 @@ class TagListJSON(JSONView, TagListMixin):
 
     def craft_response(self, context, **response_kwargs):
         tags = [tag.name for tag in context['tag_list']]
-        print tags
         response = {
             'page_info': {
                 'total_results': len(tags),
                 'results_page': len(tags),
+                'page': 1
             },
             'tags': tags
         }

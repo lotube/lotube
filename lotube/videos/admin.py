@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Video, Analytic, Tag
+from .models import Video, Thumbnail, Analytic, Rating, Tag
 
 
 class VideoAdmin(admin.ModelAdmin):
@@ -18,5 +18,7 @@ class AnalyticAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Video, VideoAdmin)
+admin.site.register(Thumbnail)
 admin.site.register(Analytic, AnalyticAdmin)
+admin.site.register(Rating)
 admin.site.register(Tag)

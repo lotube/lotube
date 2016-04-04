@@ -50,7 +50,7 @@ class AbstractAnalytic(models.Model):
 
 
 class AbstractRating(models.Model):
-    video = AutoOneToOneField('videos.Analytic', primary_key=True,
+    video = AutoOneToOneField('videos.Video', primary_key=True,
                               related_name='rating')
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
@@ -59,7 +59,7 @@ class AbstractRating(models.Model):
 class AbstractThumbnail(models.Model):
     video = AutoOneToOneField('videos.Video', primary_key=True,
                               related_name='thumbnail')
-    url = models.CharField(max_length=255, unique=True)
+    url = models.CharField(max_length=255, default='', blank=True)
     width = models.PositiveIntegerField(default=0)
     height = models.PositiveIntegerField(default=0)
 

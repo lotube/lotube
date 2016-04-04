@@ -4,6 +4,7 @@ from .mixins import UserListMixin, UserDetailMixin
 
 def get_item(db_user):
     return {
+        'type': 'user',
         'id': db_user.id,
         'username': db_user.username,
         'first_name': db_user.first_name,
@@ -13,6 +14,7 @@ def get_item(db_user):
         'is_staff': db_user.is_staff,
         'is_active': db_user.is_active,
     }
+
 
 class UserListJSON(JSONView, UserListMixin):
     """
@@ -25,6 +27,7 @@ class UserListJSON(JSONView, UserListMixin):
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
+                'page': 1
             },
             'items': items
         }

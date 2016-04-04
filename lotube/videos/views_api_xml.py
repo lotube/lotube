@@ -1,6 +1,6 @@
 from core.mixins import XMLFromJSONView
-from .views_api_json import VideoListJSON, VideoDetailJSON, VideoUserListJSON
-from .views_api_json import VideoAnalyticJSON, TagListJSON
+from .views_api_json import VideoListJSON, VideoDetailJSON, VideoUserListJSON, \
+    VideoAnalyticJSON, VideoRatingJSON, TagListJSON
 
 
 class VideoListXML(XMLFromJSONView, VideoListJSON):
@@ -16,6 +16,10 @@ class VideoUserListXML(XMLFromJSONView, VideoUserListJSON):
 
 
 class VideoAnalyticXML(XMLFromJSONView, VideoAnalyticJSON):
+    pass
+
+
+class VideoRatingXML(XMLFromJSONView, VideoRatingJSON):
     pass
 
 
