@@ -1,7 +1,5 @@
 from django.conf.urls import url
 
-from .views_web import CommentList, CommentDetail
-
 
 urlpatterns = [
     # List of Comments

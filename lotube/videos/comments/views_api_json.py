@@ -5,10 +5,9 @@ from .mixins import CommentListMixin, CommentDetailMixin
 
 def _get_item(db_comment):
     return {
+        'type': 'comment',
         'video_id': db_comment.video.id,
         'id': db_comment.id,
-        'id_source': db_comment.id,
-        'source': constants.PROJECT_NAME,
         'user': db_comment.user.username,
         'content': db_comment.content,
         'created_at': db_comment.created,
@@ -27,6 +26,7 @@ class CommentListJSON(JSONView, CommentListMixin):
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
+                'page': 1,
             },
             'items': items
         }
