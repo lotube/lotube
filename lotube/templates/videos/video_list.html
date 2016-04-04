@@ -1,10 +1,14 @@
 {% extends "videos/base.html" %}
 
 {% block content %}
+    <h1>Videos</h1>
+
     {% for video in object_list %}
         <div>
             <div>
-                Title: {{ video.title }}
+                Title: {{ video.title }} ({{ video.id }})<br>
+                Source: {{ video.source }}<br>
+                Filename: {{ video.filename }}<br>
                 Username: {{ video.user.username }}
             </div>
             <div>
@@ -13,6 +17,11 @@
             <div>
                 Created at: {{ video.created }}
                 Modified at: {{ video.modified }}
+            </div>
+            <div>Duration: {{ video.duration }} seconds</div>
+            <div>
+                Thumbnail: {{ video.thumbnail.url }}
+                ({{ video.thumbnail.width }} x {{ video.thumbnail.height }})
             </div>
             <div>
                 Tags:
@@ -24,6 +33,7 @@
                     {% endfor %}
                 </ul>
             </div>
+            <hr>
         </div>
     {% endfor %}
 {% endblock %}

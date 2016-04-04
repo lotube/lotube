@@ -11,7 +11,7 @@ class VideoDetail(VideoDetailMixin):
 
 
 class VideoUserList(VideoUserListMixin):
-    template_name = 'videos/video_user_list.html'
+    template_name = 'videos/video_list.html'
 
 
 class VideoByTagList(VideoByTagListMixin):

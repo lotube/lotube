@@ -1,16 +1,67 @@
 {% extends "videos/base.html" %}
 
-<h2>{{ object.video.title }}</h2>
+<h2>{{ object.object.title }}</h2>
 
 {% block content %}
+    <h1>Video - {{ object.title }}</h1>
+
     <div>
-        <div>
-            Title: {{ object.title }}
-            Username: {{ object.user.username }}
-        </div>
-        <div>
-            Created at: {{ object.created }}
-            Modified at: {{ object.modified }}
-        </div>
+        Title: {{ object.title }} ({{ object.id }})<br>
+        Source: {{ object.source }}<br>
+        Filename: {{ object.filename }}<br>
+        Username: {{ object.user.username }}
+    </div>
+    <div>
+        Description: {{object.description }}
+    </div>
+    <div>
+        Created at: {{ object.created }}
+        Modified at: {{ object.modified }}
+    </div>
+    <div>Duration: {{ object.duration }} seconds</div>
+    <div>
+        Thumbnail: {{ object.thumbnail.url }}
+        ({{ object.thumbnail.width }} x {{ object.thumbnail.height }})
+    </div>
+    <div>
+        Tags:
+        <ul>
+            {% for tag in object.tags.all %}
+                <li>
+                    {{ tag.name }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h2>Analytics</h2>
+        Views: {{ object.rating.views }}
+        Unique views: {{ object.rating.unique_views }}
+        Shares: {{ object.rating.shares }}
+    </div>
+    <div>
+        <h2>Rating</h2>
+        Upvotes: {{ object.rating.upvotes }}<br>
+        Downvotes: {{ object.rating.downvotes }}
+    </div>
+    <div>
+        <h2>Comments</h2>
+        {% for comment in object.comments.all %}
+            <div>
+                <div>
+                    User: {{ comment.user.username }}
+                </div>
+                <div>
+                    {% if comment.is_removed %}
+                        <i>Removed</i>
+                    {% else %}
+                        {{ comment.content }}
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+        {% empty %}
+            No comments - be the first one to post!
+        {% endfor %}
     </div>
 {% endblock %}
