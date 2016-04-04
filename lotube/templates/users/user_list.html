@@ -1,10 +1,12 @@
 {% extends "users/base.html" %}
 
 {% block content %}
+    <h1>Users</h1>
+
     {% for user in object_list %}
         <div>
-            <div>{{ user.first_name }} {{ user.last_name }}</div>
-            <div>{{ user.username }}</div>
+            <div>Name: {{ user.first_name }} {{ user.last_name }}</div>
+            <div>Username: {{ user.username }} ({{ user.id }})</div>
             <div>Joined: {{ user.date_joined }} Last login: {{ user.last_login }}</div>
             <div>
                 {% if user.is_staff %}
@@ -12,7 +14,15 @@
                 {% else %}
                     Member
                 {% endif %}
+                {% if user.is_active %}
+                    (active)
+                {% else %}
+                    (inactive)
+                {% endif %}
             </div>
         </div>
+        <hr>
+    {% empty %}
+        No users
     {% endfor %}
 {% endblock %}

@@ -4,14 +4,19 @@
 
 {% block content %}
     <div>
-        <div>{{ object.first_name }} {{ object.last_name }}</div>
-        <div>{{ object.username }}</div>
+        <div>Name: {{ object.first_name }} {{ object.last_name }}</div>
+        <div>Username: {{ object.username }} ({{ object.id }})</div>
         <div>Joined: {{ object.date_joined }} Last login: {{ object.last_login }}</div>
         <div>
             {% if object.is_staff %}
                 Staff
             {% else %}
                 Member
+            {% endif %}
+            {% if object.is_active %}
+                (active)
+            {% else %}
+                (inactive)
             {% endif %}
         </div>
     </div>
