@@ -15,7 +15,7 @@ class AbstractUser(AbstractBaseUser):
     """
     Remember that password and last_login are inherited from AbstractBaseUser.
     """
-    username = LowerCaseCharField(max_length=50, unique=True,
+    username = LowerCaseCharField(max_length=50, db_index=True, unique=True,
                                   validators=[
                                       Common.alphanumeric(),
                                       Common.min_length(5),
