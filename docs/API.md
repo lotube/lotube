@@ -81,27 +81,23 @@ Other data such as user, title or description will be relative to the source.
      "items": [
         {
           "type": "video",
-          "id": [
-          {
+          "id": {
             "id": 1,
-            "id_source": 1,
-          }
-          ],
+            "id_source": 1
+          },
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
-          "duration" : "5 seconds",
+          "duration" : 10,
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "filename": "1.flv",
-          "thumbnail": [
-          {
+          "thumbnail": {
             "height": 0,
             "width": 0,
-            "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
-          }
-          ],
+            "url": "http://www.example.com/thumbnail.jpg"
+          },
           "tags": [
             "python"
           ]
@@ -118,28 +114,24 @@ See [GET videos](#get-videos)
 
 ```json
     {
-    "type": "video",
-      "id": [
-      {
+      "type": "video",
+      "id": {
         "id": 1,
-        "id_source": 1,
-      }
-      ],
+        "id_source": 1
+      },
       "source": "lotube",
       "user": "tommy33",
       "title": "Hello world",
       "description": "My hello world video",
-      "duration" : "5 seconds",
+      "duration" : 10,
       "created_at": "2016-03-23T10:37:04.873Z",
       "modified_at": "2016-03-23T10:37:04.873Z",
       "filename": "1.flv",
-      "thumbnail": [
-      {
+      "thumbnail": {
         "height": 0,
         "width": 0,
-        "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
-      }
-      ],
+        "url": "http://www.example.com/thumbnail.jpg"
+      },
       "tags": [
         "python"
       ]
@@ -154,7 +146,7 @@ See [GET videos](#get-videos)
 
 ```json
     {
-    "page_info": {
+     "page_info": {
         "total_results": 1,
         "results_page": 1,
         "page": 1
@@ -162,27 +154,23 @@ See [GET videos](#get-videos)
      "items": [
         {
           "type": "video",
-          "id": [
-          {
+          "id": {
             "id": 1,
-            "id_source": 1,
-          }
-          ],
+            "id_source": 1
+          },
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
-          "duration" : "5 seconds",
+          "duration" : 10,
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "filename": "1.flv",
-          "thumbnail": [
-          {
+          "thumbnail": {
             "height": 0,
             "width": 0,
-            "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
-          }
-          ],
+            "url": "http://www.example.com/thumbnail.jpg"
+          },
           "tags": [
             "python"
           ]
@@ -217,7 +205,7 @@ See [GET videos](#get-videos)
 
 ```json
     {
-    "page_info": {
+     "page_info": {
         "total_results": 1,
         "results_page": 1,
         "page": 1
@@ -225,27 +213,23 @@ See [GET videos](#get-videos)
      "items": [
         {
           "type": "video",
-          "id": [
-          {
+          "id": {
             "id": 1,
-            "id_source": 1,
-          }
-          ],
+            "id_source": 1
+          },
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
-          "duration" : "5 seconds",
+          "duration" : 10,
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "filename": "1.flv",
-          "thumbnail": [
-          {
+          "thumbnail": {
             "height": 0,
             "width": 0,
-            "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
-          }
-          ],
+            "url": "http://www.example.com/thumbnail.jpg"
+          },
           "tags": [
             "python"
           ]
@@ -262,12 +246,10 @@ Returns video analytics (such as views) of provided Video :id.
     {
       "type": "video-analytic",
       "video_id": 1,
-      "views": [
-      {
+      "views": {
         "total_views": 1,
         "unique_views": 1
-      }
-      ],
+      },
       "shares": 0
     }
 ```
@@ -306,11 +288,10 @@ else source's unique identifier.
           "type": "comment",
           "video_id": 1,
           "id": 1,
-          "id_source": 1,
           "user": "tommy33",
           "content": "I like my own video!",
           "created_at": "2016-03-23T10:37:04.873Z",
-          "modified_at": "2016-03-23T10:37:04.873Z",
+          "modified_at": "2016-03-23T10:37:04.873Z"
         }
      ]
     }
@@ -325,10 +306,9 @@ If exists, it returns the comment details of the video :id.
       "type": "comment",
       "video_id": 1,
       "id": 1,
-      "id_source": 1,
       "user": "tommy33",
       "content": "I like my own video!",
       "created_at": "2016-03-23T10:37:04.873Z",
-      "modified_at": "2016-03-23T10:37:04.873Z",
+      "modified_at": "2016-03-23T10:37:04.873Z"
     }
 ```
