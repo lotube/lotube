@@ -23,10 +23,12 @@ Returns a collection of users.
     {
      "page_info": {
         "total_results": 1,
-        "results_page": 1
+        "results_page": 1,
+        "page": 1
      },
      "items": [
-        { 
+        {
+          "type": "user",
           "id": 1,
           "username": "tommy33",
           "first_name": "Tommy",
@@ -45,7 +47,8 @@ Returns a collection of users.
 If exists, it returns the user details of the :username provided.
 
 ```json
-    { 
+    {
+      "type": "user",
       "id": 1,
       "username": "tommy33",
       "first_name": "Tommy",
@@ -72,19 +75,25 @@ Other data such as user, title or description will be relative to the source.
     {
      "page_info": {
         "total_results": 1,
-        "results_page": 1
+        "results_page": 1,
+        "page": 1
      },
      "items": [
-        { 
-          "id": 1,
-          "id_source": 1,
+        {
+          "type": "video"
+          "id" :[
+            "id": 1,
+            "id_source": 1,
+          ]
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
+          "duration" : "5 seconds"
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
-          "video_filename": "1.flv",
+          "filename": "1.flv",
+          "thumbnail": "(0 x 0)"
           "tags": [
             "python"
           ]
@@ -100,16 +109,21 @@ If exists, it returns the video details of the provided video :id.
 See [GET videos](#get-videos)
 
 ```json
-    { 
-      "id": 1,
-      "id_source": 1,
+    {
+    "type": "video"
+      "id" :[
+        "id": 1,
+        "id_source": 1,
+      ]
       "source": "lotube",
       "user": "tommy33",
       "title": "Hello world",
       "description": "My hello world video",
+      "duration" : "5 seconds"
       "created_at": "2016-03-23T10:37:04.873Z",
       "modified_at": "2016-03-23T10:37:04.873Z",
-      "video_filename": "1.flv",
+      "filename": "1.flv",
+      "thumbnail": "(0 x 0)"
       "tags": [
         "python"
       ]
@@ -124,21 +138,27 @@ See [GET videos](#get-videos)
 
 ```json
     {
-     "page_info": {
+    "page_info": {
         "total_results": 1,
-        "results_page": 1
+        "results_page": 1,
+        "page": 1
      },
      "items": [
-        { 
-          "id": 1,
-          "id_source": 1,
+        {
+          "type": "video"
+          "id" :[
+            "id": 1,
+            "id_source": 1,
+          ]
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
+          "duration" : "5 seconds"
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
-          "video_filename": "1.flv",
+          "filename": "1.flv",
+          "thumbnail": "(0 x 0)"
           "tags": [
             "python"
           ]
@@ -157,7 +177,8 @@ See [GET videos](#get-videos)
     {
      "page_info": {
         "total_results": 1,
-        "results_page": 1
+        "results_page": 1,
+        "page": 1
      },
      "tags": ["python", "django"]
     }
@@ -172,21 +193,27 @@ See [GET videos](#get-videos)
 
 ```json
     {
-     "page_info": {
+    "page_info": {
         "total_results": 1,
-        "results_page": 1
+        "results_page": 1,
+        "page": 1
      },
      "items": [
-        { 
-          "id": 1,
-          "id_source": 1,
+        {
+          "type": "video"
+          "id" :[
+            "id": 1,
+            "id_source": 1,
+          ]
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
+          "duration" : "5 seconds"
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
-          "video_filename": "1.flv",
+          "filename": "1.flv",
+          "thumbnail": "(0 x 0)"
           "tags": [
             "python"
           ]
@@ -201,8 +228,26 @@ Returns video analytics (such as views) of provided Video :id.
 
 ```json
     {
-      "id": 1,
-      "views": 0
+      "type": "video-analytic"
+      "video_id": 1,
+      "views": [
+        "total_views": 1,
+        "unique_views": 1
+      "shares": 0
+      ]
+    }
+```
+
+### GET videos/:id/rating
+
+Returns video rating of the provided Video :id.
+
+```json
+    {
+      "type": "video-rating"
+      "video_id": 1,
+      "upvotes: 0,
+      "downvotes": 0
     }
 ```
 
@@ -219,14 +264,15 @@ else source's unique identifier.
     {
      "page_info": {
         "total_results": 1,
-        "results_page": 1
+        "results_page": 1,
+        "page": 1
      },
      "items": [
         {
+          "type": "comment"
           "video_id": 1,
           "id": 1,
           "id_source": 1,
-          "source": "lotube",
           "user": "tommy33",
           "content": "I like my own video!",
           "created_at": "2016-03-23T10:37:04.873Z",
@@ -242,10 +288,10 @@ If exists, it returns the comment details of the video :id.
 
 ```json
     {
+      "type": "comment"
       "video_id": 1,
       "id": 1,
       "id_source": 1,
-      "source": "lotube",
       "user": "tommy33",
       "content": "I like my own video!",
       "created_at": "2016-03-23T10:37:04.873Z",
