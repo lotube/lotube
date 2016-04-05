@@ -80,20 +80,28 @@ Other data such as user, title or description will be relative to the source.
      },
      "items": [
         {
-          "type": "video"
-          "id" :[
+          "type": "video",
+          "id": [
+          {
             "id": 1,
             "id_source": 1,
-          ]
+          }
+          ],
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
-          "duration" : "5 seconds"
+          "duration" : "5 seconds",
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "filename": "1.flv",
-          "thumbnail": "(0 x 0)"
+          "thumbnail": [
+          {
+            "height": 0,
+            "width": 0,
+            "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
+          }
+          ],
           "tags": [
             "python"
           ]
@@ -110,20 +118,28 @@ See [GET videos](#get-videos)
 
 ```json
     {
-    "type": "video"
-      "id" :[
+    "type": "video",
+      "id": [
+      {
         "id": 1,
         "id_source": 1,
-      ]
+      }
+      ],
       "source": "lotube",
       "user": "tommy33",
       "title": "Hello world",
       "description": "My hello world video",
-      "duration" : "5 seconds"
+      "duration" : "5 seconds",
       "created_at": "2016-03-23T10:37:04.873Z",
       "modified_at": "2016-03-23T10:37:04.873Z",
       "filename": "1.flv",
-      "thumbnail": "(0 x 0)"
+      "thumbnail": [
+      {
+        "height": 0,
+        "width": 0,
+        "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
+      }
+      ],
       "tags": [
         "python"
       ]
@@ -145,20 +161,28 @@ See [GET videos](#get-videos)
      },
      "items": [
         {
-          "type": "video"
-          "id" :[
+          "type": "video",
+          "id": [
+          {
             "id": 1,
             "id_source": 1,
-          ]
+          }
+          ],
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
-          "duration" : "5 seconds"
+          "duration" : "5 seconds",
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "filename": "1.flv",
-          "thumbnail": "(0 x 0)"
+          "thumbnail": [
+          {
+            "height": 0,
+            "width": 0,
+            "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
+          }
+          ],
           "tags": [
             "python"
           ]
@@ -186,7 +210,7 @@ See [GET videos](#get-videos)
 
 ### GET videos/tags/:coma_separated_tags
 
-Returns a collection of videos containing at least one of the following 
+Returns a collection of videos containing at least one of the following
 :coma_separated_tags.
 
 See [GET videos](#get-videos)
@@ -200,20 +224,28 @@ See [GET videos](#get-videos)
      },
      "items": [
         {
-          "type": "video"
-          "id" :[
+          "type": "video",
+          "id": [
+          {
             "id": 1,
             "id_source": 1,
-          ]
+          }
+          ],
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
           "description": "My hello world video",
-          "duration" : "5 seconds"
+          "duration" : "5 seconds",
           "created_at": "2016-03-23T10:37:04.873Z",
           "modified_at": "2016-03-23T10:37:04.873Z",
           "filename": "1.flv",
-          "thumbnail": "(0 x 0)"
+          "thumbnail": [
+          {
+            "height": 0,
+            "width": 0,
+            "url": "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg",
+          }
+          ],
           "tags": [
             "python"
           ]
@@ -228,13 +260,15 @@ Returns video analytics (such as views) of provided Video :id.
 
 ```json
     {
-      "type": "video-analytic"
+      "type": "video-analytic",
       "video_id": 1,
       "views": [
+      {
         "total_views": 1,
         "unique_views": 1
+      }
+      ],
       "shares": 0
-      ]
     }
 ```
 
@@ -244,9 +278,9 @@ Returns video rating of the provided Video :id.
 
 ```json
     {
-      "type": "video-rating"
+      "type": "video-rating",
       "video_id": 1,
-      "upvotes: 0,
+      "upvotes": 0,
       "downvotes": 0
     }
 ```
@@ -257,7 +291,7 @@ Returns a collection of comments of the provided Video :id.
 
 **id**: LOTube unique identifier of the comment
 
-**id_source**: LOTube identifier of the comment if `source="lotube"`, 
+**id_source**: LOTube identifier of the comment if `source="lotube"`,
 else source's unique identifier.
 
 ```json
@@ -269,7 +303,7 @@ else source's unique identifier.
      },
      "items": [
         {
-          "type": "comment"
+          "type": "comment",
           "video_id": 1,
           "id": 1,
           "id_source": 1,
@@ -288,7 +322,7 @@ If exists, it returns the comment details of the video :id.
 
 ```json
     {
-      "type": "comment"
+      "type": "comment",
       "video_id": 1,
       "id": 1,
       "id_source": 1,
