@@ -8,8 +8,15 @@
     <div>
         Title: {{ object.title }} ({{ object.id }})<br>
         Source: {{ object.source }}<br>
-        Filename: {{ object.filename }}<br>
         Username: {{ object.user.username }}
+    </div>
+    <div>
+        {% if object.source == 'youtube' %}
+            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ object.id_source }}?rel=0" frameborder="0" allowfullscreen></iframe>
+        {% else %}
+            Visualiser has not yet been implemented!<br>
+            Filename: {{ object.filename }}
+        {% endif %}
     </div>
     <div>
         Description: {{object.description }}
