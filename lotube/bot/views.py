@@ -1,4 +1,7 @@
 import os
+
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 
 from lotube_crawler import Crawler
@@ -38,6 +41,8 @@ class CrawlerBot(object):
             return tag
 
     def execute(self, request):
+        if not request.user.is_authenticated() or not request.user.is_staff:
+            raise PermissionDenied
         token = os.environ.get('TOKEN_YOUTUBE')
         crawler = Crawler(site='youtube', site_token=token,
                           max_breadth=1, max_depth=1)
