@@ -9,9 +9,10 @@ def _get_item(db_comment):
         'video_id': db_comment.video.id,
         'id': db_comment.id,
         'user': db_comment.user.username,
-        'content': db_comment.content,
+        'content': db_comment.content if not db_comment.is_removed else '',
         'created_at': db_comment.created,
-        'modified_at': db_comment.modified
+        'modified_at': db_comment.modified,
+        'is_removed': db_comment.is_removed
     }
 
 
