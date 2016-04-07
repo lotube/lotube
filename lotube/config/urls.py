@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^bot/', include('bot.urls')),
     url(r'^api/v1/', include('config.urls_api', namespace='api')),
     url(r'^', include('config.urls_web', namespace='web')),
-    url(r'^', RedirectView.as_view(url='videos'))
+    url(r'^$', RedirectView.as_view(url='videos'))
 ]
