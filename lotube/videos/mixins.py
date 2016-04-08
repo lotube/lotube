@@ -10,23 +10,24 @@ class VideoListMixin(ListView):
     model = Video
 
     def _url_params(self):
-        # user params
-        user = self.request.GET.get('user')
-        if user:
-            user = User.objects.filter(username=user)
+        model_kwargs = {}
 
-        # video params
-        video_kwargs = {}
+        # user
+        user = self.request.GET.get('user', '')
+        if user != '':
+            model_kwargs['user'] = User.objects.filter(username=user)
 
-        title = self.request.GET.get('title')
-        if title:
-            video_kwargs['title__contains'] = title
+        # title
+        title = self.request.GET.get('title', '')
+        if title != '':
+            model_kwargs['title__contains'] = title
 
-        tags = self.request.GET.get('tags')
-        if tags:
-            video_kwargs['tags'] = tags
+        # tags
+        tags = self.request.GET.get('tags', '')
+        if tags != '':
+            model_kwargs['tags'] = Tag.objects.get_videos_by_tags(tags)
 
-        return video_kwargs
+        return model_kwargs
 
     def get_queryset(self):
         self._url_params()

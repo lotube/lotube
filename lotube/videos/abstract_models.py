@@ -4,6 +4,7 @@ from django.db import models
 from core.models import LowerCaseCharField
 from core.validators import Common
 from users.models import User
+from .managers import TagManager
 from . import constants
 
 
@@ -68,6 +69,7 @@ class AbstractTag(models.Model):
     name = LowerCaseCharField(max_length=30,
                               unique=True,
                               validators=[Common.contains(constants.TAGS_ALLOWED_CHARACTERS)])
+    objects = TagManager()
 
     def __str__(self):
         return self.name
