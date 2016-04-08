@@ -71,6 +71,18 @@ identifier.
 
 Other data such as user, title or description will be relative to the source.
 
+#### Params
+
+_Optional parameters_
+
+**user**: Published by user (i.e. admin)
+
+**title**: Video title contains (i.e. hello)
+
+**tags**: Video has tags (coma separated values) (i.e. games,fps)
+
+#### Sample
+
 ```json
     {
      "page_info": {

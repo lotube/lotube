@@ -9,6 +9,30 @@ from .models import Video, Tag
 class VideoListMixin(ListView):
     model = Video
 
+    def _url_params(self):
+        # user params
+        user = self.request.GET.get('user')
+        if user:
+            user = User.objects.filter(username=user)
+
+        # video params
+        video_kwargs = {}
+
+        title = self.request.GET.get('title')
+        if title:
+            video_kwargs['title__contains'] = title
+
+        tags = self.request.GET.get('tags')
+        if tags:
+            video_kwargs['tags'] = tags
+
+        return video_kwargs
+
+    def get_queryset(self):
+        self._url_params()
+        queryset = self.model.objects.filter(**self._url_params())
+        return queryset
+
 
 class VideoDetailMixin(DetailView):
     model = Video
