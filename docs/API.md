@@ -291,7 +291,8 @@ else source's unique identifier.
           "user": "tommy33",
           "content": "I like my own video!",
           "created_at": "2016-03-23T10:37:04.873Z",
-          "modified_at": "2016-03-23T10:37:04.873Z"
+          "modified_at": "2016-03-23T10:37:04.873Z",
+          "is_removed": false
         }
      ]
     }
@@ -309,6 +310,7 @@ If exists, it returns the comment details of the video :id.
       "user": "tommy33",
       "content": "I like my own video!",
       "created_at": "2016-03-23T10:37:04.873Z",
-      "modified_at": "2016-03-23T10:37:04.873Z"
+      "modified_at": "2016-03-23T10:37:04.873Z",
+      "is_removed": false
     }
 ```
