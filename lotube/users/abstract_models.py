@@ -24,7 +24,7 @@ class AbstractUser(AbstractBaseUser):
     email = models.EmailField(unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=300, blank=True, default='')
-    last_name = models.EmailField(max_length=300, blank=True, default='')
+    last_name = models.CharField(max_length=300, blank=True, default='')
     ip_address = GenericIPAddressField(null=True)
     is_staff = models.BooleanField(default=False)
 
