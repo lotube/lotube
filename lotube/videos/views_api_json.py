@@ -94,7 +94,7 @@ class VideoAnalyticJSON(JSONView, VideoDetailMixin):
                                     kwargs={'pk': db_video.id,
                                             'format': '.json'})
         response = {
-            'type': 'video-analytic',
+            'type': 'video_analytic',
             'href': self.request.build_absolute_uri(href_relative_uri),
             'video_id': db_video.id,
             'views': {
@@ -117,7 +117,7 @@ class VideoRatingJSON(JSONView, VideoDetailMixin):
                                     kwargs={'pk': db_video.id,
                                             'format': '.json'})
         response = {
-            'type': 'video-rating',
+            'type': 'video_rating',
             'href': self.request.build_absolute_uri(href_relative_uri),
             'video_id': db_video.id,
             'upvotes': db_video.rating.upvotes,

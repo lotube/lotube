@@ -267,7 +267,7 @@ Returns video analytics (such as views) of provided Video :id.
 
 ```json
     {
-      "type": "video-analytic",
+      "type": "video_analytic",
       "href": "http://127.0.0.1/api/v1/videos/1/rating.json",
       "video_id": 1,
       "views": {
@@ -284,7 +284,7 @@ Returns video rating of the provided Video :id.
 
 ```json
     {
-      "type": "video-rating",
+      "type": "video_rating",
       "href": "http://127.0.0.1/api/v1/videos/1/rating.json",
       "video_id": 1,
       "upvotes": 0,
