@@ -46,6 +46,7 @@ class TestDefaultUser(TestCase):
     def test_is_not_active_after_31_days_creation(self):
         self.user.date_joined = self.user.date_joined + \
                                 timedelta(days=-self.INACTIVE_AFTER-1)
+        self.user.last_login = None
         self.user.save()
         self.assertFalse(self.user.is_active)
 
