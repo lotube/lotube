@@ -55,7 +55,7 @@ urlpatterns = [
     url(
         r'^\/tags' + data_format + '$',
         APIViewLoader.as_view(json=TagListJSON, xml=TagListXML),
-        name='tag_list'
+        name='tags'
     ),
 
     # List of Videos by Tags
