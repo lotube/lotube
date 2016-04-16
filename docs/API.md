@@ -21,6 +21,7 @@ Returns a collection of users.
 
 ```json
     {
+     "type": "user_list",
      "page_info": {
         "total_results": 1,
         "results_page": 1,
@@ -87,6 +88,7 @@ _Optional parameters_
 
 ```json
     {
+     "type": "video_list",
      "page_info": {
         "total_results": 1,
         "results_page": 1,
@@ -162,6 +164,7 @@ See [GET videos](#get-videos)
 
 ```json
     {
+     "type": "video_list",
      "page_info": {
         "total_results": 1,
         "results_page": 1,
@@ -204,6 +207,7 @@ See [GET videos](#get-videos)
 
 ```json
     {
+     "type": "tag_list",
      "page_info": {
         "total_results": 1,
         "results_page": 1,
@@ -222,6 +226,7 @@ See [GET videos](#get-videos)
 
 ```json
     {
+     "type": "video_list",
      "page_info": {
         "total_results": 1,
         "results_page": 1,
@@ -263,7 +268,7 @@ Returns video analytics (such as views) of provided Video :id.
 ```json
     {
       "type": "video-analytic",
-      "href": "http://127.0.0.1:8000/api/v1/videos/1/rating.json",
+      "href": "http://127.0.0.1/api/v1/videos/1/rating.json",
       "video_id": 1,
       "views": {
         "total_views": 1,
@@ -280,7 +285,7 @@ Returns video rating of the provided Video :id.
 ```json
     {
       "type": "video-rating",
-      "href": "http://127.0.0.1:8000/api/v1/videos/1/rating.json",
+      "href": "http://127.0.0.1/api/v1/videos/1/rating.json",
       "video_id": 1,
       "upvotes": 0,
       "downvotes": 0
@@ -298,6 +303,7 @@ else source's unique identifier.
 
 ```json
     {
+     "type": "comment_list",
      "page_info": {
         "total_results": 1,
         "results_page": 1,
@@ -308,7 +314,7 @@ else source's unique identifier.
           "type": "comment",
           "video_id": 1,
           "id": 1,
-          "href": "http://127.0.0.1:8000/api/v1/videos/1/comments/1.json",
+          "href": "http://127.0.0.1/api/v1/videos/1/comments/1.json",
           "user": "tommy33",
           "content": "I like my own video!",
           "created_at": "2016-03-23T10:37:04.873Z",
@@ -328,7 +334,7 @@ If exists, it returns the comment details of the video :id.
       "type": "comment",
       "video_id": 1,
       "id": 1,
-      "href": "http://127.0.0.1:8000/api/v1/videos/1/comments/1.json",
+      "href": "http://127.0.0.1/api/v1/videos/1/comments/1.json",
       "user": "tommy33",
       "content": "I like my own video!",
       "created_at": "2016-03-23T10:37:04.873Z",

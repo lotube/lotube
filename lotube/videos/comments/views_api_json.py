@@ -30,6 +30,7 @@ class CommentListJSON(JSONView, CommentListMixin):
     def craft_response(self, context, **response_kwargs):
         items = [_get_item(db_video, self.request) for db_video in context['comment_list']]
         response = {
+            'type': 'comment_list',
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),

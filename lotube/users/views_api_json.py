@@ -31,6 +31,7 @@ class UserListJSON(JSONView, UserListMixin):
         items = [get_item(db_user, self.request)
                  for db_user in context['user_list']]
         response = {
+            'type': 'user_list',
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),

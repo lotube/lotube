@@ -42,6 +42,7 @@ class VideoListJSON(JSONView, VideoListMixin):
         items = [_get_item(db_video, self.request)
                  for db_video in context['video_list']]
         response = {
+            'type': 'video_list',
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
@@ -71,6 +72,7 @@ class VideoUserListJSON(JSONView, VideoUserListMixin):
         items = [_get_item(db_video, self.request)
                  for db_video in context['video_list']]
         response = {
+            'type': 'video_list',
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
@@ -133,6 +135,7 @@ class VideoByTagListJSON(JSONView, VideoByTagListMixin):
         items = [_get_item(db_video, self.request)
                  for db_video in context['video_list']]
         response = {
+            'type': 'video_list',
             'page_info': {
                 'total_results': len(items),
                 'results_page': len(items),
@@ -151,6 +154,7 @@ class TagListJSON(JSONView, TagListMixin):
     def craft_response(self, context, **response_kwargs):
         tags = [tag.name for tag in context['tag_list']]
         response = {
+            'type': 'tag_list',
             'page_info': {
                 'total_results': len(tags),
                 'results_page': len(tags),
