@@ -1,4 +1,4 @@
-# API /api/v
+# API /api/v1/
 
 The REST API provides programmatic access to read and write LOTube data.<br>
 Responses are available in both JSON and XML formats (append the desired format 
