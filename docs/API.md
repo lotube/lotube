@@ -30,6 +30,7 @@ Returns a collection of users.
         {
           "type": "user",
           "id": 1,
+          "href": "http://127.0.0.1/api/v1/users/tommy33.json",
           "username": "tommy33",
           "first_name": "Tommy",
           "last_name": "Sun",
@@ -50,6 +51,7 @@ If exists, it returns the user details of the :username provided.
     {
       "type": "user",
       "id": 1,
+      "href": "http://127.0.0.1/api/v1/users/tommy33.json",
       "username": "tommy33",
       "first_name": "Tommy",
       "last_name": "Sun",
@@ -97,6 +99,7 @@ _Optional parameters_
             "id": 1,
             "id_source": 1
           },
+          "href": "http://127.0.0.1/api/v1/videos/1.json",
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
@@ -131,6 +134,7 @@ See [GET videos](#get-videos)
         "id": 1,
         "id_source": 1
       },
+      "href": "http://127.0.0.1/api/v1/videos/1.json",
       "source": "lotube",
       "user": "tommy33",
       "title": "Hello world",
@@ -170,6 +174,7 @@ See [GET videos](#get-videos)
             "id": 1,
             "id_source": 1
           },
+          "href": "http://127.0.0.1/api/v1/videos/1.json",
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
@@ -229,6 +234,7 @@ See [GET videos](#get-videos)
             "id": 1,
             "id_source": 1
           },
+          "href": "http://127.0.0.1/api/v1/videos/1.json",
           "source": "lotube",
           "user": "tommy33",
           "title": "Hello world",
@@ -257,6 +263,7 @@ Returns video analytics (such as views) of provided Video :id.
 ```json
     {
       "type": "video-analytic",
+      "href": "http://127.0.0.1:8000/api/v1/videos/1/rating.json",
       "video_id": 1,
       "views": {
         "total_views": 1,
@@ -273,6 +280,7 @@ Returns video rating of the provided Video :id.
 ```json
     {
       "type": "video-rating",
+      "href": "http://127.0.0.1:8000/api/v1/videos/1/rating.json",
       "video_id": 1,
       "upvotes": 0,
       "downvotes": 0

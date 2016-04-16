@@ -1,16 +1,21 @@
-from config import constants
+from django.core.urlresolvers import reverse
+
 from core.mixins import JSONView
 from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
 from .mixins import VideoByTagListMixin, TagListMixin
 
 
-def _get_item(db_video):
+def _get_item(db_video, request):
+    href_relative_uri = reverse('api:videos:video',
+                                kwargs={'pk': db_video.id,
+                                        'format': '.json'})
     return {
         'type': 'video',
         'id': {
             'id': db_video.id,
             'id_source': db_video.id_source,
         },
+        'href': request.build_absolute_uri(href_relative_uri),
         'source': db_video.source,
         'user': db_video.user.username,
         'title': db_video.title,
@@ -34,7 +39,8 @@ class VideoListJSON(JSONView, VideoListMixin):
     """
 
     def craft_response(self, context, **response_kwargs):
-        items = [_get_item(db_video) for db_video in context['video_list']]
+        items = [_get_item(db_video, self.request)
+                 for db_video in context['video_list']]
         response = {
             'page_info': {
                 'total_results': len(items),
@@ -53,7 +59,7 @@ class VideoDetailJSON(JSONView, VideoDetailMixin):
 
     def craft_response(self, context, **response_kwargs):
         db_video = context['object']
-        return _get_item(db_video)
+        return _get_item(db_video, self.request)
 
 
 class VideoUserListJSON(JSONView, VideoUserListMixin):
@@ -62,7 +68,8 @@ class VideoUserListJSON(JSONView, VideoUserListMixin):
     """
 
     def craft_response(self, context, **response_kwargs):
-        items = [_get_item(db_video) for db_video in context['video_list']]
+        items = [_get_item(db_video, self.request)
+                 for db_video in context['video_list']]
         response = {
             'page_info': {
                 'total_results': len(items),
@@ -81,8 +88,12 @@ class VideoAnalyticJSON(JSONView, VideoDetailMixin):
 
     def craft_response(self, context, **response_kwargs):
         db_video = context['object']
+        href_relative_uri = reverse('api:videos:video_analytic',
+                                    kwargs={'pk': db_video.id,
+                                            'format': '.json'})
         response = {
             'type': 'video-analytic',
+            'href': self.request.build_absolute_uri(href_relative_uri),
             'video_id': db_video.id,
             'views': {
                 'total_views': db_video.analytic.views,
@@ -100,8 +111,12 @@ class VideoRatingJSON(JSONView, VideoDetailMixin):
 
     def craft_response(self, context, **response_kwargs):
         db_video = context['object']
+        href_relative_uri = reverse('api:videos:video_rating',
+                                    kwargs={'pk': db_video.id,
+                                            'format': '.json'})
         response = {
             'type': 'video-rating',
+            'href': self.request.build_absolute_uri(href_relative_uri),
             'video_id': db_video.id,
             'upvotes': db_video.rating.upvotes,
             'downvotes': db_video.rating.downvotes,
@@ -115,7 +130,8 @@ class VideoByTagListJSON(JSONView, VideoByTagListMixin):
     """
 
     def craft_response(self, context, **response_kwargs):
-        items = [_get_item(db_video) for db_video in context['video_list']]
+        items = [_get_item(db_video, self.request)
+                 for db_video in context['video_list']]
         response = {
             'page_info': {
                 'total_results': len(items),
