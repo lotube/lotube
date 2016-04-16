@@ -1,4 +1,4 @@
-# API /api/
+# API /api/v
 
 The REST API provides programmatic access to read and write LOTube data.<br>
 Responses are available in both JSON and XML formats (append the desired format 
@@ -6,7 +6,7 @@ at the end).
 
 URL example:
 
-`/api/users.json`
+`/api/v1/users.json`
 
 ## Table of Contents
 
