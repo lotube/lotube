@@ -70,8 +70,8 @@ class VideoUserListJSON(JSONListView, VideoUserListMixin):
         self.items = []
 
     def craft_response(self, context, **response_kwargs):
-        items = [_get_item(db_video, self.request)
-                 for db_video in context['video_list']]
+        self.items = [_get_item(db_video, self.request)
+                      for db_video in context['video_list']]
         return super(VideoUserListJSON, self)\
             .craft_response(context, **response_kwargs)
 

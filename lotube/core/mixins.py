@@ -1,5 +1,5 @@
 import dicttoxml
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, resolve
 from django.http import JsonResponse, HttpResponse
 from django.views.generic import View
 
@@ -70,32 +70,33 @@ class JSONListView(JSONView):
         return response
 
     def __url_params(self, request, overwrite_param={}):
-            """
-            :param request: page (list) request with or without page param
-            :param context: page context
-            :param overwrite_param: dict of params to overwrite (i.e) {'page':1}
-            If the parameter doesn't exist in the original request, it will
-            be appended.
-            :return: url params (textual) (i.e. ?page=2)
-            """
+        """
+        :param request: page (list) request with or without page param
+        :param context: page context
+        :param overwrite_param: dict of params to overwrite (i.e) {'page':1}
+        If the parameter doesn't exist in the original request, it will
+        be appended.
+        :return: url params (textual) (i.e. ?page=2)
+        """
 
-            params = [(param, str(request.GET[param]
-                                  if param not in overwrite_param
-                                  else overwrite_param.pop(param)))
-                      for param in request.GET]
-            for key, value in overwrite_param.iteritems():  # not in the original request
-                params.append((key, str(value)))
+        params = [(param, str(request.GET[param]
+                              if param not in overwrite_param
+                              else overwrite_param.pop(param)))
+                  for param in request.GET]
+        for key, value in overwrite_param.iteritems():  # not in the original request
+            params.append((key, str(value)))
 
-            params_str = map(lambda param: param[0] + '=' + param[1], params)
-            params_str = '?' + '&'.join(params_str) if params else ''
-            return params_str
+        params_str = map(lambda param: param[0] + '=' + param[1], params)
+        params_str = '?' + '&'.join(params_str) if params else ''
+        return params_str
 
     def __gen_page_link(self, request, page):
-            relative_uri = reverse('api:videos:videos', kwargs=self.kwargs)
-            params = self.__url_params(request, {'page': page})
+        active_full_namespace = resolve(self.request.path).view_name
+        relative_uri = reverse(active_full_namespace, kwargs=self.kwargs)
+        params = self.__url_params(request, {'page': page})
 
-            return request.build_absolute_uri(relative_uri + params) \
-                if params != '' else ''
+        return request.build_absolute_uri(relative_uri + params) \
+            if params != '' else ''
 
 
 class XMLView(View):
