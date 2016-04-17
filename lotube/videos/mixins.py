@@ -2,12 +2,14 @@ from annoying.functions import get_object_or_None
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 
+from config import constants
 from users.models import User
 from .models import Video, Tag
 
 
 class VideoListMixin(ListView):
     model = Video
+    paginate_by = constants.PAGINATE_BY
 
     def _url_params(self):
         model_kwargs = {}
@@ -30,7 +32,6 @@ class VideoListMixin(ListView):
         return model_kwargs
 
     def get_queryset(self):
-        self._url_params()
         queryset = self.model.objects.filter(**self._url_params())
         return queryset
 
