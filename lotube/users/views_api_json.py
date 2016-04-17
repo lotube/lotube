@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 
-from core.mixins import JSONView
+from core.mixins import JSONView, JSONListView
 from .mixins import UserListMixin, UserDetailMixin
 
 
@@ -22,24 +22,20 @@ def get_item(db_user, request):
     }
 
 
-class UserListJSON(JSONView, UserListMixin):
+class UserListJSON(JSONListView, UserListMixin):
     """
     List of users
     """
 
+    def __init__(self):
+        self.type = 'user_list'
+        self.items = []
+
     def craft_response(self, context, **response_kwargs):
-        items = [get_item(db_user, self.request)
-                 for db_user in context['user_list']]
-        response = {
-            'type': 'user_list',
-            'page_info': {
-                'total_results': len(items),
-                'results_page': len(items),
-                'page': 1
-            },
-            'items': items
-        }
-        return response
+        self.items = [get_item(db_user, self.request)
+                      for db_user in context['user_list']]
+        return super(UserListJSON, self)\
+            .craft_response(context, **response_kwargs)
 
 
 class UserDetailJSON(JSONView, UserDetailMixin):
