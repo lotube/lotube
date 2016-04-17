@@ -20,7 +20,7 @@ class AbstractTimeStamped(models.Model):
 
 
 class AbstractVideo(AbstractTimeStamped):
-    id_source = models.CharField(max_length=100, unique=True)
+    id_source = models.CharField(max_length=100)
     source = models.CharField(max_length=30)
     user = models.ForeignKey(User)
     title = models.CharField(max_length=300)
