@@ -1,5 +1,4 @@
 from django.core.urlresolvers import reverse
-from django.http import Http404
 
 from core.mixins import JSONView, JSONListView
 from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
@@ -65,7 +64,7 @@ class VideoUserListJSON(JSONListView, VideoUserListMixin):
     Video user list
     """
 
-    def __init(self):
+    def __init__(self):
         self.type = 'video_list'
         self.items = []
 
@@ -124,7 +123,7 @@ class VideoByTagListJSON(JSONListView, VideoByTagListMixin):
     List of videos by Tags
     """
 
-    def __init(self):
+    def __init__(self):
         self.type = 'video_list'
         self.items = []
 
@@ -140,7 +139,7 @@ class TagListJSON(JSONListView, TagListMixin):
     List of all tags
     """
 
-    def __init(self):
+    def __init__(self):
         self.type = 'tag_list'
         self.items = []
 

@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, View
 
+from config import constants
 from videos.models import Video
 from .models import Comment
 
@@ -23,6 +24,7 @@ class CommentMixin(View):
 
 class CommentListMixin(CommentMixin, ListView):
     model = Comment
+    paginate_by = constants.PAGINATE_BY
 
     def get_queryset(self):
         return self.video_object.comments.all()
