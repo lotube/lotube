@@ -119,40 +119,32 @@ class VideoRatingJSON(JSONView, VideoDetailMixin):
         return response
 
 
-class VideoByTagListJSON(JSONView, VideoByTagListMixin):
+class VideoByTagListJSON(JSONListView, VideoByTagListMixin):
     """
     List of videos by Tags
     """
 
+    def __init(self):
+        self.type = 'video_list'
+        self.items = []
+
     def craft_response(self, context, **response_kwargs):
-        items = [_get_item(db_video, self.request)
-                 for db_video in context['video_list']]
-        response = {
-            'type': 'video_list',
-            'page_info': {
-                'total_results': len(items),
-                'results_page': len(items),
-                'page': 1
-            },
-            'items': items
-        }
-        return response
+        self.items = [_get_item(db_video, self.request)
+                      for db_video in context['video_list']]
+        return super(VideoByTagListJSON, self)\
+            .craft_response(context, **response_kwargs)
 
 
-class TagListJSON(JSONView, TagListMixin):
+class TagListJSON(JSONListView, TagListMixin):
     """
     List of all tags
     """
 
+    def __init(self):
+        self.type = 'tag_list'
+        self.items = []
+
     def craft_response(self, context, **response_kwargs):
-        tags = [tag.name for tag in context['tag_list']]
-        response = {
-            'type': 'tag_list',
-            'page_info': {
-                'total_results': len(tags),
-                'results_page': len(tags),
-                'page': 1
-            },
-            'tags': tags
-        }
-        return response
+        self.items = [tag.name for tag in context['tag_list']]
+        return super(TagListJSON, self)\
+            .craft_response(context, **response_kwargs)

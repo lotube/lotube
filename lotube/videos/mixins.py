@@ -52,6 +52,7 @@ class VideoUserListMixin(ListView):
 
 class VideoByTagListMixin(ListView):
     model = Tag
+    paginate_by = constants.PAGINATE_BY
 
     def get_queryset(self):
         tags = self.kwargs['tags'].split(',')
@@ -66,3 +67,4 @@ class VideoByTagListMixin(ListView):
 
 class TagListMixin(ListView):
     model = Tag
+    paginate_by = constants.PAGINATE_BY
