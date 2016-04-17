@@ -4,6 +4,7 @@ from .mixins import VideoByTagListMixin, TagListMixin
 
 class VideoList(VideoListMixin):
     template_name = 'videos/video_list.html'
+    context_object_name = 'video_list'
 
 
 class VideoDetail(VideoDetailMixin):
