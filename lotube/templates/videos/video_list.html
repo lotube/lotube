@@ -48,7 +48,7 @@
             <hr>
         </div>
     {% endfor %}
-    {% if is_paginated %}
+    {% if page_obj %}
         <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
