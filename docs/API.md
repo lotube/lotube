@@ -24,8 +24,15 @@ Returns a collection of users.
      "type": "user_list",
      "page_info": {
         "total_results": 1,
-        "results_page": 1,
+        "results_page": 10,
         "page": 1
+     },
+     "links": {
+        "self": "http://127.0.0.1/api/v1/users.json?page=1",
+        "first": "http://127.0.0.1/api/v1/users.json?page=1",
+        "previous": "",
+        "next": "",
+        "last": "http://127.0.0.1/api/v1/users.json?page=1"
      },
      "items": [
         {
@@ -91,8 +98,15 @@ _Optional parameters_
      "type": "video_list",
      "page_info": {
         "total_results": 1,
-        "results_page": 1,
+        "results_page": 10,
         "page": 1
+     },
+     "links": {
+        "self": "http://127.0.0.1/api/v1/videos.json?page=1",
+        "first": "http://127.0.0.1/api/v1/videos.json?page=1",
+        "previous": "",
+        "next": "",
+        "last": "http://127.0.0.1/api/v1/videos.json?page=1"
      },
      "items": [
         {
@@ -167,8 +181,15 @@ See [GET videos](#get-videos)
      "type": "video_list",
      "page_info": {
         "total_results": 1,
-        "results_page": 1,
+        "results_page": 10,
         "page": 1
+     },
+     "links": {
+        "self": "http://127.0.0.1/api/v1/videos/user/tommy33.json?page=1",
+        "first": "http://127.0.0.1/api/v1/videos/user/tommy33.json?page=1",
+        "previous": "",
+        "next": "",
+        "last": "http://127.0.0.1/api/v1/videos/user/tommy33.json?page=1"
      },
      "items": [
         {
@@ -209,11 +230,18 @@ See [GET videos](#get-videos)
     {
      "type": "tag_list",
      "page_info": {
-        "total_results": 1,
-        "results_page": 1,
+        "total_results": 2,
+        "results_page": 10,
         "page": 1
      },
-     "tags": ["python", "django"]
+     "links": {
+        "self": "http://127.0.0.1/api/v1/videos/tags.json?page=1",
+        "first": "http://127.0.0.1/api/v1/videos/tags.json?page=1",
+        "previous": "",
+        "next": "",
+        "last": "http://127.0.0.1/api/v1/videos/tags.json?page=1"
+     },
+     "items": ["python", "django"]
     }
 ```
 
@@ -229,8 +257,15 @@ See [GET videos](#get-videos)
      "type": "video_list",
      "page_info": {
         "total_results": 1,
-        "results_page": 1,
+        "results_page": 10,
         "page": 1
+     },
+     "links": {
+        "self": "http://127.0.0.1/api/v1/videos/tags/python.json?page=1",
+        "first": "http://127.0.0.1/api/v1/videos/tags/python.json?page=1",
+        "previous": "",
+        "next": "",
+        "last": "http://127.0.0.1/api/v1/videos/tags/python.json?page=1"
      },
      "items": [
         {
@@ -306,8 +341,15 @@ else source's unique identifier.
      "type": "comment_list",
      "page_info": {
         "total_results": 1,
-        "results_page": 1,
+        "results_page": 10,
         "page": 1
+     },
+     "links": {
+        "self": "http://127.0.0.1/api/v1/videos/1/comments.json?page=1",
+        "first": "http://127.0.0.1/api/v1/videos/1/comments.json?page=1",
+        "previous": "",
+        "next": "",
+        "last": "http://127.0.0.1/api/v1/videos/1/comments.json?page=1"
      },
      "items": [
         {
