@@ -1,6 +1,5 @@
-from config import constants
 from django.core.urlresolvers import reverse
-from core.mixins import JSONView
+from core.mixins import JSONView, JSONListView
 from .mixins import CommentListMixin, CommentDetailMixin
 
 
@@ -22,23 +21,20 @@ def _get_item(db_comment, request):
     }
 
 
-class CommentListJSON(JSONView, CommentListMixin):
+class CommentListJSON(JSONListView, CommentListMixin):
     """
     List of Comments
     """
 
+    def __init__(self):
+        self.type = 'comment_list'
+        self.items = []
+
     def craft_response(self, context, **response_kwargs):
-        items = [_get_item(db_video, self.request) for db_video in context['comment_list']]
-        response = {
-            'type': 'comment_list',
-            'page_info': {
-                'total_results': len(items),
-                'results_page': len(items),
-                'page': 1,
-            },
-            'items': items
-        }
-        return response
+        self.items = [_get_item(db_video, self.request)
+                      for db_video in context['comment_list']]
+        return super(CommentListJSON, self)\
+            .craft_response(context, **response_kwargs)
 
 
 class CommentDetailJSON(JSONView, CommentDetailMixin):
