@@ -11,7 +11,7 @@ class VideoListMixin(ListView):
     model = Video
     paginate_by = constants.PAGINATE_BY
 
-    def _url_params(self):
+    def __url_params(self):
         model_kwargs = {}
 
         # user
@@ -32,7 +32,7 @@ class VideoListMixin(ListView):
         return model_kwargs
 
     def get_queryset(self):
-        queryset = self.model.objects.filter(**self._url_params())
+        queryset = self.model.objects.filter(**self.__url_params())
         return queryset
 
 
@@ -42,6 +42,7 @@ class VideoDetailMixin(DetailView):
 
 class VideoUserListMixin(ListView):
     model = Video
+    paginate_by = constants.PAGINATE_BY
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs['username'])
