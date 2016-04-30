@@ -4,4 +4,6 @@ django-annoying==0.9.0
 django-appconf==1.0.1
 six==1.10.0
 coverage==4.0.3
+djangorestframework==3.3.3
+djangorestframework-jsonapi==2.0.0
 -e git://github.com/lotube/lotube-crawler.git#egg=lotube-crawler

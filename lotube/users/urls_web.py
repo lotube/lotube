@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views_web import UserList, UserDetail
+from .views_web import UserList, UserDetail, LoginView, RegisterView
 
 urlpatterns = [
     # List of users
@@ -8,6 +8,20 @@ urlpatterns = [
         r'^$',
         UserList.as_view(),
         name='users'
+    ),
+
+    # Login
+    url(
+        r'^\/login$',
+        LoginView.as_view(),
+        name='login'
+    ),
+
+    # Sign up
+    url(
+        r'^\/signup',
+        RegisterView.as_view(),
+        name='signup'
     ),
 
     # Retrieve a specific user
