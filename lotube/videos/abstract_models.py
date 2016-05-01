@@ -1,5 +1,5 @@
-from annoying.fields import AutoOneToOneField
 from django.db import models
+from django.db.models import OneToOneField
 
 from core.models import LowerCaseCharField
 from core.validators import Common
@@ -37,8 +37,8 @@ class AbstractVideo(AbstractTimeStamped):
 
 
 class AbstractAnalytic(models.Model):
-    video = AutoOneToOneField('videos.Video', primary_key=True,
-                              related_name='analytic')
+    video = OneToOneField('videos.Video', primary_key=True,
+                          related_name='analytic')
     views = models.PositiveIntegerField(default=0)
     unique_views = models.PositiveIntegerField(default=0)
     shares = models.PositiveIntegerField(default=0)
@@ -51,18 +51,36 @@ class AbstractAnalytic(models.Model):
 
 
 class AbstractRating(models.Model):
-    video = AutoOneToOneField('videos.Video', primary_key=True,
-                              related_name='rating')
+    video = OneToOneField('videos.Video', primary_key=True,
+                          related_name='rating')
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
 
+    @property
+    def upvote(self):
+        self.upvotes += 1
+        self.save()
+        return self.upvotes
+
+    @property
+    def downvote(self):
+        self.downvote -= 1
+        self.save()
+        return self.downvotes
+
+    def __str__(self):
+        return u'{0}/{1}'.format(self.upvotes, self.downvotes)
+
 
 class AbstractThumbnail(models.Model):
-    video = AutoOneToOneField('videos.Video', primary_key=True,
-                              related_name='thumbnail')
+    video = OneToOneField('videos.Video', primary_key=True,
+                          related_name='thumbnail')
     url = models.CharField(max_length=255, default='', blank=True)
     width = models.PositiveIntegerField(default=0)
     height = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return u'{0}'.format(self.url)
 
 
 class AbstractTag(models.Model):

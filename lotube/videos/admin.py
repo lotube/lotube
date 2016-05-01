@@ -13,12 +13,20 @@ class VideoAdmin(admin.ModelAdmin):
     show_url.short_description = 'Filename URL'
 
 
+class ThumbnailAdmin(admin.ModelAdmin):
+    list_display = ('video', 'url')
+
+
 class AnalyticAdmin(admin.ModelAdmin):
     list_display = ('video', 'views',)
 
 
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ('video', 'upvotes', 'downvotes',)
+
+
 admin.site.register(Video, VideoAdmin)
-admin.site.register(Thumbnail)
+admin.site.register(Thumbnail, ThumbnailAdmin)
 admin.site.register(Analytic, AnalyticAdmin)
-admin.site.register(Rating)
+admin.site.register(Rating, RatingAdmin)
 admin.site.register(Tag)
