@@ -1,7 +1,8 @@
 from django.core.exceptions import PermissionDenied, ValidationError
+from rest_framework import permissions
 
 
-class SerializerContextUtils(object):
+class ContextUtils(object):
 
     def __init__(self, context):
         self.context = context
@@ -20,3 +21,15 @@ class SerializerContextUtils(object):
     def build_absolute_uri(self, relative_uri):
         self._validate_request()
         return self.request.build_absolute_uri(relative_uri)
+
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Object-level permission to only allow owners of an object to edit it.
+    Assumes the model instance has an `user` attribute.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user == obj.user

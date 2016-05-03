@@ -1,7 +1,8 @@
-from rest_framework.serializers import SerializerMethodField, reverse
+from rest_framework.serializers import SerializerMethodField, reverse, \
+    HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
 
-from core.utils import SerializerContextUtils
+from core.api_utils import ContextUtils
 from videos.models import Video, Thumbnail, Tag, Analytic, Rating
 from videos.utils import TagBuilder
 
@@ -35,20 +36,21 @@ class TagSerializer(ModelSerializer):
 
 
 class VideoSerializer(ModelSerializer):
+    href = HyperlinkedIdentityField(view_name='api_v2:videos-detail')
     thumbnail = ThumbnailSerializer()
     tags = TagSerializer(many=True, read_only=True)
     # user = UserSerializer(read_only=True)
     analytics = SerializerMethodField()
 
     def get_analytics(self, obj):
-        return SerializerContextUtils(self.context)\
+        return ContextUtils(self.context)\
             .build_absolute_uri(reverse('api_v2:videos-analytics', [obj.id]))
 
     def create(self, validated_data):
         thumbnail = validated_data.pop('thumbnail')
 
         # logged in required
-        user = SerializerContextUtils(self.context).logged_in_user()
+        user = ContextUtils(self.context).logged_in_user()
 
         # create video
         video = Video(**validated_data)
@@ -75,6 +77,6 @@ class VideoSerializer(ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('id', 'id_source', 'source', 'title', 'description',
+        fields = ('id', 'id_source', 'href', 'source', 'title', 'description',
                   'duration', 'created', 'modified', 'filename', 'thumbnail',
                   'analytics', 'tags',)
