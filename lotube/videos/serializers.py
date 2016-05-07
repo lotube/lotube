@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import SerializerMethodField, reverse, \
     HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
@@ -43,10 +44,15 @@ class VideoSerializer(ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
     user = UserSerializer()
     analytics = SerializerMethodField()
+    comments = serializers.SerializerMethodField()
 
     def get_analytics(self, obj):
         return ContextUtils(self.context)\
             .build_absolute_uri(reverse('api_v2:videos-analytics', [obj.id]))
+
+    def get_comments(self, obj):
+        return ContextUtils(self.context)\
+            .build_absolute_uri(reverse('api_v2:video-comments-list', [obj.id]))
 
     def create(self, validated_data):
         thumbnail = validated_data.pop('thumbnail')
@@ -84,5 +90,6 @@ class VideoSerializer(ModelSerializer):
         model = Video
         fields = ('id', 'id_source', 'source', 'user', 'href', 'title',
                   'description', 'duration', 'created', 'modified', 'filename',
-                  'thumbnail', 'analytics', 'tags',)
-        read_only_fields = ('id_source', 'source', 'user', 'href', 'duration',)
+                  'thumbnail', 'analytics', 'tags', 'comments',)
+        read_only_fields = ('id_source', 'source', 'user', 'href', 'duration',
+                            'comments',)
