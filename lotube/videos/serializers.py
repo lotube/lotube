@@ -26,6 +26,7 @@ class ThumbnailSerializer(ModelSerializer):
     class Meta:
         model = Thumbnail
         fields = ('url', 'width', 'height')
+        read_only_fields = ('width', 'height')
 
 
 class TagSerializer(ModelSerializer):
@@ -73,10 +74,13 @@ class VideoSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
+        instance.filename = validated_data.get('filename', instance.filename)
+        instance.thumbnail = validated_data.get('thumbnail', instance.thumbnail)
         return instance
 
     class Meta:
         model = Video
-        fields = ('id', 'id_source', 'href', 'source', 'title', 'description',
+        fields = ('id', 'id_source', 'source', 'href', 'title', 'description',
                   'duration', 'created', 'modified', 'filename', 'thumbnail',
                   'analytics', 'tags',)
+        read_only_fields = ('id_source', 'source', 'href', 'duration',)
