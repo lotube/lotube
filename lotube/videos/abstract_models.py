@@ -20,8 +20,9 @@ class AbstractTimeStamped(models.Model):
 
 
 class AbstractVideo(AbstractTimeStamped):
-    id_source = models.CharField(max_length=100)
-    source = models.CharField(max_length=30)
+    # Video is from LoTube if source and id_source are empty
+    id_source = models.CharField(max_length=100, blank=True)
+    source = models.CharField(max_length=30, blank=True)
     user = models.ForeignKey(User)
     title = models.CharField(max_length=300)
     description = models.CharField(max_length=10000, blank=True, default='')
@@ -81,6 +82,9 @@ class AbstractThumbnail(models.Model):
 
     def __str__(self):
         return u'{0}'.format(self.url)
+
+    class Meta:
+        abstract = True
 
 
 class AbstractTag(models.Model):
