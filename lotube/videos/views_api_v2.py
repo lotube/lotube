@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
-from core.api_utils import IsOwnerOrReadOnly
+from core.api_utils import IsOwnerOrReadOnlyVideo
 from videos.models import Video, Tag, Analytic, Rating
 from videos.serializers import VideoSerializer, TagSerializer, \
     AnalyticsSerializer, RatingSerializer
@@ -14,7 +14,7 @@ from videos.serializers import VideoSerializer, TagSerializer, \
 class VideoAPIView(ModelViewSet):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnlyVideo]
 
     @detail_route(url_path='analytics')
     def get_analytics(self, request, pk):

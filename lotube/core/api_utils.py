@@ -23,13 +23,23 @@ class ContextUtils(object):
         return self.request.build_absolute_uri(relative_uri)
 
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IsOwnerOrReadOnlyVideo(permissions.BasePermission):
     """
-    Object-level permission to only allow owners of an object to edit it.
-    Assumes the model instance has an `user` attribute.
+    Object-level permission to only allow owners of a video to edit it.
     """
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
         return request.user == obj.user
+
+
+class IsOwnerOrReadOnlyUser(permissions.BasePermission):
+    """
+    Object-level permission to only allow users to edit them.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user == obj
