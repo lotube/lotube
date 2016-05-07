@@ -3,6 +3,7 @@ from rest_framework.serializers import SerializerMethodField, reverse, \
 from rest_framework.serializers import ModelSerializer
 
 from core.api_utils import ContextUtils
+from users.serializers import UserSerializer
 from videos.models import Video, Thumbnail, Tag, Analytic, Rating
 from videos.utils import TagBuilder
 
@@ -40,7 +41,7 @@ class VideoSerializer(ModelSerializer):
     href = HyperlinkedIdentityField(view_name='api_v2:videos-detail')
     thumbnail = ThumbnailSerializer()
     tags = TagSerializer(many=True, read_only=True)
-    # user = UserSerializer(read_only=True)
+    user = UserSerializer()
     analytics = SerializerMethodField()
 
     def get_analytics(self, obj):
@@ -81,7 +82,7 @@ class VideoSerializer(ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('id', 'id_source', 'source', 'href', 'title', 'description',
-                  'duration', 'created', 'modified', 'filename', 'thumbnail',
-                  'analytics', 'tags',)
-        read_only_fields = ('id_source', 'source', 'href', 'duration',)
+        fields = ('id', 'id_source', 'source', 'user', 'href', 'title',
+                  'description', 'duration', 'created', 'modified', 'filename',
+                  'thumbnail', 'analytics', 'tags',)
+        read_only_fields = ('id_source', 'source', 'user', 'href', 'duration',)

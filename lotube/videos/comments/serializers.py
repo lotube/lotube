@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField
     reverse
 
 from core.api_utils import ContextUtils
+from users.serializers import UserSerializer
 from videos.comments.models import Comment
 
 
@@ -22,6 +23,7 @@ class CommentHrefHyperlinkedIdentityField(HyperlinkedIdentityField):
 
 class CommentSerializer(ModelSerializer):
     href = CommentHrefHyperlinkedIdentityField(view_name='api_v2:video-comments-detail')
+    user = UserSerializer()
 
     def create(self, validated_data):
         # logged in required
@@ -42,7 +44,7 @@ class CommentSerializer(ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'href', 'video', 'user', 'created', 'modified',
+        fields = ('id', 'href', 'user', 'video', 'created', 'modified',
                   'content',)
-        read_only_fields = ('id', 'href', 'video', 'user', 'created',
+        read_only_fields = ('id', 'href', 'user', 'video', 'user', 'created',
                             'modified')
