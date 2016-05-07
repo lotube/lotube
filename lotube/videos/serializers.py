@@ -65,9 +65,6 @@ class VideoSerializer(ModelSerializer):
 
         # add video thumbnail
         video.thumbnail.url = thumbnail['url']
-        video.thumbnail.width = thumbnail['width']
-        video.thumbnail.height = thumbnail['height']
-        video.thumbnail.save()
 
         return video
 
@@ -75,7 +72,11 @@ class VideoSerializer(ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.filename = validated_data.get('filename', instance.filename)
-        instance.thumbnail = validated_data.get('thumbnail', instance.thumbnail)
+
+        # thumbnail
+        thumbnail = validated_data.get('thumbnail', instance.thumbnail).popitem()
+        instance.thumbnail.url = thumbnail[1] if thumbnail[0] == 'url' else ''
+
         return instance
 
     class Meta:
