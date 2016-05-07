@@ -23,7 +23,7 @@ class ContextUtils(object):
         return self.request.build_absolute_uri(relative_uri)
 
 
-class IsOwnerOrReadOnlyVideo(permissions.BasePermission):
+class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of a video to edit it.
     """

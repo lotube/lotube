@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, \
     UpdateModelMixin
@@ -14,4 +15,4 @@ class UserAPIView(GenericViewSet,
     model = User
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsOwnerOrReadOnlyUser]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnlyUser]
