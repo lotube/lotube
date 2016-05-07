@@ -65,7 +65,7 @@ class AbstractRating(models.Model):
 
     @property
     def downvote(self):
-        self.downvote -= 1
+        self.downvotes -= 1
         self.save()
         return self.downvotes
 
