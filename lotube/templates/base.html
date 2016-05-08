@@ -3,7 +3,10 @@
 
 </head>
 <body>
+    <h1>{{ PROJECT_NAME }}</h1>
     <div id="content">
+        <a href="{% url "web:videos:videos" %}">videos</a>
+        <a href="{% url "web:users:users" %}">users</a> |
         {% block content %}
         {% endblock %}
     </div>
