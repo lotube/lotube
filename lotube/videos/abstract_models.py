@@ -3,7 +3,7 @@ from django.db.models import OneToOneField
 
 from config import constants as globalConstants
 from core.models import LowerCaseCharField
-from core.validators import Common
+from core.validators import Common, File
 from users.models import User
 from .managers import TagManager
 from . import constants
@@ -21,7 +21,10 @@ class AbstractTimeStamped(models.Model):
 
 
 class AbstractVideo(AbstractTimeStamped):
-    # Video is from LoTube if source and id_source are empty
+    """
+    Representation of Video model.
+    Video was uploaded on our platform if source and id_source are empty
+    """
     id_source = models.CharField(max_length=100, blank=True)
     source = models.CharField(max_length=30, blank=True)
     user = models.ForeignKey(User)
@@ -31,7 +34,8 @@ class AbstractVideo(AbstractTimeStamped):
     filename = models.CharField(max_length=255, unique=True)
     tags = models.ManyToManyField('videos.Tag', related_name='videos')
     thumbnail = models.ImageField(upload_to=globalConstants.VIDEO_THUMBNAIL_PATH,
-                                  blank=True, null=True)
+                                  blank=True, null=True,
+                                  validators=[File.max_size(globalConstants.VIDEO_THUMBNAIL_MAX_SIZE)])
 
     def __str__(self):
         return self.title
