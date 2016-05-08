@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import CreateView
@@ -39,13 +40,14 @@ class LoginView(TemplateView):
         return super(LoginView, self).get(request, args, kwargs)
 
     def post(self, request, **kwargs):
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(email=email, password=password)
+        user = authenticate(username=username, password=password)
         if user is None:
             self.errors.append('Credentials are invalid')
         else:
             login(request, user)
+            return redirect(self.success_url)
         return super(LoginView, self).get(request, **kwargs)
 
     def get_context_data(self, **kwargs):
