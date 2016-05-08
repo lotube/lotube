@@ -1,29 +1,24 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField, \
     reverse
 
 from core.api_utils import ContextUtils
-from users.serializers import UserSerializer
 from videos.comments.models import Comment
 
 
-class CommentHrefHyperlinkedIdentityField(HyperlinkedIdentityField):
-    video = None
+class CommentSerializer(ModelSerializer):
+    href = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
 
-    def __init__(self, **kwargs):
-        super(CommentHrefHyperlinkedIdentityField, self).__init__(**kwargs)
-
-    def get_url(self, obj, view_name, request, format):
-        lookup_field_value = getattr(obj, self.lookup_field, None)
-
+    def get_href(self, obj):
         return ContextUtils(self.context) \
             .build_absolute_uri(
             reverse('api_v2:video-comments-detail',
-                    [self.video.id, lookup_field_value]))
+                    [obj.video.id, obj.id]))
 
-
-class CommentSerializer(ModelSerializer):
-    href = CommentHrefHyperlinkedIdentityField(view_name='api_v2:video-comments-detail')
-    user = UserSerializer()
+    def get_user(self, obj):
+        return ContextUtils(self.context) \
+            .build_absolute_uri(reverse('api_v2:users-detail', [obj.user.id]))
 
     def create(self, validated_data):
         # logged in required

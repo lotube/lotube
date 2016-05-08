@@ -3,8 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
 from core.api_utils import IsOwnerOrReadOnly
-from videos.comments.serializers import CommentSerializer, \
-    CommentHrefHyperlinkedIdentityField
+from videos.comments.serializers import CommentSerializer
 from videos.models import Video
 from .models import Comment
 
@@ -14,9 +13,7 @@ class CommentAPIView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def _get_video(self):
-        video = get_object_or_404(Video, id=self.kwargs['video'])
-        CommentHrefHyperlinkedIdentityField.video = video
-        return video
+        return get_object_or_404(Video, id=self.kwargs['video'])
 
     def get_queryset(self):
         return Comment.objects.filter(video=self._get_video(), is_removed=False)
