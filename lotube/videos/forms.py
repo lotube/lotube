@@ -3,7 +3,7 @@ from models import *
 from django import forms
 
 
-class VideoEdit(ModelForm):
+class VideoEditForm(ModelForm):
     """
     A form for editing videos.
     """

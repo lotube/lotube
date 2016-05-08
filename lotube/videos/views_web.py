@@ -1,8 +1,8 @@
 from django.core.urlresolvers import reverse
 
 from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin
-from .mixins import VideoByTagListMixin, TagListMixin, VideoEditMixin
-from .forms import VideoEdit
+from .mixins import VideoByTagListMixin, TagListMixin, VideoEditMixin, VideoDeleteMixin
+from .forms import VideoEditForm
 
 
 class VideoList(VideoListMixin):
@@ -27,7 +27,12 @@ class TagList(TagListMixin):
 
 class VideoEdit(VideoEditMixin):
     template_name = 'videos/video_edit.html'
-    form_class = VideoEdit
+    form_class = VideoEditForm
 
     def get_success_url(self):
         return reverse('web:videos:video_edit', args=[self.kwargs['pk']])
+
+
+class VideoDelete(VideoDeleteMixin):
+    template_name = 'videos/video_delete.html'
+    success_url = '/'

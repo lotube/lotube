@@ -6,7 +6,7 @@
     <h1>Video - {{ object.title }} </h1>
     {% if object.user == request.user %}
         <a href = "{% url "web:videos:video_edit" video.id %}">Edit</a>
-        <a href = "#">Delete</a>
+        <a href = "{% url "web:videos:video_delete" video.id %}">Delete</a>
     {% endif %}
     <div>
         Title: {{ object.title }} ({{ object.id }})<br>
