@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import OneToOneField
 
+from config import constants as globalConstants
 from core.models import LowerCaseCharField
 from core.validators import Common
 from users.models import User
@@ -29,6 +30,8 @@ class AbstractVideo(AbstractTimeStamped):
     duration = models.PositiveIntegerField(default=0)
     filename = models.CharField(max_length=255, unique=True)
     tags = models.ManyToManyField('videos.Tag', related_name='videos')
+    thumbnail = models.ImageField(upload_to=globalConstants.VIDEO_THUMBNAIL_PATH,
+                                  blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -71,20 +74,6 @@ class AbstractRating(models.Model):
 
     def __str__(self):
         return u'{0}/{1}'.format(self.upvotes, self.downvotes)
-
-
-class AbstractThumbnail(models.Model):
-    video = OneToOneField('videos.Video', primary_key=True,
-                          related_name='thumbnail')
-    url = models.CharField(max_length=255, default='', blank=True)
-    width = models.PositiveIntegerField(default=0)
-    height = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return u'{0}'.format(self.url)
-
-    class Meta:
-        abstract = True
 
 
 class AbstractTag(models.Model):

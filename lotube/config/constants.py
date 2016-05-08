@@ -1,8 +1,19 @@
 PROJECT_NAME = 'lotube'
 PAGINATE_BY = 10  # X items per page
 
+# FILE UPLOADS
+VIDEO_FILE_PATH = 'videos/file/'
+VIDEO_FILE_MAX_SIZE = 100 * 1024 * 1024  # 100 MB
+
+VIDEO_THUMBNAIL_PATH = 'uploads/videos/thumbnails'
+VIDEO_THUMBNAIL_MAX_SIZE = 2 * 1024 * 1024  # 2 MB
+
 
 def app_constants(request):
     return {
         'PROJECT_NAME': PROJECT_NAME,
+        'VIDEO_FILE_PATH': VIDEO_FILE_PATH,
+        'VIDEO_FILE_MAX_SIZE': VIDEO_FILE_MAX_SIZE,
+        'VIDEO_THUMBNAIL_PATH': VIDEO_THUMBNAIL_PATH,
+        'VIDEO_THUMBNAIL_MAX_SIZE': VIDEO_THUMBNAIL_MAX_SIZE,
     }

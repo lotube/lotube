@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Video, Thumbnail, Analytic, Rating, Tag
+from .models import Video, Analytic, Rating, Tag
 
 
 class VideoAdmin(admin.ModelAdmin):
@@ -13,10 +13,6 @@ class VideoAdmin(admin.ModelAdmin):
     show_url.short_description = 'Filename URL'
 
 
-class ThumbnailAdmin(admin.ModelAdmin):
-    list_display = ('video', 'url')
-
-
 class AnalyticAdmin(admin.ModelAdmin):
     list_display = ('video', 'views',)
 
@@ -26,7 +22,6 @@ class RatingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Video, VideoAdmin)
-admin.site.register(Thumbnail, ThumbnailAdmin)
 admin.site.register(Analytic, AnalyticAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(Tag)

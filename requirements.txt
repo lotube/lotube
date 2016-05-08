@@ -5,4 +5,5 @@ django-appconf==1.0.1
 six==1.10.0
 coverage==4.0.3
 djangorestframework==3.3.3
+Pillow==2.7.0
 -e git://github.com/lotube/lotube-crawler.git#egg=lotube-crawler

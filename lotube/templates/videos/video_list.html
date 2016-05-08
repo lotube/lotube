@@ -32,8 +32,12 @@
             </div>
             <div>Duration: {{ video.duration }} seconds</div>
             <div>
-                Thumbnail: {{ video.thumbnail.url }}
-                ({{ video.thumbnail.width }} x {{ video.thumbnail.height }})
+                Thumbnail:
+                {% if video.thumbnail %}
+                    <img src="{{ MEDIA_URL }}{{ video.thumbnail }}" width="200" height="150" />
+                {% else %}
+                    -
+                {% endif %}
             </div>
             <div>
                 Tags:

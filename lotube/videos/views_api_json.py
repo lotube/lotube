@@ -25,9 +25,9 @@ def _get_item(db_video, request):
         'modified_at': db_video.modified,
         'filename': db_video.filename,
         'thumbnail': {
-            'height': db_video.thumbnail.height,
-            'width': db_video.thumbnail.width,
-            'url': db_video.thumbnail.url
+            'height': db_video.thumbnail.height if db_video.thumbnail else 0,
+            'width': db_video.thumbnail.width if db_video.thumbnail else 0,
+            'url': db_video.thumbnail.url if db_video.thumbnail else ''
         },
         'tags': [tag.name for tag in db_video.tags.all()]
     }
