@@ -10,11 +10,16 @@ from .models import Video, Tag
 
 
 class OwnerRequiredMixin(CustomLoginRequiredMixin):
+    """
+    Video owner is required. <pk> parameter in video URL is required.
+    """
 
     def dispatch(self, request, **kwargs):
-        if not request.user.is_authenticated()\
-                or request.user != kwargs['pk']:
-            raise Http404('Not logged in or not the owner')
+        if not request.user.is_authenticated():
+            raise Http404('Not logged in')
+        video = get_object_or_404(Video, pk=kwargs['pk'])
+        if request.user != video.user:
+            raise Http404('Not the video owner')
         return super(OwnerRequiredMixin, self).dispatch(request, **kwargs)
 
 
