@@ -2,8 +2,9 @@ from django.db import models
 from django.db.models import OneToOneField
 
 from config import constants as globalConstants
+from core.fields import RestrictedNonAnimatedImageField
 from core.models import LowerCaseCharField
-from core.validators import Common, File
+from core.validators import Common
 from users.models import User
 from .managers import TagManager
 from . import constants
@@ -33,9 +34,10 @@ class AbstractVideo(AbstractTimeStamped):
     duration = models.PositiveIntegerField(default=0)
     filename = models.CharField(max_length=255, unique=True)
     tags = models.ManyToManyField('videos.Tag', related_name='videos')
-    thumbnail = models.ImageField(upload_to=globalConstants.VIDEO_THUMBNAIL_PATH,
-                                  blank=True, null=True,
-                                  validators=[File.max_size(globalConstants.VIDEO_THUMBNAIL_MAX_SIZE)])
+    thumbnail = RestrictedNonAnimatedImageField(
+        upload_to=globalConstants.VIDEO_THUMBNAIL_PATH,
+        blank=True, null=True,
+        max_upload_size=globalConstants.VIDEO_THUMBNAIL_MAX_SIZE)
 
     def __str__(self):
         return self.title
