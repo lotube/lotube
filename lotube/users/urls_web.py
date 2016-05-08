@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
-from .views_web import UserList, UserDetail, LoginView, RegisterView, LogoutView
+from .views_web import UserList, UserDetail, LoginView, RegisterView, LogoutView, \
+    UserDelete, UserUpdate
 
 urlpatterns = [
     # List of users
@@ -36,5 +37,19 @@ urlpatterns = [
         r'^\/(?P<username>[\w\d]+)$',
         UserDetail.as_view(),
         name='user'
+    ),
+
+    # Update a specific user
+    url(
+        r'\/(?P<username>[\w\d]+)/edit$',
+        UserUpdate.as_view(),
+        name='update'
+    ),
+
+    # Delete a specific user
+    url(
+        r'\/(?P<username>[\w\d]+)/delete$',
+        UserDelete.as_view(),
+        name='delete'
     ),
 ]

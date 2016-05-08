@@ -1,7 +1,13 @@
 import dicttoxml
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, resolve
 from django.http import JsonResponse, HttpResponse
 from django.views.generic import View
+
+
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+    login_url = 'web:users:login'
+    redirect_field_name = 'next'
 
 
 class JSONView(View):

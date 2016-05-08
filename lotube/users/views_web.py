@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import CreateView
 
-from users.forms import UserCreationForm
-from .mixins import UserListMixin, UserDetailMixin
+from users.forms import UserCreationForm, UserUpdateForm
+from .mixins import UserListMixin, UserDetailMixin, UserDeleteMixin, \
+    UserUpdateMixin
 
 
 class UserList(UserListMixin):
@@ -14,6 +16,19 @@ class UserList(UserListMixin):
 
 class UserDetail(UserDetailMixin):
     template_name = 'users/user_detail.html'
+
+
+class UserUpdate(UserUpdateMixin):
+    template_name = 'users/update.html'
+    form_class = UserUpdateForm
+
+    def get_success_url(self):
+        return reverse('web:users:update', args=[self.kwargs['username']])
+
+
+class UserDelete(UserDeleteMixin):
+    success_url = '/'
+    template_name = 'users/delete.html'
 
 
 class RegisterView(CreateView):
