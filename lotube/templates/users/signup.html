@@ -1,9 +1,15 @@
 {% extends "users/base.html" %}
 
 {% block inner_content %}
-    <form method="post" action="">
-        {% include "form.html" with required_mark="*" %}
-        <input type="submit" value="Sign up" />
-    </form>
+    <h1>Sign up</h1>
+
+    {% if user.is_authenticated %}
+        You're already logged in!
+    {% else %}
+        <form method="post" action="">
+            {% include "form.html" with required_mark="*" %}
+            <input type="submit" value="Sign up" />
+        </form>
+    {% endif %}
 
 {% endblock %}

@@ -1,5 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import CreateView
 
 from users.forms import UserCreationForm
@@ -51,3 +52,15 @@ class LoginView(TemplateView):
         context = super(LoginView, self).get_context_data(**kwargs)
         context['errors'] = self.errors
         return context
+
+
+class LogoutView(RedirectView):
+    """
+    Logout view, will redirect to login view regardless of user having been
+    authenticated or not.
+    """
+    pattern_name = 'web:users:login'
+
+    def get_redirect_url(self, **kwargs):
+        logout(self.request)
+        return super(LogoutView, self).get_redirect_url(**kwargs)

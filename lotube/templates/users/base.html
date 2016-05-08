@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <a href="{% url "web:users:login" %}">log in</a>
+    <a href="{% url "web:users:signup" %}">sign up</a>
+    <a href="{% url "web:users:logout" %}">log out</a>
+
     {% block inner_content %}
     {% endblock %}
 {% endblock %}

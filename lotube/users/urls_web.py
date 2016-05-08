@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views_web import UserList, UserDetail, LoginView, RegisterView
+from .views_web import UserList, UserDetail, LoginView, RegisterView, LogoutView
 
 urlpatterns = [
     # List of users
@@ -22,6 +22,13 @@ urlpatterns = [
         r'^\/signup',
         RegisterView.as_view(),
         name='signup'
+    ),
+
+    # Logout
+    url(
+        r'^\/logout',
+        LogoutView.as_view(),
+        name='logout'
     ),
 
     # Retrieve a specific user

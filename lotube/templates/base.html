@@ -5,6 +5,11 @@
 <body>
     <h1>{{ PROJECT_NAME }}</h1>
     <div id="content">
+        {% if user.is_authenticated %}
+            Welcome {{ user.username }}!
+        {% else %}
+            You're not logged in
+        {% endif %} |
         <a href="{% url "web:videos:videos" %}">videos</a>
         <a href="{% url "web:users:users" %}">users</a> |
         {% block content %}
