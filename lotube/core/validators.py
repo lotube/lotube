@@ -57,4 +57,4 @@ class File(object):
 
     @staticmethod
     def _bytes_to_megabytes(val, decimals=2):
-        return round(val / 1024 / 1024, 2)
+        return round(val / 1024 / 1024, decimals)
