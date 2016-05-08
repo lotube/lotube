@@ -3,8 +3,11 @@
 <h2>{{ object.object.title }}</h2>
 
 {% block inner_content %}
-    <h1>Video - {{ object.title }}</h1>
-
+    <h1>Video - {{ object.title }} </h1>
+    {% if object.user == request.user %}
+        <a href = "{% url "web:videos:video_edit" video.id %}">Edit</a>
+        <a href = "#">Delete</a>
+    {% endif %}
     <div>
         Title: {{ object.title }} ({{ object.id }})<br>
         Source: {{ object.source }}<br>

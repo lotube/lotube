@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 
 from . import constants
 from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList
-from .views_web import TagList
+from .views_web import TagList, VideoEdit
 
 urlpatterns = [
     # Include comments application
@@ -46,4 +46,11 @@ urlpatterns = [
         VideoByTagList.as_view(),
         name='videos_by_tags'
     ),
+
+    # Edit video
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
+        VideoEdit.as_view(),
+        name='video_edit'
+    )
 ]

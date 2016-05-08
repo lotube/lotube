@@ -1,6 +1,6 @@
 from annoying.functions import get_object_or_None
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 
 from config import constants
 from users.models import User
@@ -68,3 +68,7 @@ class VideoByTagListMixin(ListView):
 class TagListMixin(ListView):
     model = Tag
     paginate_by = constants.PAGINATE_BY
+
+
+class VideoEditMixin(UpdateView):
+    model = Video
