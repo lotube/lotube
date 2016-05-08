@@ -1,10 +1,21 @@
 from annoying.functions import get_object_or_None
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView
 
 from config import constants
+from core.mixins import CustomLoginRequiredMixin
 from users.models import User
 from .models import Video, Tag
+
+
+class OwnerRequiredMixin(CustomLoginRequiredMixin):
+
+    def dispatch(self, request, **kwargs):
+        if not request.user.is_authenticated()\
+                or request.user != kwargs['pk']:
+            raise Http404('Not logged in or not the owner')
+        return super(OwnerRequiredMixin, self).dispatch(request, **kwargs)
 
 
 class VideoListMixin(ListView):
