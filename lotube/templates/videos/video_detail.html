@@ -2,6 +2,14 @@
 
 <h2>{{ object.object.title }}</h2>
 
+{% block local_stylesheets %}
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+{% endblock %}
+
+{% block local_scripts %}
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+{% endblock %}
+
 {% block inner_content %}
     <h1>Video - {{ object.title }} </h1>
     {% if object.user == request.user %}
@@ -17,8 +25,6 @@
         {% if object.source == 'youtube' %}
             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ object.id_source }}?rel=0" frameborder="0" allowfullscreen></iframe>
         {% else %}
-            <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-            <script src="http://vjs.zencdn.net/c/video.js"></script>
             <video id="video1" class="video-js vjs-default-skin" width="640" height="480"
                 data-setup='{"controls" : true}'>
                 <source src="{{ MEDIA_URL }}{{ object.filename }}" type="video/x-flv">
@@ -66,7 +72,7 @@
         <h2>Comments</h2>
         <a href = "{% url 'web:videos:comments:comment_add' video.id %}">New Comment</a>
         {% for comment in object.comments.all %}
-            <div>
+            <div id="comment_{{ comment.id }}">
                 <div>
                     User: {{ comment.user.username }}
                     {% if object.user == request.user %}

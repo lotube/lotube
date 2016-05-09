@@ -16,7 +16,8 @@ class CommentAdd(CommentAddMixin):
     form_class = CommentAddForm
 
     def get_success_url(self):
-        return reverse('web:videos:video', args=[self.kwargs['video']])
+        return reverse('web:videos:video', args=[self.kwargs['video']]) + \
+               '#comment_' + str(self.object.id)
 
 
 class CommentEdit(CommentEditMixin):
@@ -24,4 +25,5 @@ class CommentEdit(CommentEditMixin):
     form_class = CommentEditForm
 
     def get_success_url(self):
-        return reverse('web:videos:video', args=[self.kwargs['video']])
+        return reverse('web:videos:video', args=[self.kwargs['video']]) \
+               + '#comment_' + str(self.object.id)
