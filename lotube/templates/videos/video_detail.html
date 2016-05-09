@@ -77,7 +77,7 @@
                     User: {{ comment.user.username }}
                     {% if comment.user == request.user %}
                         <a href = "{% url 'web:videos:comments:comment_edit' video.id comment.id %}">Edit</a>
-                        <a href = "#">Delete</a>
+                        <a href = "{% url 'web:videos:comments:comment_delete' video.id comment.id %}">Delete</a>
                     {% endif %}
                 </div>
                 <div>

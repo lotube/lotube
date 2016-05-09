@@ -1,14 +1,7 @@
 from django.core.urlresolvers import reverse
 
-from .mixins import CommentListMixin, CommentDetailMixin, CommentAddMixin, CommentEditMixin, CommentDeleteMixin
+from .mixins import CommentAddMixin, CommentEditMixin, CommentDeleteMixin
 from .forms import CommentAddForm, CommentEditForm
-
-#class CommentList(CommentListMixin):
-#    template_name = 'videos/comments/comment_list.html'
-
-
-#class CommentDetail(CommentDetailMixin):
-#    template_name = 'videos/comments/comment_detail.html'
 
 
 class CommentAdd(CommentAddMixin):
@@ -27,3 +20,12 @@ class CommentEdit(CommentEditMixin):
     def get_success_url(self):
         return reverse('web:videos:video', args=[self.kwargs['video']]) \
                + '#comment_' + str(self.object.id)
+
+
+class CommentDelete(CommentDeleteMixin):
+    template_name = 'videos/comments/comment_delete.html'
+
+    def get_success_url(self):
+        return reverse('web:videos:video', args=[self.kwargs['video']]) \
+               + '#comment_' + str(self.object.id)
+
