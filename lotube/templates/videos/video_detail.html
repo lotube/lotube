@@ -17,8 +17,12 @@
         {% if object.source == 'youtube' %}
             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ object.id_source }}?rel=0" frameborder="0" allowfullscreen></iframe>
         {% else %}
-            Visualiser has not yet been implemented!<br>
-            Filename: {{ object.filename }}
+            <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+            <script src="http://vjs.zencdn.net/c/video.js"></script>
+            <video id="video1" class="video-js vjs-default-skin" width="640" height="480"
+                data-setup='{"controls" : true}'>
+                <source src="{{ MEDIA_URL }}{{ object.filename }}" type="video/x-flv">
+            </video>
         {% endif %}
     </div>
     <div>
@@ -30,8 +34,12 @@
     </div>
     <div>Duration: {{ object.duration }} seconds</div>
     <div>
-        Thumbnail: {{ object.thumbnail.url }}
-        ({{ object.thumbnail.width }} x {{ object.thumbnail.height }})
+        Thumbnail:
+        {% if video.thumbnail %}
+            <img src="{{ MEDIA_URL }}{{ video.thumbnail }}" width="200" height="150" />
+        {% else %}
+            -
+        {% endif %}
     </div>
     <div>
         Tags:

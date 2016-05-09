@@ -4,7 +4,7 @@ from rest_framework.serializers import SerializerMethodField, reverse, \
 from rest_framework.serializers import ModelSerializer
 
 from core.api_utils import ContextUtils
-from videos.models import Video, Thumbnail, Tag, Analytic, Rating
+from videos.models import Video, Tag, Analytic, Rating
 from videos.utils import TagBuilder
 
 
@@ -22,14 +22,6 @@ class AnalyticsSerializer(ModelSerializer):
         fields = ('views', 'unique_views', 'shares')
 
 
-class ThumbnailSerializer(ModelSerializer):
-
-    class Meta:
-        model = Thumbnail
-        fields = ('url', 'width', 'height')
-        read_only_fields = ('width', 'height')
-
-
 class TagSerializer(ModelSerializer):
 
     class Meta:
@@ -39,7 +31,6 @@ class TagSerializer(ModelSerializer):
 
 class VideoSerializer(ModelSerializer):
     href = HyperlinkedIdentityField(view_name='api_v2:videos-detail')
-    thumbnail = ThumbnailSerializer()
     tags = TagSerializer(many=True, read_only=True)
     user = serializers.SerializerMethodField()
     analytics = SerializerMethodField()
@@ -58,8 +49,6 @@ class VideoSerializer(ModelSerializer):
             .build_absolute_uri(reverse('api_v2:video-comments-list', [obj.id]))
 
     def create(self, validated_data):
-        thumbnail = validated_data.pop('thumbnail')
-
         # logged in required
         user = ContextUtils(self.context).logged_in_user()
 
@@ -73,21 +62,7 @@ class VideoSerializer(ModelSerializer):
         for tag in tags:
             video.tags.add(tag)
 
-        # add video thumbnail
-        video.thumbnail.url = thumbnail['url']
-
         return video
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
-        instance.filename = validated_data.get('filename', instance.filename)
-
-        # thumbnail
-        thumbnail = validated_data.get('thumbnail', instance.thumbnail).popitem()
-        instance.thumbnail.url = thumbnail[1] if thumbnail[0] == 'url' else ''
-
-        return instance
 
     class Meta:
         model = Video

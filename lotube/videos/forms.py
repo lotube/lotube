@@ -1,6 +1,5 @@
 from django.forms import ModelForm
 from models import *
-from django import forms
 
 
 class VideoEditForm(ModelForm):
@@ -10,4 +9,4 @@ class VideoEditForm(ModelForm):
 
     class Meta:
         model = Video
-        fields = ('title', 'description',)
+        fields = ('title', 'description', 'filename', 'thumbnail',)
