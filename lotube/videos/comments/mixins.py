@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView, View, CreateView, DeleteV
 from config import constants
 from videos.models import Video
 from .models import Comment
-from core.mixins import CustomLoginRequiredMixin
+from core.mixins import CustomLoginRequiredMixin, OwnerRequiredMixin
 
 
 class CommentMixin(View):
@@ -40,17 +40,6 @@ class CommentDetailMixin(CommentMixin, DetailView):
                                  video=self.kwargs['video'],
                                  id=self.kwargs['pk']
                                  )
-
-
-class OwnerRequiredMixin(CustomLoginRequiredMixin):
-
-    def dispatch(self, request, **kwargs):
-        if not request.user.is_authenticated():
-            raise Http404('Not logged in')
-        comment = get_object_or_404(Comment, pk=kwargs['pk'])
-        if request.user != comment.user:
-            raise Http404('Not the video owner')
-        return super(OwnerRequiredMixin, self).dispatch(request, **kwargs)
 
 
 class CommentAddMixin(CustomLoginRequiredMixin, CreateView):
