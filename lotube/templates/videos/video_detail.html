@@ -17,7 +17,12 @@
         {% if object.source == 'youtube' %}
             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ object.id_source }}?rel=0" frameborder="0" allowfullscreen></iframe>
         {% else %}
-            <video width="560" height="315" src="{{ MEDIA_URL }}{{ object.filename }}" controls="controls"></video>
+            <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+            <script src="http://vjs.zencdn.net/c/video.js"></script>
+            <video id="video1" class="video-js vjs-default-skin" width="640" height="480"
+                data-setup='{"controls" : true}'>
+                <source src="{{ MEDIA_URL }}{{ object.filename }}" type="video/x-flv">
+            </video>
         {% endif %}
     </div>
     <div>

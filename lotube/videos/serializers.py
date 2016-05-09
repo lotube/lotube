@@ -64,13 +64,6 @@ class VideoSerializer(ModelSerializer):
 
         return video
 
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
-        instance.filename = validated_data.get('filename', instance.filename)
-
-        return instance
-
     class Meta:
         model = Video
         fields = ('id', 'id_source', 'source', 'user', 'href', 'title',

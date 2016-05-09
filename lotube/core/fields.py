@@ -41,6 +41,7 @@ class ContentTypeRestrictedFileField(FileField):
         file = data.file
         try:
             content_type = file.content_type
+            print content_type
             if self.content_types and content_type not in self.content_types:
                 raise forms.ValidationError('Filetype not supported.')
             if self.max_upload_size and file._size > self.max_upload_size:
@@ -76,4 +77,4 @@ class RestrictedVideoField(RestrictedFile):
     A ContentTypeRestrictedFileField specifically for videos; allowed formats
     are already set by default.
     """
-    content_types = ['video/mp4', 'video/flv', 'video/webm']
+    content_types = ['video/x-flv']
