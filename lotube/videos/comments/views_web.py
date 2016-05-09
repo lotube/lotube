@@ -16,4 +16,4 @@ class CommentAdd(CommentAddMixin):
     form_class = CommentAddForm
 
     def get_success_url(self):
-        return reverse('web:videos:video', args=(self.kwargs['video']))
+        return reverse('web:videos:video', args=[self.kwargs['video']])

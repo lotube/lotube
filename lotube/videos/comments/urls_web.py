@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Create new comment
     url(
-        r'^/comment_add$',
+        r'^\/new',
         CommentAdd.as_view(),
         name='comment_add'
     ),
