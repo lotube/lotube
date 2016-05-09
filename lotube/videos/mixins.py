@@ -2,6 +2,7 @@ from annoying.functions import get_object_or_None
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView
 
 from config import constants
 from core.mixins import CustomLoginRequiredMixin
@@ -84,6 +85,14 @@ class VideoByTagListMixin(ListView):
 class TagListMixin(ListView):
     model = Tag
     paginate_by = constants.PAGINATE_BY
+
+
+class VideoCreateMixin(CustomLoginRequiredMixin, CreateView):
+    model = Video
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(VideoCreateMixin, self).form_valid(form)
 
 
 class VideoEditMixin(OwnerRequiredMixin, UpdateView):
