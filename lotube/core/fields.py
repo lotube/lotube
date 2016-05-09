@@ -69,3 +69,11 @@ class RestrictedNonAnimatedImageField(RestrictedImageField):
     A RestrictedImageField that does not allow animated images (.gif).
     """
     content_types = ['image/jpeg', 'image/png']
+
+
+class RestrictedVideoField(RestrictedFile):
+    """
+    A ContentTypeRestrictedFileField specifically for videos; allowed formats
+    are already set by default.
+    """
+    content_types = ['video/mp4', 'video/flv', 'video/webm']

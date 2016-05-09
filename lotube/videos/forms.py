@@ -9,4 +9,4 @@ class VideoEditForm(ModelForm):
 
     class Meta:
         model = Video
-        fields = ('title', 'description', 'thumbnail',)
+        fields = ('title', 'description', 'filename', 'thumbnail',)
