@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, View, CreateView, DeleteView, UpdateView
 
@@ -41,6 +42,17 @@ class CommentDetailMixin(CommentMixin, DetailView):
                                  )
 
 
+class OwnerRequiredMixin(CustomLoginRequiredMixin):
+
+    def dispatch(self, request, **kwargs):
+        if not request.user.is_authenticated():
+            raise Http404('Not logged in')
+        comment = get_object_or_404(Comment, pk=kwargs['pk'])
+        if request.user != comment.user:
+            raise Http404('Not the video owner')
+        return super(OwnerRequiredMixin, self).dispatch(request, **kwargs)
+
+
 class CommentAddMixin(CustomLoginRequiredMixin, CreateView):
     model = Comment
 
@@ -50,8 +62,13 @@ class CommentAddMixin(CustomLoginRequiredMixin, CreateView):
         return super(CommentAddMixin, self).form_valid(form)
 
 
-class CommentEditMixin(UpdateView):
+class CommentEditMixin(OwnerRequiredMixin, UpdateView):
     model = Comment
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.video = Video.objects.get(id=self.kwargs['video'])
+        return super(CommentEditMixin, self).form_valid(form)
 
 
 class CommentDeleteMixin(DeleteView):
