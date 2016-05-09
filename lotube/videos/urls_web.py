@@ -1,7 +1,8 @@
 from django.conf.urls import include, url
 
 from . import constants
-from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList
+from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList, \
+    VideoCreate
 from .views_web import TagList, VideoEdit, VideoDelete
 
 urlpatterns = [
@@ -45,6 +46,13 @@ urlpatterns = [
         ',]+)$',
         VideoByTagList.as_view(),
         name='videos_by_tags'
+    ),
+
+    # Create a specific video
+    url(
+        r'^\/new$',
+        VideoCreate.as_view(),
+        name='video_create'
     ),
 
     # Edit a specific video

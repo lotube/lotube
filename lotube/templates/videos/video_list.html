@@ -3,6 +3,8 @@
 {% block inner_content %}
     <h1>Videos</h1>
 
+    <a href="{% url "web:videos:video_create" %}">New video</a>
+
     <div>
         <form method="GET">
             <input type="text" name="title" placeholder="video title" value="{{ request.GET.title }}" />
