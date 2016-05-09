@@ -65,11 +65,14 @@
     <div>
         <h2>Comments</h2>
         <a href = "{% url 'web:videos:comments:comment_add' video.id %}">New Comment</a>
-
         {% for comment in object.comments.all %}
             <div>
                 <div>
                     User: {{ comment.user.username }}
+                    {% if object.user == request.user %}
+                        <a href = "{% url 'web:videos:comments:comment_edit' video.id comment.id %}">Edit</a>
+                        <a href = "#">Delete</a>
+                    {% endif %}
                 </div>
                 <div>
                     Published: {{ comment.created }}

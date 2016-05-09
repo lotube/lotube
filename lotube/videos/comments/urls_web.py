@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views_web import CommentAdd
+from .views_web import CommentAdd, CommentEdit
 
 urlpatterns = [
     # List of Comments
@@ -19,8 +19,21 @@ urlpatterns = [
 
     # Create new comment
     url(
-        r'^/comment_add$',
+        r'^comment_add$',
         CommentAdd.as_view(),
         name='comment_add'
+    ),
+
+    # Edit a specific comment
+   # url(
+   #     r'^(?P<pk>\d+)comment_edit$',
+   #     CommentEdit.as_view(),
+   #     name='comment_edit'
+   # )
+
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
+        CommentEdit.as_view(),
+        name='comment_edit'
     ),
 ]
