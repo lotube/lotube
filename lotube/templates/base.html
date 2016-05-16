@@ -13,7 +13,7 @@
 <body>
     <h1>{{ PROJECT_NAME }}</h1>
     <div id="content">
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
             Welcome
             <a href="{% url "web:users:user" request.user.username %}">
                 {{ request.user.username }}!
