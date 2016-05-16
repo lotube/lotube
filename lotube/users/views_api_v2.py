@@ -16,3 +16,4 @@ class UserAPIView(GenericViewSet,
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnlyUser]
+    filter_fields = ('id', 'username',)

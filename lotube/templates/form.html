@@ -19,6 +19,7 @@
     {% endif %}
     <div class="row">
          {{ field }}
+        <span id="id_{{ field.name }}_error_field" style="color:red"></span>
     </div>
 {% endfor %}
 <input type="hidden" name="next" value="{{ next }}" />

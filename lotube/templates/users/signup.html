@@ -1,4 +1,9 @@
 {% extends "users/base.html" %}
+{% load static %}
+
+{% block local_scripts %}
+    <script src="{% static "js/users/register_username_availability.js" %}"></script>
+{% endblock %}
 
 {% block inner_content %}
     <h1>Sign up</h1>
