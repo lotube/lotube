@@ -110,7 +110,7 @@ class CrawlerBot(object):
                              title=video.title,
                              description=video.description,
                              filename=base_url+video.id_source)
-            db_video.save()
+            db_video.save(force_insert=True)  # Could be problematic on sqlite
             for tag in video.tags:
                 db_video.tags.add(self.get_tag(tag))
 

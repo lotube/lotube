@@ -7,13 +7,13 @@ urlpatterns = [
     url(
         r'^launch',
         CrawlerBot().execute,
-        name='CrawlerBot'
+        name='launch'
     ),
 
     # Crawler Management
     url(
         r'^manage',
         CrawlerBot().get_management,
-        name='CrawlerManagement'
+        name='manage'
     )
 ]
