@@ -1,4 +1,5 @@
 import os
+import threading
 
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
@@ -52,7 +53,11 @@ class CrawlerBot(object):
                 term = form.cleaned_data['term']
                 max_depth = form.cleaned_data['max_depth']
                 max_breadth = form.cleaned_data['max_breadth']
-                self._execute_crawler(term, max_depth, max_breadth)
+                # Threading _execute_crawler function
+                t = threading.Thread(target=self._execute_crawler,
+                                     args=[term, max_depth, max_breadth])
+                t.setDaemon(True)
+                t.start()
                 return HttpResponse('OK')
         else:
             form = CrawlerForm()
