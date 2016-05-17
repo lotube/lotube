@@ -2,7 +2,7 @@ import os
 import threading
 
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from lotube_crawler import Crawler
 from videos.models import Video, Tag
@@ -11,14 +11,23 @@ from users.models import User
 from lotube.bot.forms import CrawlerForm
 
 
+class Singleton(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
 class CrawlerBot(object):
+    __metaclass__ = Singleton
 
-    # Threading control
-    global threads
-    threads = {}
+    def __init__(self):
+        # Threading control
+        self.threads = {}
 
-    global mutex
-    mutex = threading.Lock()
+        self.mutex = threading.Lock()
 
     def get_user(self):
         """
@@ -50,9 +59,9 @@ class CrawlerBot(object):
             return tag
 
     def get_threads(self):
-        mutex.acquire()
-        num = len(threads)
-        mutex.release()
+        self.mutex.acquire()
+        num = len(self.threads)
+        self.mutex.release()
         return num
 
     def execute(self, request):
@@ -71,16 +80,20 @@ class CrawlerBot(object):
                                      args=args)
                 t.setDaemon(True)
                 t.start()
-                mutex.acquire()
-                threads[t.ident] = args
-                response = render(request, 'bot/bot_management.html',
-                                  {'threads': threads, 'nthreads': len(threads)})
-                mutex.release()
-                return response
+                self.mutex.acquire()
+                self.threads[t.ident] = args
+                self. mutex.release()
+                return redirect('/bot/manage')
         else:
             form = CrawlerForm()
-
         return render(request, 'bot/bot.html', {'form': form, 'nthreads': self.get_threads()})
+
+    def get_management(self, request):
+            self.mutex.acquire()
+            response = render(request, 'bot/bot_management.html',
+                              {'threads': self.threads, 'nthreads': len(self.threads)})
+            self. mutex.release()
+            return response
 
     def _execute_crawler(self, term, max_depth, max_breadth):
         token = os.environ.get('TOKEN_YOUTUBE')
@@ -102,6 +115,6 @@ class CrawlerBot(object):
                 db_video.tags.add(self.get_tag(tag))
 
         # Erase CrawlerBot thread controller
-        mutex.acquire()
-        del(threads[threading.currentThread().ident])
-        mutex.release()
+        self.mutex.acquire()
+        del(self.threads[threading.currentThread().ident])
+        self.mutex.release()
