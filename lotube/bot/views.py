@@ -2,7 +2,6 @@ import os
 import threading
 
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from lotube_crawler import Crawler
@@ -50,6 +49,12 @@ class CrawlerBot(object):
             tag.save()
             return tag
 
+    def get_threads(self):
+        mutex.acquire()
+        num = len(threads)
+        mutex.release()
+        return num
+
     def execute(self, request):
         if not request.user.is_authenticated() or not request.user.is_staff:
             raise PermissionDenied
@@ -68,16 +73,14 @@ class CrawlerBot(object):
                 t.start()
                 mutex.acquire()
                 threads[t.ident] = args
+                response = render(request, 'bot/bot_management.html',
+                                  {'threads': threads, 'nthreads': len(threads)})
                 mutex.release()
-                return HttpResponse('OK')
+                return response
         else:
             form = CrawlerForm()
 
-        mutex.acquire()
-        nthreads = len(threads)
-        mutex.release()
-
-        return render(request, 'bot/bot.html', {'form': form, 'nthreads': nthreads})
+        return render(request, 'bot/bot.html', {'form': form, 'nthreads': self.get_threads()})
 
     def _execute_crawler(self, term, max_depth, max_breadth):
         token = os.environ.get('TOKEN_YOUTUBE')
