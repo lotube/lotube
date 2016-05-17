@@ -36,7 +36,6 @@ Returns a collection of users.
     "is_staff": true,
     "is_active": true
     }
-    }
 ```
 
 ### GET users/:username
@@ -109,7 +108,6 @@ _Optional parameters_
     ],
     "comments": "http://127.0.0.1:8000/api/v2/videos/2/comments"
     }
-    }
 ```
 
 ### GET videos/:id
@@ -180,7 +178,6 @@ See [GET videos](#get-videos)
         "python"
     ],
     "comments": "http://127.0.0.1:8000/api/v2/videos/2/comments"
-    }
     }
 ```
 
