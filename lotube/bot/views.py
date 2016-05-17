@@ -14,6 +14,13 @@ from lotube.bot.forms import CrawlerForm
 
 class CrawlerBot(object):
 
+    # Threading control
+    global threads
+    threads = {}
+
+    global mutex
+    mutex = threading.Lock()
+
     def get_user(self):
         """
         Create Youtube user or return existing one
@@ -53,22 +60,30 @@ class CrawlerBot(object):
                 term = form.cleaned_data['term']
                 max_depth = form.cleaned_data['max_depth']
                 max_breadth = form.cleaned_data['max_breadth']
+                args = [term, max_depth, max_breadth]
                 # Threading _execute_crawler function
                 t = threading.Thread(target=self._execute_crawler,
-                                     args=[term, max_depth, max_breadth])
+                                     args=args)
                 t.setDaemon(True)
                 t.start()
+                mutex.acquire()
+                threads[t.ident] = args
+                mutex.release()
                 return HttpResponse('OK')
         else:
             form = CrawlerForm()
 
-        return render(request, 'bot/bot.html', {'form': form})
+        mutex.acquire()
+        nthreads = len(threads)
+        mutex.release()
+
+        return render(request, 'bot/bot.html', {'form': form, 'nthreads': nthreads})
 
     def _execute_crawler(self, term, max_depth, max_breadth):
         token = os.environ.get('TOKEN_YOUTUBE')
         crawler = Crawler(site='youtube', site_token=token,
                           max_breadth=max_breadth, max_depth=max_depth)
-        for video in crawler.run(term.split()):  # Test with split()
+        for video in crawler.run(term.split()):
             if Video.objects.filter(id_source=video.id_source).exists():
                 continue
 
@@ -83,24 +98,7 @@ class CrawlerBot(object):
             for tag in video.tags:
                 db_video.tags.add(self.get_tag(tag))
 
-        # if not request.user.is_authenticated() or not request.user.is_staff:
-        #     raise PermissionDenied
-        # token = os.environ.get('TOKEN_YOUTUBE')
-        # crawler = Crawler(site='youtube', site_token=token,
-        #                   max_breadth=1, max_depth=1)
-        # for video in crawler.run(['games']):
-        #     if Video.objects.filter(id_source=video.id_source).exists():
-        #         continue
-        #
-        #     base_url = 'http://www.youtube.com/watch?v='
-        #     db_video = Video(id_source=video.id_source,
-        #                      source='youtube',
-        #                      user=self.get_user(),
-        #                      title=video.title,
-        #                      description=video.description,
-        #                      filename=base_url+video.id_source)
-        #     db_video.save()
-        #     for tag in video.tags:
-        #         db_video.tags.add(self.get_tag(tag))
-        #
-        # return HttpResponse('OK')
+        # Erase CrawlerBot thread controller
+        mutex.acquire()
+        del(threads[threading.currentThread().ident])
+        mutex.release()
