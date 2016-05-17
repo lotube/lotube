@@ -63,7 +63,7 @@ class CrawlerBot(object):
         token = os.environ.get('TOKEN_YOUTUBE')
         crawler = Crawler(site='youtube', site_token=token,
                           max_breadth=max_breadth, max_depth=max_depth)
-        for video in crawler.run([term]):  # Test with split()
+        for video in crawler.run(term.split()):  # Test with split()
             if Video.objects.filter(id_source=video.id_source).exists():
                 continue
 
