@@ -34,6 +34,7 @@ class CommentSerializer(ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.content = validated_data.get('content', instance.content)
+        instance.save()
 
         return instance
 
