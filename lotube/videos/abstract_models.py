@@ -68,6 +68,10 @@ class AbstractRating(models.Model):
                           related_name='rating')
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
+    up_register = models.ManyToManyField('UpVote', through=AbstractUpVote,
+                                         related_name='video_upvote')
+    down_register = models.ManyToManyField('DownVote', through=AbstractDownVote,
+                                           related_name='video_downvote')
 
     @property
     def upvote(self):
@@ -83,6 +87,16 @@ class AbstractRating(models.Model):
 
     def __str__(self):
         return u'{0}/{1}'.format(self.upvotes, self.downvotes)
+
+
+class AbstractUpVote(AbstractTimeStamped):
+    models.ForeignKey(User)
+    models.ForeignKey('Video')
+
+
+class AbstractDownVote(AbstractTimeStamped):
+    models.ForeignKey(User)
+    models.ForeignKey('Video')
 
 
 class AbstractTag(models.Model):
