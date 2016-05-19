@@ -11,7 +11,7 @@ class AnalyticAdmin(admin.ModelAdmin):
 
 
 class RatingAdmin(admin.ModelAdmin):
-    list_display = ('video', 'upvotes', 'downvotes',)
+    list_display = ('video', 'likes',)
 
 
 admin.site.register(Video, VideoAdmin)

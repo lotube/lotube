@@ -66,37 +66,36 @@ class AbstractAnalytic(models.Model):
 class AbstractRating(models.Model):
     video = OneToOneField('videos.Video', primary_key=True,
                           related_name='rating')
-    upvotes = models.PositiveIntegerField(default=0)
-    downvotes = models.PositiveIntegerField(default=0)
-    up_register = models.ManyToManyField('UpVote', through=AbstractUpVote,
-                                         related_name='video_upvote')
-    down_register = models.ManyToManyField('DownVote', through=AbstractDownVote,
-                                           related_name='video_downvote')
+    likes = models.PositiveIntegerField(default=0)
+    likes_register = models.ManyToManyField(User, through='Like',
+                                            related_name='video_likes')
 
     @property
-    def upvote(self):
-        self.upvotes += 1
+    def like(self):
+        self.likes += 1
         self.save()
-        return self.upvotes
+        return self.likes
 
     @property
-    def downvote(self):
-        self.downvotes -= 1
+    def undo_like(self):
+        self.likes -= 1
         self.save()
-        return self.downvotes
+        return self.likes
 
     def __str__(self):
-        return u'{0}/{1}'.format(self.upvotes, self.downvotes)
+        return u'{0}'.format(self.likes)
+
+    class Meta:
+        abstract = True
 
 
-class AbstractUpVote(AbstractTimeStamped):
-    models.ForeignKey(User)
-    models.ForeignKey('Video')
+class AbstractLike(AbstractTimeStamped):
+    user = models.ForeignKey(User)
+    rating = models.ForeignKey('Rating')
 
-
-class AbstractDownVote(AbstractTimeStamped):
-    models.ForeignKey(User)
-    models.ForeignKey('Video')
+    class Meta:
+        abstract = True
+        unique_together = ('user', 'rating')
 
 
 class AbstractTag(models.Model):

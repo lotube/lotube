@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from .abstract_models import AbstractVideo, AbstractAnalytic, AbstractTag, \
-    AbstractRating, AbstractUpVote, AbstractDownVote
+    AbstractRating, AbstractLike
 
 
 class Video(AbstractVideo):
@@ -20,9 +20,5 @@ class Tag(AbstractTag):
     pass
 
 
-class UpVote(AbstractUpVote):
-    pass
-
-
-class DownVote(AbstractDownVote):
+class Like(AbstractLike):
     pass

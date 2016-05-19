@@ -1,5 +1,7 @@
 from django.core.urlresolvers import reverse
+from django.views.generic import ListView
 
+from .models import Like
 from .mixins import VideoListMixin, VideoDetailMixin, VideoUserListMixin, \
     VideoCreateMixin
 from .mixins import VideoByTagListMixin, TagListMixin, VideoEditMixin, \
@@ -46,3 +48,13 @@ class VideoEdit(VideoEditMixin):
 class VideoDelete(VideoDeleteMixin):
     template_name = 'videos/video_delete.html'
     success_url = '/'
+
+
+class LikeList(ListView):
+    template_name = 'videos/like_list.html'
+    model = Like
+
+    def get_context_data(self, **kwargs):
+        context = super(LikeList, self).get_context_data()
+        context['video'] = self.kwargs['pk']
+        return context

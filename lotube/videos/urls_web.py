@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 
 from . import constants
 from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList, \
-    VideoCreate
+    VideoCreate, LikeList
 from .views_web import TagList, VideoEdit, VideoDelete
 
 urlpatterns = [
@@ -67,5 +67,12 @@ urlpatterns = [
         r'^\/(?P<pk>\d+)/delete$',
         VideoDelete.as_view(),
         name='video_delete'
+    ),
+
+    # UpVoteList
+    url(
+        r'^\/(?P<pk>\d+)/likes',
+        LikeList.as_view(),
+        name='video_likes'
     )
 ]

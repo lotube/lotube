@@ -8,7 +8,7 @@ from lotube_crawler import Crawler
 from videos.models import Video, Tag
 from users.models import User
 
-from lotube.bot.forms import CrawlerForm
+from .forms import CrawlerForm
 
 
 class Singleton(type):
