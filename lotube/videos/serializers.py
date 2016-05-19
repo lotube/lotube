@@ -4,8 +4,15 @@ from rest_framework.serializers import SerializerMethodField, reverse, \
 from rest_framework.serializers import ModelSerializer
 
 from core.api_utils import ContextUtils
-from videos.models import Video, Tag, Analytic, Rating
+from videos.models import Video, Tag, Analytic, Rating, Like
 from videos.utils import TagBuilder
+
+
+class LikeSerializer(ModelSerializer):
+
+    class Meta:
+        model = Like
+        fields = ('href', 'video', 'rating', 'user', 'created', 'modified',)
 
 
 class RatingSerializer(ModelSerializer):
@@ -19,7 +26,8 @@ class AnalyticsSerializer(ModelSerializer):
 
     class Meta:
         model = Analytic
-        fields = ('views', 'unique_views', 'shares')
+        # fields = ('views', 'unique_views', 'shares')
+        fields = ('views',)
 
 
 class TagSerializer(ModelSerializer):
@@ -34,6 +42,7 @@ class VideoSerializer(ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
     user = serializers.SerializerMethodField()
     analytics = SerializerMethodField()
+    rating = SerializerMethodField()
     comments = serializers.SerializerMethodField()
 
     def get_analytics(self, obj):
@@ -43,6 +52,10 @@ class VideoSerializer(ModelSerializer):
     def get_user(self, obj):
         return ContextUtils(self.context)\
             .build_absolute_uri(reverse('api_v2:users-detail', [obj.user.id]))
+
+    def get_rating(self, obj):
+        return ContextUtils(self.context)\
+            .build_absolute_uri(reverse('api_v2:videos-rating', [obj.id]))
 
     def get_comments(self, obj):
         return ContextUtils(self.context)\
@@ -68,6 +81,6 @@ class VideoSerializer(ModelSerializer):
         model = Video
         fields = ('id', 'id_source', 'source', 'user', 'href', 'title',
                   'description', 'duration', 'created', 'modified', 'filename',
-                  'thumbnail', 'analytics', 'tags', 'comments',)
+                  'thumbnail', 'analytics', 'rating', 'tags', 'comments',)
         read_only_fields = ('id_source', 'source', 'user', 'href', 'duration',
                             'comments',)
