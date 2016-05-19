@@ -65,8 +65,8 @@
     </div>
     <div>
         <h2>Rating</h2>
-        Upvotes: {{ object.rating.upvotes }}<br>
-        Downvotes: {{ object.rating.downvotes }}
+        Number of Likes: {{ object.rating.likes }}<br>
+        <a href = "{% url 'web:videos:video_likes' video.id %}">Likes list</a>
     </div>
     <div>
         <h2>Comments</h2>
