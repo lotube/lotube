@@ -32,6 +32,15 @@
         {% endif %}
     </div>
     <div>
+        <form action="{% url "web:videos:video_like" object.id %}" method="post">
+            {% csrf_token %}
+            <a href="{% url "web:videos:video_like" object.id %}">
+                <button>Like</button>
+            </a>
+        </form>
+        +{{ object.rating.likes }}
+    </div>
+    <div>
         Description: {{object.description }}
     </div>
     <div>

@@ -70,13 +70,11 @@ class AbstractRating(models.Model):
     likes_register = models.ManyToManyField(User, through='Like',
                                             related_name='video_likes')
 
-    @property
     def like(self):
         self.likes += 1
         self.save()
         return self.likes
 
-    @property
     def undo_like(self):
         self.likes -= 1
         self.save()
