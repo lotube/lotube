@@ -1,4 +1,5 @@
 from annoying.functions import get_object_or_None
+from django.db import transaction
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
@@ -41,6 +42,13 @@ class VideoListMixin(ListView):
 
 class VideoDetailMixin(DetailView):
     model = Video
+
+    @transaction.atomic
+    def get_object(self, queryset=None):
+        object = super(VideoDetailMixin, self).get_object(queryset)
+        object.analytic.views += 1
+        object.analytic.save()
+        return object
 
 
 class VideoUserListMixin(ListView):

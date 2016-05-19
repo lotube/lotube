@@ -12,7 +12,7 @@ class RatingSerializer(ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ('upvotes', 'downvotes')
+        fields = ('likes',)
 
 
 class AnalyticsSerializer(ModelSerializer):

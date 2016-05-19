@@ -57,7 +57,7 @@ class AbstractAnalytic(models.Model):
     shares = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return str(self.video)
+        return str(self.views)
 
     class Meta:
         abstract = True
