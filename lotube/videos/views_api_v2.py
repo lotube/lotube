@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
+from rest_framework import mixins
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from core.api_utils import IsOwnerOrReadOnly
 from videos.models import Video, Tag, Analytic, Rating, Like
@@ -34,10 +35,19 @@ class TagAPIView(ModelViewSet):
     serializer_class = TagSerializer
 
 
-class LikeAPIView(ModelViewSet):
+class LikeAPIView(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.DestroyModelMixin,
+                  mixins.ListModelMixin,
+                  GenericViewSet):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-    def get_serializer_context(self):
-        return {'request': self.request}
+    def get_serializer(self, *args, **kwargs):
+        video = self.kwargs['video']
+        video_obj = get_object_or_404(Video, id=video)
+        serializer_class = self.get_serializer_class()
+        kwargs['context'] = self.get_serializer_context()
+        kwargs['context']['video'] = video_obj
+        return serializer_class(*args, **kwargs)

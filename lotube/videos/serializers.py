@@ -1,4 +1,10 @@
-from rest_framework import serializers
+from annoying.functions import get_object_or_None
+from django.db import transaction
+from django.http import Http404
+from django.http.response import HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+from rest_framework import serializers, status
+from rest_framework.response import Response
 from rest_framework.serializers import SerializerMethodField, reverse, \
     HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
@@ -12,17 +18,46 @@ class LikeSerializer(ModelSerializer):
     href = SerializerMethodField()
     video = SerializerMethodField()
 
+    def __init__(self, *args, **kwargs):
+        super(LikeSerializer, self).__init__(*args, **kwargs)
+
     def get_href(self, obj):
         return ContextUtils(self.context)\
             .build_absolute_uri(reverse('api_v2:video-likes-detail',
                                         [obj.rating.video.id, obj.id]))
+
+    @transaction.atomic
+    def create(self, validated_data):
+        rating = self.context['video'].rating
+        obj = get_object_or_None(Like, rating=rating,
+                                 user=self.context.get('request').user)
+        if obj:
+            return obj
+        else:
+            rating.like()
+            return Like.objects.create(rating=rating,
+                                       user=self.context.get('request').user)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            like = self.get_object()
+            if like.user == request.user:
+                rating = get_object_or_None(Rating, likes_register=like)
+                rating.undo_like()
+                self.perform_destroy(like)
+            else:
+                return HttpResponseForbidden
+        except Http404:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_video(self, obj):
         return obj.rating.video.id
 
     class Meta:
         model = Like
-        fields = ('href', 'video', 'rating', 'user', 'created', 'modified',)
+        fields = ('href', 'video', 'user', 'created', 'modified',)
+        read_only_fields = ('href', 'video', 'user', 'created', 'modified',)
 
 
 class RatingSerializer(ModelSerializer):
@@ -45,6 +80,7 @@ class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
         fields = ('video', 'href', 'likes_count', 'likes',)
+        read_only_fields = ('video', 'href', 'likes_count', 'likes',)
 
 
 class AnalyticsSerializer(ModelSerializer):
