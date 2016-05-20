@@ -9,6 +9,16 @@ from videos.utils import TagBuilder
 
 
 class LikeSerializer(ModelSerializer):
+    href = SerializerMethodField()
+    video = SerializerMethodField()
+
+    def get_href(self, obj):
+        return ContextUtils(self.context)\
+            .build_absolute_uri(reverse('api_v2:video-likes-detail',
+                                        [obj.rating.video.id, obj.id]))
+
+    def get_video(self, obj):
+        return obj.rating.video.id
 
     class Meta:
         model = Like
