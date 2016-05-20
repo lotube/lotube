@@ -9,6 +9,8 @@ class ContextUtils(object):
         self.request = context.get('request')
 
     def _validate_request(self):
+        print 'HEOOO'
+        print self.request.user
         if not self.request:
             raise ValidationError('Context Request not found')
 

@@ -16,10 +16,25 @@ class LikeSerializer(ModelSerializer):
 
 
 class RatingSerializer(ModelSerializer):
+    href = HyperlinkedIdentityField(view_name='api_v2:videos-rating')
+    likes_count = serializers.SerializerMethodField()
+    likes = serializers.SerializerMethodField()
+
+    def __init__(self, obj, *args, **kwargs):
+        request = kwargs.pop('request')
+        super(RatingSerializer, self).__init__(obj, *args, **kwargs)
+        self.context['request'] = request
+
+    def get_likes_count(self, obj):
+        return obj.likes
+
+    def get_likes(self, obj):
+        return ContextUtils(self.context)\
+            .build_absolute_uri(reverse('api_v2:video-likes-list', [obj.video.id]))
 
     class Meta:
         model = Rating
-        fields = ('likes',)
+        fields = ('video', 'href', 'likes_count', 'likes',)
 
 
 class AnalyticsSerializer(ModelSerializer):
