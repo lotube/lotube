@@ -1,4 +1,10 @@
 {% extends "videos/base.html" %}
+{% load static %}
+
+{% block local_scripts %}
+    <script src="{% static "js/videos/jqery_youtube_autocomplete.js" %}"></script>
+{% endblock %}
+
 
 {% block inner_content %}
     <h1>Videos</h1>
@@ -7,7 +13,7 @@
 
     <div>
         <form method="GET">
-            <input type="text" name="title" placeholder="video title" value="{{ request.GET.title }}" />
+            <input type="text" name="title" id="title_id" placeholder="video title" value="{{ request.GET.title }}" />
             <input type="text" name="user" placeholder="username" value="{{ request.GET.user }}" />
             <input type="text" name="tags" placeholder="games,fps" value="{{ request.GET.tags }}" />
             <input type="submit" value="Search" />
@@ -53,6 +59,8 @@
             </div>
             <hr>
         </div>
+    {% empty %}
+        <div>0 Videos Found</div>
     {% endfor %}
     {% if page_obj %}
         <div class="pagination">
