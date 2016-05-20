@@ -1,10 +1,6 @@
 from annoying.functions import get_object_or_None
 from django.db import transaction
-from django.http import Http404
-from django.http.response import HttpResponseForbidden
-from django.shortcuts import get_object_or_404
-from rest_framework import serializers, status
-from rest_framework.response import Response
+from rest_framework import serializers
 from rest_framework.serializers import SerializerMethodField, reverse, \
     HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
@@ -37,19 +33,6 @@ class LikeSerializer(ModelSerializer):
             rating.like()
             return Like.objects.create(rating=rating,
                                        user=self.context.get('request').user)
-
-    def destroy(self, request, *args, **kwargs):
-        try:
-            like = self.get_object()
-            if like.user == request.user:
-                rating = get_object_or_None(Rating, likes_register=like)
-                rating.undo_like()
-                self.perform_destroy(like)
-            else:
-                return HttpResponseForbidden
-        except Http404:
-            pass
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_video(self, obj):
         return obj.rating.video.id

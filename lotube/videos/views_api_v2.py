@@ -1,5 +1,7 @@
+from annoying.functions import get_object_or_None
+from django.http.response import HttpResponseForbidden, Http404
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -51,3 +53,16 @@ class LikeAPIView(mixins.CreateModelMixin,
         kwargs['context'] = self.get_serializer_context()
         kwargs['context']['video'] = video_obj
         return serializer_class(*args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            like = self.get_object()
+            if like.user == request.user:
+                rating = get_object_or_None(Rating, likes_register=like.user)
+                rating.undo_like()
+                self.perform_destroy(like)
+            else:
+                return HttpResponseForbidden
+        except Http404:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
