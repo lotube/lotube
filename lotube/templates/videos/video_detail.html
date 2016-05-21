@@ -2,9 +2,20 @@
 
 <h2>{{ object.object.title }}</h2>
 
-{% block inner_content %}
-    <h1>Video - {{ object.title }}</h1>
+{% block local_stylesheets %}
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+{% endblock %}
 
+{% block local_scripts %}
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+{% endblock %}
+
+{% block inner_content %}
+    <h1>Video - {{ object.title }} </h1>
+    {% if object.user == request.user %}
+        <a href = "{% url "web:videos:video_edit" video.id %}">Edit</a>
+        <a href = "{% url "web:videos:video_delete" video.id %}">Delete</a>
+    {% endif %}
     <div>
         Title: {{ object.title }} ({{ object.id }})<br>
         Source: {{ object.source }}<br>
@@ -14,9 +25,20 @@
         {% if object.source == 'youtube' %}
             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ object.id_source }}?rel=0" frameborder="0" allowfullscreen></iframe>
         {% else %}
-            Visualiser has not yet been implemented!<br>
-            Filename: {{ object.filename }}
+            <video id="video1" class="video-js vjs-default-skin" width="640" height="480"
+                data-setup='{"controls" : true}'>
+                <source src="{{ MEDIA_URL }}{{ object.filename }}" type="video/x-flv">
+            </video>
         {% endif %}
+    </div>
+    <div>
+        <form action="{% url "web:videos:video_like" object.id %}" method="post">
+            {% csrf_token %}
+            <a href="{% url "web:videos:video_like" object.id %}">
+                <button>Like</button>
+            </a>
+        </form>
+        +{{ object.rating.likes }}
     </div>
     <div>
         Description: {{object.description }}
@@ -27,8 +49,12 @@
     </div>
     <div>Duration: {{ object.duration }} seconds</div>
     <div>
-        Thumbnail: {{ object.thumbnail.url }}
-        ({{ object.thumbnail.width }} x {{ object.thumbnail.height }})
+        Thumbnail:
+        {% if video.thumbnail %}
+            <img src="{{ MEDIA_URL }}{{ video.thumbnail }}" width="200" height="150" />
+        {% else %}
+            -
+        {% endif %}
     </div>
     <div>
         Tags:
@@ -42,21 +68,26 @@
     </div>
     <div>
         <h2>Analytics</h2>
-        Views: {{ object.rating.views }}
-        Unique views: {{ object.rating.unique_views }}
-        Shares: {{ object.rating.shares }}
+        Views: {{ object.analytic.views }}
+        {# Unique views: object.analytic.unique_views #}
+        {# Shares: object.analytic.shares #}
     </div>
     <div>
         <h2>Rating</h2>
-        Upvotes: {{ object.rating.upvotes }}<br>
-        Downvotes: {{ object.rating.downvotes }}
+        Number of Likes: {{ object.rating.likes }}<br>
+        <a href = "{% url 'web:videos:video_likes' video.id %}">Likes list</a>
     </div>
     <div>
         <h2>Comments</h2>
+        <a href = "{% url 'web:videos:comments:comment_add' video.id %}">New Comment</a>
         {% for comment in object.comments.all %}
-            <div>
+            <div id="comment_{{ comment.id }}">
                 <div>
                     User: {{ comment.user.username }}
+                    {% if comment.user == request.user %}
+                        <a href = "{% url 'web:videos:comments:comment_edit' video.id comment.id %}">Edit</a>
+                        <a href = "{% url 'web:videos:comments:comment_delete' video.id comment.id %}">Delete</a>
+                    {% endif %}
                 </div>
                 <div>
                     Published: {{ comment.created }}

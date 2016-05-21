@@ -1,0 +1,11 @@
+{% extends "videos/base.html" %}
+
+{% block inner_content %}
+    <p>
+        Back to <a href="{% url "web:videos:video" video.id %}">{{ video.title }}</a>
+    </p>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% include "form.html" %}
+        <input type="submit" value="Edit" />
+    </form>
+{% endblock %}

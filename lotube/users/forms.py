@@ -48,3 +48,13 @@ class UserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial["password"]
+
+
+class UserUpdateForm(forms.ModelForm):
+    """A form for updating users on the web.
+    """
+    # TODO update passwords
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name')

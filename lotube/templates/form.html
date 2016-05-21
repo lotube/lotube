@@ -1,0 +1,25 @@
+{% if form.errors %}
+    <div class="error">
+        {% for field in form %}
+            {% if field.errors %}
+                {{ field.label_tag }} {{ field.errors }}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+{% csrf_token %}
+{% for field in form %}
+    {% if not field.is_hidden %}
+        <div class="row">
+            {{ field.label_tag }}
+            {% if field.field.required %}
+                {{ required_mark }}
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="row">
+         {{ field }}
+        <span id="id_{{ field.name }}_error_field" style="color:red"></span>
+    </div>
+{% endfor %}
+<input type="hidden" name="next" value="{{ next }}" />

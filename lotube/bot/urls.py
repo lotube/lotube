@@ -5,8 +5,15 @@ from views import CrawlerBot
 urlpatterns = [
     # CrawlerBot
     url(
-        r'^CrawlerBot',
+        r'^launch',
         CrawlerBot().execute,
-        name='CrawlerBot'
+        name='launch'
     ),
+
+    # Crawler Management
+    url(
+        r'^manage',
+        CrawlerBot().get_management,
+        name='manage'
+    )
 ]

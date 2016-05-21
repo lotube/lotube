@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{% url "bot:launch" %}">Launch crawler</a>
+    <div>Number of crawler instances executing: {{ nthreads }}</div>
+
+    {% block inner_content %}
+        <table border="1">
+            <tr>
+                <th>Crawler Id</th>
+                <th>Search terms</th>
+                <th>Max. Depth</th>
+                <th>Max. Breadth</th>
+            </tr>
+            {% for key, values in threads.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ values.0 }}</td>
+                    <td>{{ values.1 }}</td>
+                    <td>{{ values.2 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+{% endblock %}

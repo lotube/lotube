@@ -1,8 +1,9 @@
 from django.conf.urls import include, url
 
 from . import constants
-from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList
-from .views_web import TagList
+from .views_web import VideoList, VideoDetail, VideoUserList, VideoByTagList, \
+    VideoCreate, LikeList, LikeView
+from .views_web import TagList, VideoEdit, VideoDelete
 
 urlpatterns = [
     # Include comments application
@@ -45,5 +46,40 @@ urlpatterns = [
         ',]+)$',
         VideoByTagList.as_view(),
         name='videos_by_tags'
+    ),
+
+    # Create a specific video
+    url(
+        r'^\/new$',
+        VideoCreate.as_view(),
+        name='video_create'
+    ),
+
+    # Edit a specific video
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
+        VideoEdit.as_view(),
+        name='video_edit'
+    ),
+
+    # Delete a specific video
+    url(
+        r'^\/(?P<pk>\d+)/delete$',
+        VideoDelete.as_view(),
+        name='video_delete'
+    ),
+
+    # LikeList
+    url(
+        r'^\/(?P<pk>\d+)/likes',
+        LikeList.as_view(),
+        name='video_likes'
+    ),
+
+    # Like View (to effectuate the Like)
+    url(
+        r'\/(?P<pk>\d+)/like',
+        LikeView.as_view(),
+        name='video_like'
     ),
 ]

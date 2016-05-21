@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{% url "bot:manage" %}">Manage crawler</a>
+    <div>Number of crawler instances executing: {{ nthreads }}</div>
+
+    {% block inner_content %}
+        <form method="post" action="" enctype="multipart/form-data">
+            {% include "form.html" %}
+            <input type="submit" value="Submit" />
+        </form>
+    {% endblock %}
+
+{% endblock %}

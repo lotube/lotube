@@ -4,6 +4,13 @@
 
 {% block inner_content %}
     <h1>User - {{ object.username }}</h1>
+    {% if request.user == object %}
+        <p>
+            <a href="{% url "web:users:update" object.username %}">Edit</a>
+            <a href="{% url "web:users:delete" object.username %}">Delete</a>
+        </p>
+    {% endif %}
+
     <div>
         <div>Name: {{ object.first_name }} {{ object.last_name }}</div>
         <div>Username: {{ object.username }} ({{ object.id }})</div>

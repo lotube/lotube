@@ -1,6 +1,8 @@
-from annoying.fields import AutoOneToOneField
 from django.db import models
+from django.db.models import OneToOneField
 
+from config import constants as globalConstants
+from core.fields import RestrictedNonAnimatedImageField, RestrictedVideoField
 from core.models import LowerCaseCharField
 from core.validators import Common
 from users.models import User
@@ -20,14 +22,25 @@ class AbstractTimeStamped(models.Model):
 
 
 class AbstractVideo(AbstractTimeStamped):
-    id_source = models.CharField(max_length=100)
-    source = models.CharField(max_length=30)
+    """
+    Representation of Video model.
+    Video was uploaded on our platform if source and id_source are empty
+    """
+    id_source = models.CharField(max_length=100, blank=True)
+    source = models.CharField(max_length=30, blank=True)
     user = models.ForeignKey(User)
     title = models.CharField(max_length=300)
     description = models.CharField(max_length=10000, blank=True, default='')
     duration = models.PositiveIntegerField(default=0)
-    filename = models.CharField(max_length=255, unique=True)
+    filename = RestrictedVideoField(
+        null=True,  # because other sources may not have a filename
+        upload_to=globalConstants.VIDEO_FILE_PATH,
+        max_upload_size=globalConstants.VIDEO_FILE_MAX_SIZE)
     tags = models.ManyToManyField('videos.Tag', related_name='videos')
+    thumbnail = RestrictedNonAnimatedImageField(
+        upload_to=globalConstants.VIDEO_THUMBNAIL_PATH,
+        blank=True, null=True,
+        max_upload_size=globalConstants.VIDEO_THUMBNAIL_MAX_SIZE)
 
     def __str__(self):
         return self.title
@@ -37,32 +50,50 @@ class AbstractVideo(AbstractTimeStamped):
 
 
 class AbstractAnalytic(models.Model):
-    video = AutoOneToOneField('videos.Video', primary_key=True,
-                              related_name='analytic')
+    video = OneToOneField('videos.Video', primary_key=True,
+                          related_name='analytic')
     views = models.PositiveIntegerField(default=0)
     unique_views = models.PositiveIntegerField(default=0)
     shares = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return str(self.video)
+        return str(self.views)
 
     class Meta:
         abstract = True
 
 
 class AbstractRating(models.Model):
-    video = AutoOneToOneField('videos.Video', primary_key=True,
-                              related_name='rating')
-    upvotes = models.PositiveIntegerField(default=0)
-    downvotes = models.PositiveIntegerField(default=0)
+    video = OneToOneField('videos.Video', primary_key=True,
+                          related_name='rating')
+    likes = models.PositiveIntegerField(default=0)
+    likes_register = models.ManyToManyField(User, through='Like',
+                                            related_name='video_likes')
+
+    def like(self):
+        self.likes += 1
+        self.save()
+        return self.likes
+
+    def undo_like(self):
+        self.likes -= 1
+        self.save()
+        return self.likes
+
+    def __str__(self):
+        return u'{0}'.format(self.likes)
+
+    class Meta:
+        abstract = True
 
 
-class AbstractThumbnail(models.Model):
-    video = AutoOneToOneField('videos.Video', primary_key=True,
-                              related_name='thumbnail')
-    url = models.CharField(max_length=255, default='', blank=True)
-    width = models.PositiveIntegerField(default=0)
-    height = models.PositiveIntegerField(default=0)
+class AbstractLike(AbstractTimeStamped):
+    user = models.ForeignKey(User)
+    rating = models.ForeignKey('Rating')
+
+    class Meta:
+        abstract = True
+        unique_together = ('user', 'rating')
 
 
 class AbstractTag(models.Model):

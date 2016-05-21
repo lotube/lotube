@@ -1,9 +1,11 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, CreateView, DeleteView, UpdateView
 
 from config import constants
 from videos.models import Video
 from .models import Comment
+from core.mixins import CustomLoginRequiredMixin, OwnerRequiredMixin
 
 
 class CommentMixin(View):
@@ -38,4 +40,26 @@ class CommentDetailMixin(CommentMixin, DetailView):
                                  video=self.kwargs['video'],
                                  id=self.kwargs['pk']
                                  )
+
+
+class CommentAddMixin(CustomLoginRequiredMixin, CreateView):
+    model = Comment
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.video = Video.objects.get(id=self.kwargs['video'])
+        return super(CommentAddMixin, self).form_valid(form)
+
+
+class CommentEditMixin(OwnerRequiredMixin, UpdateView):
+    model = Comment
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.video = Video.objects.get(id=self.kwargs['video'])
+        return super(CommentEditMixin, self).form_valid(form)
+
+
+class CommentDeleteMixin(OwnerRequiredMixin, DeleteView):
+    model = Comment
 

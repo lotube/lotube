@@ -1,0 +1,14 @@
+{% extends "videos/base.html" %}
+
+{% block inner_content %}
+    <div>Upvotes for {{ video }}:</div>
+    <ul>
+        {% for upvote in object_list %}
+            <li>
+                {{ upvote.user }}
+            </li>
+        {% empty %}
+            <li>No likes.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

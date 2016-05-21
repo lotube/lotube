@@ -1,18 +1,26 @@
 from django.conf.urls import url
 
+from .views_web import CommentAdd, CommentEdit, CommentDelete
 
 urlpatterns = [
-    # List of Comments
-    #url(
-    #    r'^$',
-    #    CommentList.as_view(),
-    #    name='comments'
-    #),
+    # Create new comment
+    url(
+        r'^\/new',
+        CommentAdd.as_view(),
+        name='comment_add'
+    ),
 
-    # Retrieve a specific Comment by id
-    #url(
-    #    r'^\/(?P<pk>\d+)$',
-    #    CommentDetail.as_view(),
-    #    name='comment'
-    #),
+    # Edit a specific comment
+    url(
+        r'^\/(?P<pk>\d+)/edit$',
+        CommentEdit.as_view(),
+        name='comment_edit'
+    ),
+
+    # Delete a specific comment
+    url(
+        r'^\/(?P<pk>\d+)/delete$',
+        CommentDelete.as_view(),
+        name='comment_delete'
+    ),
 ]

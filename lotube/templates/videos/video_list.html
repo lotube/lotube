@@ -1,11 +1,21 @@
 {% extends "videos/base.html" %}
+{% load static %}
+
+{% block local_scripts %}
+    <script src="{% static "js/videos/jquery_youtube_autocomplete.js" %}"></script>
+{% endblock %}
+
 
 {% block inner_content %}
     <h1>Videos</h1>
 
+    <a href="{% url "web:videos:video_create" %}">New video</a>
+
     <div>
         <form method="GET">
-            <input type="text" name="title" placeholder="video title" value="{{ request.GET.title }}" />
+            <div class="ui-widget" style="display:inline;">
+                <input type="text" name="title" id="search" placeholder="video title" value="{{ request.GET.title }}" />
+            </div>
             <input type="text" name="user" placeholder="username" value="{{ request.GET.user }}" />
             <input type="text" name="tags" placeholder="games,fps" value="{{ request.GET.tags }}" />
             <input type="submit" value="Search" />
@@ -32,8 +42,12 @@
             </div>
             <div>Duration: {{ video.duration }} seconds</div>
             <div>
-                Thumbnail: {{ video.thumbnail.url }}
-                ({{ video.thumbnail.width }} x {{ video.thumbnail.height }})
+                Thumbnail:
+                {% if video.thumbnail %}
+                    <img src="{{ MEDIA_URL }}{{ video.thumbnail }}" width="200" height="150" />
+                {% else %}
+                    -
+                {% endif %}
             </div>
             <div>
                 Tags:
@@ -47,6 +61,8 @@
             </div>
             <hr>
         </div>
+    {% empty %}
+        <div>0 Videos Found</div>
     {% endfor %}
     {% if page_obj %}
         <div class="pagination">

@@ -1,10 +1,50 @@
+{% load static %}
 <html>
 <head>
+    <title>{{ PROJECT_NAME }}</title>
+    <link rel="shortcut icon" sizes="196x196" href="{% static "img/favicon.png" %}">
 
+    {% block cdn_stylesheets %}
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" />
+    {% endblock %}
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block local_stylesheets %}
+        {# app stylesheets #}
+    {% endblock %}
 </head>
 <body>
+    <h1>{{ PROJECT_NAME }}</h1>
     <div id="content">
+        {% if request.user.is_authenticated %}
+            Welcome
+            <a href="{% url "web:users:user" request.user.username %}">
+                {{ request.user.username }}!
+            </a>
+        {% else %}
+            You're not logged in
+        {% endif %} |
+        <a href="{% url "web:videos:videos" %}">videos</a>
+        <a href="{% url "web:users:users" %}">users</a> |
+
         {% block content %}
+        {% endblock %}
+
+        {% block cdn_scripts %}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        {% endblock %}
+
+        {% block scripts %}
+            <script src="{% static "js/jquery.config.js" %}"></script>
+            <script src="{% static "js/css.js" %}"></script>
+        {% endblock %}
+
+        {% block local_scripts %}
+            {# app scripts #}
         {% endblock %}
     </div>
 </body>
