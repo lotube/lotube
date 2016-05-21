@@ -233,9 +233,43 @@ Returns video rating of the provided Video :id.
     {
       "type": "video_rating",
       "href": "http://127.0.0.1/api/v1/videos/1/rating.json",
-      "video_id": 1,
-      "upvotes": 0,
-      "downvotes": 0
+      "likes_count": 0,
+      "likes": "http://127.0.0.1:8000/api/v2/videos/1/likes"
+    }
+```
+
+### GET videos/:id/likes
+
+Returns video likes of the provided Video :id.
+
+```json
+    {
+      "count": 1,
+      "next": null,
+      "previous": null,
+      "results": [
+          {
+          "href": "http://127.0.0.1:8000/api/v2/videos/1/likes/1",
+          "video": 1,
+          "user": 1,
+          "created" :"2016-05-21T14:58:56.355270Z",
+          "modified":"2016-05-21T14:58:56.355294Z"
+          }
+      ]
+    }
+```
+
+### GET videos/:id/likes/:id
+
+If exists, it returns the video details of the provided video :id.
+
+```json
+    {
+      "href": "http://127.0.0.1:8000/api/v2/videos/1/likes/1",
+      "video": 1,
+      "user": 1,
+      "created": "2016-05-21T14:58:56.355270Z",
+      "modified": "2016-05-21T14:58:56.355294Z"
     }
 ```
 
