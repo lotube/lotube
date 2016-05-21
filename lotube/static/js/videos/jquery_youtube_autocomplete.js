@@ -1,23 +1,32 @@
-$("#youtube").autocomplete({
-    source: function(request, response){
-        var apiKey = 'AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-' +
-            'mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg';
-        var query = request.title;
-        $.ajax({
-            url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+
-            query+"&key="+apiKey+"&format=5&alt=json&callback=?",
-            dataType: 'jsonp',
-            success: function(data, textStatus, request) {
-               response( $.map( data[1], function(item) {
-                    return {
-                        label: item[0],
-                        value: item[0]
-                    }
-                }));
-            }
-        });
-    },
-    select: function( event, ui ) {
-        $.youtubeAPI(ui.item.label);
-    }
-});
+(function($) {
+    var API_KEY = "AIzaSyCHl8hhcCJ8SgcjQqEKwvXBdLmTxSER_8M";
+    var BASE_URL = "http://suggestqueries.google.com/complete/search?hl=en" +
+        "&ds=yt&client=youtube&hjson=t&cp=1&key="+API_KEY+
+        "&format=5&alt=json&callback=?";
+
+    $( "#search" ).autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: BASE_URL,
+                dataType: "jsonp",
+                data: {
+                    q: request.term
+                },
+                success: function (data) {
+                    results = data[1].map(function (current) {
+                        return current[0];
+                    });
+                    response(results);
+                }
+            });
+        },
+        minLength: 3,
+        select: function (event, ui) {
+            var self = $(this);
+            $(this).val(this.value);
+            setTimeout(function() {
+                self.closest($('form')).submit();
+            }, 100); // doesn't work on Chrome without a timer
+        }
+    });
+})(jQuery);

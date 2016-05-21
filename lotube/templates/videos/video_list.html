@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block local_scripts %}
-    <script src="{% static "js/videos/jqery_youtube_autocomplete.js" %}"></script>
+    <script src="{% static "js/videos/jquery_youtube_autocomplete.js" %}"></script>
 {% endblock %}
 
 
@@ -13,7 +13,9 @@
 
     <div>
         <form method="GET">
-            <input type="text" name="title" id="title_id" placeholder="video title" value="{{ request.GET.title }}" />
+            <div class="ui-widget" style="display:inline;">
+                <input type="text" name="title" id="search" placeholder="video title" value="{{ request.GET.title }}" />
+            </div>
             <input type="text" name="user" placeholder="username" value="{{ request.GET.user }}" />
             <input type="text" name="tags" placeholder="games,fps" value="{{ request.GET.tags }}" />
             <input type="submit" value="Search" />

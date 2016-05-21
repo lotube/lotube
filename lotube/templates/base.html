@@ -2,6 +2,11 @@
 <html>
 <head>
     <title>{{ PROJECT_NAME }}</title>
+    <link rel="shortcut icon" sizes="196x196" href="{% static "img/favicon.png" %}">
+
+    {% block cdn_stylesheets %}
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" />
+    {% endblock %}
 
     {% block stylesheets %}
     {% endblock %}
@@ -29,6 +34,7 @@
 
         {% block cdn_scripts %}
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
         {% endblock %}
 
