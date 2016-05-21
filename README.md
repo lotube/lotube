@@ -3,7 +3,6 @@
 ## Requeriments
 
 - Python 2.7.5
-- Ruby _(will be used in upcoming versions)_
 
 ## Installation
 
@@ -15,14 +14,17 @@ git clone https://github.com/lotube/lotube
 
 ### Install dependencies
 
+There is currently no production specific version, thereby you should install
+ the developers requirements.
+
 ```
 pip install -r requirements.txt
 ```
 
-The following will also be used in upcoming versions:
+#### Developers
 
 ```
-gem install sass
+pip install -r requirements_dev.txt
 ```
 
 ## How to run
