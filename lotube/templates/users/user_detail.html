@@ -11,7 +11,16 @@
         </p>
     {% endif %}
 
-    <div>
+    <div id="user-content" itemscope="" itemid="{{ object.id }}" itemtype="http://schema.org/Person">
+        {# Person object #}
+        <meta itemprop="email" content="{{ object.email }}">
+        <meta itemprop="familyName" content="{{ object.last_name }}">
+        <meta itemprop="givenName" content="{{ object.first_name }}">
+        <meta itemprop="alternateName" content="{{ object.username }}">
+        <meta itemprop="name" content="{{ object.username }}">
+        <link itemprop="url" content="{% url "web:users:user" object.username %}">
+        {# /Person object #}
+
         <div>Name: {{ object.first_name }} {{ object.last_name }}</div>
         <div>Username: {{ object.username }} ({{ object.id }})</div>
         <div>Joined: {{ object.date_joined }} Last login: {{ object.last_login }}</div>

@@ -1,4 +1,5 @@
 {% extends "videos/base.html" %}
+{% load tz %}
 
 <h2>{{ object.object.title }}</h2>
 
@@ -11,17 +12,7 @@
 {% endblock %}
 
 {% block inner_content %}
-    <h1>Video - {{ object.title }} </h1>
-    {% if object.user == request.user %}
-        <a href = "{% url "web:videos:video_edit" video.id %}">Edit</a>
-        <a href = "{% url "web:videos:video_delete" video.id %}">Delete</a>
-    {% endif %}
-    <div>
-        Title: {{ object.title }} ({{ object.id }})<br>
-        Source: {{ object.source }}<br>
-        Username: {{ object.user.username }}
-    </div>
-    <div>
+    <div id="player">
         {% if object.source == 'youtube' %}
             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ object.id_source }}?rel=0" frameborder="0" allowfullscreen></iframe>
         {% else %}
@@ -31,41 +22,81 @@
             </video>
         {% endif %}
     </div>
-    <div>
-        <form action="{% url "web:videos:video_like" object.id %}" method="post">
-            {% csrf_token %}
-            <a href="{% url "web:videos:video_like" object.id %}">
-                <button>Like</button>
-            </a>
-        </form>
-        +{{ object.rating.likes }}
-    </div>
-    <div>
-        Description: {{object.description }}
-    </div>
-    <div>
-        Created at: {{ object.created }}
-        Modified at: {{ object.modified }}
-    </div>
-    <div>Duration: {{ object.duration }} seconds</div>
-    <div>
-        Thumbnail:
-        {% if video.thumbnail %}
-            <img src="{{ MEDIA_URL }}{{ video.thumbnail }}" width="200" height="150" />
-        {% else %}
-            -
+
+    <h1>{{ object.title }} </h1>
+    <div id="video-tools">
+        {% if object.user == request.user %}
+            <a href = "{% url "web:videos:video_edit" video.id %}">Edit</a>
+            <a href = "{% url "web:videos:video_delete" video.id %}">Delete</a>
         {% endif %}
     </div>
-    <div>
-        Tags:
-        <ul>
-            {% for tag in object.tags.all %}
-                <li>
-                    {{ tag.name }}
-                </li>
-            {% endfor %}
-        </ul>
+
+    <div id="watch-content" itemscope="" itemid="{{ object.id }}" itemtype="http://schema.org/VideoObject">
+        {# Video object #}
+        <link itemprop="url" href="{% url "web:videos:video" object.id %}">
+        <meta itemprop="name" content="{{ object.title }}">
+        <meta itemprop="description" content="{{ object.description }}">
+
+        <span itemprop="uploadDate" content="{{ object.created }}" >
+
+        <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <link itemprop="url" href="{% url "web:users:user" object.user.id  %}">
+        </span>
+
+        <link itemprop="thumbnailUrl" href="{{ MEDIA_URL }}{{ video.thumbnail }}">
+        <span itemprop="thumbnail" itemscope="" itemtype="http://schema.org/ImageObject">
+          <link itemprop="url" href="{{ MEDIA_URL }}{{ video.thumbnail }}">
+        </span>
+
+        <meta itemprop="playerType" content="HTML5 Flash">
+        <meta itemprop="interactionCount" content="{{ object.analytic.views }}">
+        {# /Video object #}
+
+        <div>
+            Title: {{ object.title }} ({{ object.id }})<br>
+            Source: {{ object.source }}<br>
+            Username:
+            <a href="{% url "web:users:user" object.user.username %}">
+                {{ object.user.username }}
+            </a>
+        </div>
+        <div>
+            <form action="{% url "web:videos:video_like" object.id %}" method="post">
+                {% csrf_token %}
+                <a href="{% url "web:videos:video_like" object.id %}">
+                    <button>Like</button>
+                </a>
+            </form>
+            +{{ object.rating.likes }}
+        </div>
+        <div>
+            Description: {{object.description }}
+        </div>
+        <div>
+            Created at: {{ object.created }}
+            Modified at: {{ object.modified }}
+        </div>
+        <div>Duration: {{ object.duration }} seconds</div>
+        <div>
+            Thumbnail:
+            {% if video.thumbnail %}
+                <img src="{{ MEDIA_URL }}{{ video.thumbnail }}" width="200" height="150" />
+            {% else %}
+                -
+            {% endif %}
+        </div>
+        <div>
+            Tags:
+            <ul>
+                {% for tag in object.tags.all %}
+                    <li>
+                        {{ tag.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+
     <div>
         <h2>Analytics</h2>
         Views: {{ object.analytic.views }}
