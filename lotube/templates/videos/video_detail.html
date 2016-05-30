@@ -31,7 +31,7 @@
         {% endif %}
     </div>
 
-    <div id="watch-content" itemscope="" itemid="" itemtype="http://schema.org/VideoObject">
+    <div id="watch-content" itemscope="" itemid="{{ object.id }}" itemtype="http://schema.org/VideoObject">
         {# Video object #}
         <link itemprop="url" href="{% url "web:videos:video" object.id %}">
         <meta itemprop="name" content="{{ object.title }}">
@@ -55,7 +55,10 @@
         <div>
             Title: {{ object.title }} ({{ object.id }})<br>
             Source: {{ object.source }}<br>
-            Username: {{ object.user.username }}
+            Username:
+            <a href="{% url "web:users:user" object.user.username %}">
+                {{ object.user.username }}
+            </a>
         </div>
         <div>
             <form action="{% url "web:videos:video_like" object.id %}" method="post">
