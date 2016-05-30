@@ -1,10 +1,14 @@
+import urllib
+
 from annoying.functions import get_object_or_None
 from django.db import transaction
+from django.utils.safestring import mark_safe
 from rest_framework import serializers
 from rest_framework.serializers import SerializerMethodField, reverse, \
     HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
 
+from config.settings import MEDIA_URL
 from core.api_utils import ContextUtils
 from videos.models import Video, Tag, Analytic, Rating, Like
 from videos.utils import TagBuilder
@@ -85,6 +89,7 @@ class VideoSerializer(ModelSerializer):
     href = HyperlinkedIdentityField(view_name='api_v2:videos-detail')
     tags = TagSerializer(many=True, read_only=True)
     user = serializers.SerializerMethodField()
+    filename = serializers.SerializerMethodField()
     analytics = SerializerMethodField()
     rating = SerializerMethodField()
     comments = serializers.SerializerMethodField()
@@ -96,6 +101,12 @@ class VideoSerializer(ModelSerializer):
     def get_user(self, obj):
         return ContextUtils(self.context)\
             .build_absolute_uri(reverse('api_v2:users-detail', [obj.user.id]))
+
+    def get_filename(self, obj):
+        if obj.source != '':
+            return urllib.unquote(obj.filename.url[len(MEDIA_URL):])
+        else:
+            return ContextUtils(self.context).build_absolute_uri(obj.filename.url)
 
     def get_rating(self, obj):
         return ContextUtils(self.context)\
