@@ -49,7 +49,21 @@
         </span>
 
         <meta itemprop="playerType" content="HTML5 Flash">
-        <meta itemprop="interactionCount" content="{{ object.analytic.views }}">
+
+        <span itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+            <meta itemprop="interactionType" content="https://schema.org/ViewAction" />
+            <meta itemprop="userInteractionCount" content="{{ object.analytic.views }}" />
+        </span>
+
+        <span itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+            <meta itemprop="interactionType" content="https://schema.org/LikeAction" />
+            <meta itemprop="userInteractionCount" content="{{ object.rating.likes }}" />
+        </span>
+
+          <div itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+              <meta itemprop="interactionType" content="http://schema.org/CommentAction"/>
+              <meta itemprop="userInteractionCount" content="{{ object.comments.all|length }}" />
+          </div>
         {# /Video object #}
 
         <div>
@@ -95,14 +109,15 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <div>
+            <h2>Analytics</h2>
+            Views: {{ object.analytic.views }}
+            {# Unique views: object.analytic.unique_views #}
+            {# Shares: object.analytic.shares #}
+        </div>
     </div>
 
-    <div>
-        <h2>Analytics</h2>
-        Views: {{ object.analytic.views }}
-        {# Unique views: object.analytic.unique_views #}
-        {# Shares: object.analytic.shares #}
-    </div>
     <div>
         <h2>Rating</h2>
         Number of Likes: {{ object.rating.likes }}<br>
@@ -112,7 +127,15 @@
         <h2>Comments</h2>
         <a href = "{% url 'web:videos:comments:comment_add' video.id %}">New Comment</a>
         {% for comment in object.comments.all %}
-            <div id="comment_{{ comment.id }}">
+            <div id="comment_{{ comment.id }}" itemid="" itemprop="UserComments" itemscope="" itemtype="http://schema.org/UserComments">
+                {# Comment object #}
+                <meta itemprop="commentText" content="{{ comment.content }}">
+                <meta itemprop="commentTime" content="{{ comment.created }}">
+                <span itemprop="creator" itemscope="" itemtype="http://schema.org/Person">
+                  <link itemprop="url" href="{% url "web:users:user" comment.user.id  %}">
+                </span>
+                <meta itemprop="url" content="{% url "web:videos:video" object.id %}">
+                {# /Comment #}
                 <div>
                     User: {{ comment.user.username }}
                     {% if comment.user == request.user %}
